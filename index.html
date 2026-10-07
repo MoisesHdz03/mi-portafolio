@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moises Hernandez · Portafolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: presentación breve y, enseguida, una cuadrícula 2×2 de tarjetas de proyecto; cada tarjeta lleva el color de su app y la demo en vivo arriba. */
+:root{
+  --bg:#E6E8EC;          /* gris suave: ni blanco brillante ni oscuro */
+  --surface:#F3F4F6;
+  --surface-2:#ECEEF1;
+  --ink:#1D222B;
+  --ink-2:#4F5664;
+  --ink-3:#848B98;
+  --line:#D4D8DF;
+  --accent:#5B5BD6;
+  --accent-soft:#E2E2F7;
+  --ok:#2F9E6E;
+  --frame:#262B35;
+  --shadow:0 1px 2px rgba(29,34,43,.05),0 10px 30px -12px rgba(29,34,43,.18);
+  /* color de cada proyecto */
+  --c-formia:#3E6BC4;
+  --c-notifica:#22A06B;
+  --c-tramita:#D2504A;
+  --c-bandeja:#15A39A;
+  --f-sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 .95rem/1.6 var(--f-sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(16px,4vw,32px)}
+
+/* Barra superior */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px}
+.brand{font-weight:600;font-size:.95rem;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand-mark{width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--surface);display:grid;place-items:center;font:500 .72rem/1 var(--f-mono)}
+.nav{display:flex;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.nav a{text-decoration:none;color:var(--ink-2);font-size:.84rem;padding:6px 12px;border-radius:999px}
+.nav a:hover{background:var(--surface-2);color:var(--ink)}
+
+/* Presentación */
+.intro{padding-block:clamp(36px,6vw,64px) 8px;max-width:720px}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);padding:5px 12px 5px 10px;border-radius:999px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 22%,transparent)}
+h1{font-weight:600;font-size:clamp(1.7rem,3.6vw,2.35rem);line-height:1.18;letter-spacing:-.025em;margin:18px 0 14px;text-wrap:balance}
+h1 .hl{background:linear-gradient(transparent 62%,var(--accent-soft) 62%);padding-inline:2px}
+.lede{margin:0;color:var(--ink-2);font-size:1rem;max-width:60ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.facts span{font-size:.8rem;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.facts b{font-weight:500;color:var(--ink)}
+
+/* Índice rápido de proyectos */
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.jump a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:.84rem;font-weight:500;padding:8px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);transition:transform .15s,border-color .15s}
+.jump a::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--pc)}
+.jump a:hover{transform:translateY(-2px);border-color:var(--pc)}
+
+/* Encabezados de sección */
+.sec{padding-block:48px 0}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+h2{font-weight:600;font-size:1.2rem;letter-spacing:-.01em;margin:0;display:flex;align-items:center;gap:10px}
+h2 small{font:500 .72rem/1 var(--f-mono);color:var(--ink-3);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+.sec-head p{margin:0;color:var(--ink-3);font-size:.84rem}
+
+/* Tarjetas de proyecto */
+.projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:860px){.projects{grid-template-columns:1fr}}
+.card{--pc:var(--accent);min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 1px 2px rgba(29,34,43,.05),0 18px 40px -16px color-mix(in srgb,var(--pc) 45%,transparent)}
+#formia{--pc:var(--c-formia)} #notifica{--pc:var(--c-notifica)} #tramita{--pc:var(--c-tramita)} #bandeja360{--pc:var(--c-bandeja)}
+.jump .j-formia{--pc:var(--c-formia)} .jump .j-notifica{--pc:var(--c-notifica)} .jump .j-tramita{--pc:var(--c-tramita)} .jump .j-bandeja{--pc:var(--c-bandeja)}
+
+/* Escenario con la demo en vivo */
+.stage{border-radius:12px;padding:14px 14px 0;background:
+  radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--pc) 30%,transparent),transparent 60%),
+  color-mix(in srgb,var(--pc) 14%,var(--surface-2));overflow:hidden}
+.window{background:var(--frame);border-radius:9px 9px 0 0;overflow:hidden;box-shadow:0 10px 26px -10px rgba(0,0,0,.35)}
+.window-bar{display:flex;align-items:center;gap:8px;padding:7px 10px;color:#A5ADBA;font:400 .66rem/1 var(--f-mono)}
+.lights{display:flex;gap:5px}
+.lights i{width:8px;height:8px;border-radius:50%;background:#454C59;display:block}
+.addr{flex:1;min-width:0;background:#323845;border-radius:5px;padding:5px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viewport{position:relative;aspect-ratio:16/10;max-width:100%;background:#fff;overflow:hidden}
+.viewport iframe{position:absolute;top:0;left:0;width:1280px;height:800px;border:0;transform-origin:0 0;pointer-events:none}
+.shield{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-decoration:none;background:color-mix(in srgb,var(--ink) 35%,transparent);opacity:0;transition:opacity .2s}
+.viewport:hover .shield,.shield:focus-visible{opacity:1}
+.shield span{background:var(--surface);color:var(--ink);font-weight:500;font-size:.88rem;padding:10px 16px;border-radius:999px}
+@media (hover:none){.shield{display:none}}
+
+/* Cuerpo de la tarjeta */
+.body{padding:0 8px 6px;display:flex;flex-direction:column;gap:12px;flex:1}
+.title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+h3{margin:0;font-weight:600;font-size:1.15rem;letter-spacing:-.015em;display:flex;align-items:center;gap:9px}
+h3::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--pc)}
+.chip{font-size:.72rem;font-weight:500;padding:4px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.chip.wip{background:color-mix(in srgb,#E2902F 14%,var(--surface));color:#A8621A;border-color:color-mix(in srgb,#E2902F 35%,var(--surface))}
+.chip.wip::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.pitch{margin:0;color:var(--ink-2);font-size:.9rem}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font:400 .7rem/1 var(--f-mono);color:var(--ink-2)}
+.flow b{font-weight:400;padding:5px 7px;border-radius:6px;background:color-mix(in srgb,var(--pc) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--pc) 22%,var(--surface))}
+.flow i{font-style:normal;color:var(--ink-3)}
+.stack{display:flex;flex-wrap:wrap;gap:5px}
+.stack span{font:400 .7rem/1 var(--f-mono);color:var(--ink-3);padding:4px 7px;border-radius:5px;background:var(--surface-2)}
+
+/* Detalles técnicos plegables */
+details{border-top:1px dashed var(--line);padding-top:10px}
+summary{cursor:pointer;list-style:none;font-size:.84rem;font-weight:500;color:var(--ink-2);display:flex;align-items:center;gap:6px;width:fit-content}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font:500 .9rem/1 var(--f-mono);width:18px;height:18px;display:grid;place-items:center;border-radius:5px;background:var(--surface-2)}
+details[open] summary::before{content:"–"}
+summary:hover{color:var(--ink)}
+.detail{display:grid;gap:12px;padding-top:12px;font-size:.85rem}
+.detail ul{margin:0;padding-left:18px;color:var(--ink-2);display:grid;gap:4px}
+.detail dl{margin:0;display:grid;gap:8px}
+.detail dt{font-weight:500}
+.detail dd{margin:1px 0 0;color:var(--ink-2)}
+.label{font:500 .66rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+
+.actions{display:flex;gap:8px;align-items:center;margin-top:auto;padding-top:4px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;font:500 .86rem/1 var(--f-sans);padding:10px 15px;border-radius:999px;text-decoration:none;transition:background .15s,transform .15s}
+.btn-demo{background:var(--pc);color:#fff}
+.btn-demo:hover{background:color-mix(in srgb,var(--pc) 85%,#000);transform:translateX(2px)}
+.hint{font-size:.76rem;color:var(--ink-3)}
+
+/* Habilidades */
+.skills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.skills{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:440px){.skills{grid-template-columns:1fr}}
+.skill{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.skill h4{margin:0 0 10px;font-size:.88rem;font-weight:600}
+.skill div{display:flex;flex-wrap:wrap;gap:5px}
+.skill span{font-size:.78rem;color:var(--ink-2);background:var(--surface-2);border-radius:6px;padding:4px 8px}
+
+/* Sobre mí */
+.about{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,28px);display:grid;gap:10px}
+.about p{margin:0;color:var(--ink-2);max-width:68ch}
+.about strong{font-weight:600;color:var(--ink)}
+
+footer{padding-block:48px 36px;color:var(--ink-3);font-size:.8rem}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><span class="brand-mark" data-bind="initials">MH</span><span data-bind="name">Moises Hernandez</span></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#proyectos">Proyectos</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#sobre-mi">Sobre mí</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio" class="wrap">
+  <section class="intro">
+    <span class="status"><span class="dot" aria-hidden="true"></span><span data-bind="availability">Disponible para nuevos proyectos</span></span>
+    <h1>Hola, soy <span data-bind="name">Moises Hernandez</span>. Hago software para que la <span class="hl">operación de un contact center</span> fluya.</h1>
+    <p class="lede">Captura de ventas, flujos de validación, envíos masivos por WhatsApp y formularios dinámicos. Cada proyecto tiene una demo que puedes usar, con datos ficticios.</p>
+    <div class="facts">
+      <span><b data-bind="role">Desarrollador de Software</b></span>
+      <span><b data-bind="location">México</b></span>
+      <span>C# / .NET · PHP · SQL</span>
+    </div>
+    <nav class="jump" aria-label="Ir a un proyecto">
+      <a class="j-formia" href="#formia">Formia</a>
+      <a class="j-notifica" href="#notifica">Notifica</a>
+      <a class="j-tramita" href="#tramita">Tramita CRM</a>
+      <a class="j-bandeja" href="#bandeja360">Bandeja 360</a>
+    </nav>
+  </section>
+
+  <section class="sec" id="proyectos" aria-labelledby="t-proyectos">
+    <div class="sec-head">
+      <h2 id="t-proyectos">Proyectos <small>4 demos</small></h2>
+      <p>Nombres de producto y empresa cambiados; los datos son inventados.</p>
+    </div>
+
+    <div class="projects">
+
+      <article class="card" id="formia">
+        <div class="stage">
+          <div class="window">
+            <div class="window-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="addr">formia.app/formularios/disenar</span></div>
+            <div class="viewport">
+              <iframe src="formia.html" title="Vista previa de Formia" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+              <a class="shield" href="formia.html"><span>Abrir demo →</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="title-row"><h3>Formia</h3><span class="chip wip">En desarrollo</span></div>
+          <p class="pitch">Constructor de formularios dinámicos. El administrador los diseña, los agentes los llenan y cada registro recibe un folio consecutivo.</p>
+          <div class="flow" aria-label="Ciclo de un formulario"><b>Borrador</b><i>→</i><b>Publicada</b><i>→</i><b>Captura</b><i>→</i><b>Folio</b></div>
+          <div class="stack"><span>C#</span><span>.NET 10</span><span>Blazor</span><span>EF Core</span><span>SQL Server</span><span>xUnit</span></div>
+          <details>
+            <summary>Detalles técnicos</summary>
+            <div class="detail">
+              <ul>
+                <li>Editor visual con 21 tipos de campo, condiciones y fórmulas.</li>
+                <li>Paneles por rol: administrador, supervisor y agente con meta diaria.</li>
+                <li>Correcciones con historial antes → después, estadísticas y Excel.</li>
+              </ul>
+              <span class="label">Ingeniería</span>
+              <dl>
+                <div><dt>Motor de formularios puro</dt><dd>Validador, parser de fórmulas con detección de ciclos y evaluador de condiciones, sin UI ni base de datos.</dd></div>
+                <div><dt>Folios sin duplicados</dt><dd>UPDATE atómico e índice único; una prueba lanza 10 envíos simultáneos.</dd></div>
+                <div><dt>~120 pruebas xUnit</dt><dd>Motor, validadores mexicanos (CURP, RFC, CP) y servicios.</dd></div>
+              </dl>
+            </div>
+          </details>
+          <div class="actions"><a class="btn btn-demo" href="formia.html">Abrir demo →</a><span class="hint">Cambia de rol y diseña un campo</span></div>
+        </div>
+      </article>
+
+      <article class="card" id="notifica">
+        <div class="stage">
+          <div class="window">
+            <div class="window-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="addr">notifica.app/plantillas</span></div>
+            <div class="viewport">
+              <iframe src="notifica.html" title="Vista previa de Notifica" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+              <a class="shield" href="notifica.html"><span>Abrir demo →</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="title-row"><h3>Notifica</h3><span class="chip">En producción</span></div>
+          <p class="pitch">Envío de plantillas de WhatsApp a miles de clientes desde un CSV, con seguimiento de cada mensaje hasta que se lee o se responde.</p>
+          <div class="flow" aria-label="Estados de un mensaje"><b>sent</b><i>→</i><b>delivered</b><i>→</i><b>read</b><i>→</i><b>respuesta</b></div>
+          <div class="stack"><span>PHP</span><span>MySQL</span><span>Twilio API</span><span>Webhooks</span><span>Bootstrap</span></div>
+          <details>
+            <summary>Detalles técnicos</summary>
+            <div class="detail">
+              <ul>
+                <li>Sincroniza plantillas desde Twilio con vista previa idéntica a WhatsApp.</li>
+                <li>Valida el CSV contra las variables de la plantilla y crea grupos de envío.</li>
+                <li>Tablero por grupo: entregados, leídos, fallidos y respuestas.</li>
+              </ul>
+              <span class="label">Ingeniería</span>
+              <dl>
+                <div><dt>Webhooks de estado y respuesta</dt><dd>Actualizan cada mensaje, recalculan el grupo con agregados SQL e ignoran reintentos duplicados.</dd></div>
+                <div><dt>CSV transaccional</dt><dd>Valida encabezados y filas con número de fila; si una falla, se revierte todo.</dd></div>
+              </dl>
+            </div>
+          </details>
+          <div class="actions"><a class="btn btn-demo" href="notifica.html">Abrir demo →</a><span class="hint">Carga el CSV de ejemplo y envía</span></div>
+        </div>
+      </article>
+
+      <article class="card" id="tramita">
+        <div class="stage">
+          <div class="window">
+            <div class="window-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="addr">tramita.app/ingresar</span></div>
+            <div class="viewport">
+              <iframe src="tramita.html" title="Vista previa de Tramita CRM" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+              <a class="shield" href="tramita.html"><span>Abrir demo →</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="title-row"><h3>Tramita CRM</h3><span class="chip">En producción</span></div>
+          <p class="pitch">CRM de ventas de paquetes de internet. Cada venta pasa por validación y backoffice antes de cobrarse.</p>
+          <div class="flow" aria-label="Flujo de una venta"><b>Captura</b><i>→</i><b>Validación</b><i>→</i><b>Backoffice</b><i>→</i><b>Cobrada</b></div>
+          <div class="stack"><span>PHP</span><span>MySQL</span><span>jQuery</span><span>Chart.js</span><span>jsPDF</span></div>
+          <details>
+            <summary>Detalles técnicos</summary>
+            <div class="detail">
+              <ul>
+                <li>Formulario de venta con validación en vivo (CURP, teléfonos, correo) y documentos.</li>
+                <li>Bandejas por rol: validador, backoffice, supervisor y administrador.</li>
+                <li>Resumen con gráfica, rendimiento por agente, Excel y PDF.</li>
+              </ul>
+              <span class="label">Ingeniería</span>
+              <dl>
+                <div><dt>Aprobación en dos etapas</dt><dd>Colas por estatus con motivos de rechazo; supervisores limitados a su equipo.</dd></div>
+                <div><dt>Bitácora de cambios</dt><dd>Reasignaciones con valor anterior y nuevo.</dd></div>
+              </dl>
+            </div>
+          </details>
+          <div class="actions"><a class="btn btn-demo" href="tramita.html">Abrir demo →</a><span class="hint">Captura una venta y apruébala</span></div>
+        </div>
+      </article>
+
+      <article class="card" id="bandeja360">
+        <div class="stage">
+          <div class="window">
+            <div class="window-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="addr">bandeja360.app/bandeja</span></div>
+            <div class="viewport">
+              <iframe src="bandeja360.html" title="Vista previa de Bandeja 360" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+              <a class="shield" href="bandeja360.html"><span>Abrir demo →</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="title-row"><h3>Bandeja 360</h3><span class="chip">En producción</span></div>
+          <p class="pitch">Backoffice de ventas con verificación por código SMS, cobranza y un tablero de metas para la gerencia.</p>
+          <div class="flow" aria-label="Flujo de una venta"><b>OTP</b><i>→</i><b>Ingresada</b><i>→</i><b>Cobrada</b></div>
+          <div class="stack"><span>PHP</span><span>MySQL</span><span>jQuery</span><span>Chart.js</span><span>SMS OTP</span></div>
+          <details>
+            <summary>Detalles técnicos</summary>
+            <div class="detail">
+              <ul>
+                <li>Bandejas de validador, backoffice y cobrador con reapertura controlada.</li>
+                <li>OTP por SMS y contraseña semanal para reabrir ventas.</li>
+                <li>Tablero del analista: metas mensuales y por hora, conversión y canales.</li>
+              </ul>
+              <span class="label">Ingeniería</span>
+              <dl>
+                <div><dt>Bloqueo de ventas en uso</dt><dd>Reserva atómica de 10 minutos para que dos operadores no trabajen la misma venta.</dd></div>
+                <div><dt>Una sesión por usuario</dt><dd>Token en base de datos con heartbeat; una sesión nueva cierra la anterior.</dd></div>
+                <div><dt>Auditoría por campo</dt><dd>Cada edición guarda el valor anterior y el nuevo.</dd></div>
+              </dl>
+            </div>
+          </details>
+          <div class="actions"><a class="btn btn-demo" href="bandeja360.html">Abrir demo →</a><span class="hint">Verifica un código SMS</span></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec" id="habilidades" aria-labelledby="t-hab">
+    <div class="sec-head"><h2 id="t-hab">Habilidades</h2></div>
+    <div class="skills">
+      <div class="skill"><h4>Backend</h4><div><span>C#</span><span>.NET 10</span><span>PHP</span><span>ASP.NET Identity</span><span>REST</span><span>Webhooks</span></div></div>
+      <div class="skill"><h4>Frontend</h4><div><span>Blazor</span><span>JavaScript</span><span>jQuery</span><span>Bootstrap</span><span>CSS</span><span>Chart.js</span></div></div>
+      <div class="skill"><h4>Datos</h4><div><span>SQL Server</span><span>EF Core</span><span>MySQL</span><span>Transacciones</span><span>Excel / PDF</span></div></div>
+      <div class="skill"><h4>Integraciones</h4><div><span>Twilio</span><span>WhatsApp</span><span>SMS / OTP</span><span>xUnit</span><span>Git</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="sobre-mi" aria-labelledby="t-sobre">
+    <div class="sec-head"><h2 id="t-sobre">Sobre mí</h2></div>
+    <div class="about">
+      <p>Soy desarrollador de software enfocado en la creación de soluciones tecnológicas para resolver necesidades reales de negocio y optimizar procesos.</p>
+      <p>Actualmente me desempeño en el desarrollo y administración de soluciones internas, trabajando principalmente con tecnologías web, bases de datos y automatización de procesos. He participado en la creación y mantenimiento de sistemas orientados a la operación, gestión de información, reportes y comunicación con usuarios.</p>
+      <p>Me gusta entender primero el problema y después buscar la solución tecnológica más adecuada. Esto me ha llevado a trabajar con tecnologías como <strong>PHP, MySQL, JavaScript, CSS, C# y .NET</strong>, además de integrar servicios y APIs externas cuando el proyecto lo requiere.</p>
+      <p>Una de mis principales fortalezas es el aprendizaje autodidacta. Me gusta enfrentarme a tecnologías nuevas y aprenderlas mediante proyectos reales, buscando no solamente que una solución funcione, sino también entender cómo está construida y cómo puede mejorarse.</p>
+      <p>Mi objetivo es seguir creciendo como desarrollador, fortalecer mis conocimientos en arquitectura y desarrollo de software y participar en proyectos donde la tecnología tenga un impacto real en los procesos y resultados de una organización.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© <span id="year">2026</span> <span data-bind="name">Moises Hernandez</span></span><span>Las demos usan datos ficticios.</span></div>
+</footer>
+
+<script>
+/* ===== Edita aquí tus datos ===== */
+const PERFIL = {
+  name: "Moises Hernandez",
+  role: "Desarrollador de Software",
+  location: "México",
+  availability: "Disponible para nuevos proyectos",
+};
+/* ================================ */
+
+PERFIL.initials = PERFIL.name.split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("");
+document.querySelectorAll("[data-bind]").forEach(el=>{const v=PERFIL[el.dataset.bind]; if(v) el.textContent=v;});
+document.getElementById("year").textContent=new Date().getFullYear();
+
+/* Escala cada iframe (1280×800) al ancho de su ventana */
+const fit=vp=>{const f=vp.querySelector("iframe"); f.style.transform=`scale(${vp.clientWidth/1280})`;};
+const ro=new ResizeObserver(es=>es.forEach(e=>fit(e.target)));
+document.querySelectorAll(".viewport").forEach(vp=>{fit(vp);ro.observe(vp);});
+</script>
+</body>
+</html>
