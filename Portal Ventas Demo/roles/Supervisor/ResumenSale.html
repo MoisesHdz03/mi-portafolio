@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../demo/demo-datos.js"></script><script src="../../demo/demo.js"></script><link rel="stylesheet" href="../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Supervisor - Resumen de Ventas</title>
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+    <!-- Aplica el tema y el menú guardados antes de pintar la página (evita el destello blanco) -->
+    <script src="assets/js/tema.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="assets/css/supervisor.css">
+    </head>
+<body>
+<aside class="sidebar" id="sidebar" aria-label="Menú principal">
+    <div class="sidebar__marca">
+        <span class="sidebar__logo"><i class="fas fa-headset"></i></span>
+        <span class="sidebar__nombre">
+            <strong>Portal Ventas</strong>
+            <small>Supervisor</small>
+        </span>
+    </div>
+
+    <div class="sidebar__usuario" title="jcastillo">
+        <span class="avatar">J</span>
+        <span class="sidebar__usuario-datos">
+            <small>Bienvenido</small>
+            <strong>jcastillo</strong>
+        </span>
+    </div>
+
+    <p class="sidebar__titulo">Navegación</p>
+    <ul class="sidebar__menu">
+                                <li>
+                <a href="ventasregistradas.html"
+                   class="sidebar__enlace"
+                   title="Ver Ventas">
+                    <i class="fas fa-table-list"></i>
+                    <span>Ver Ventas</span>
+                </a>
+            </li>
+                                <li>
+                <a href="ver.html"
+                   class="sidebar__enlace"
+                   title="Filtros">
+                    <i class="fas fa-calendar-days"></i>
+                    <span>Filtros</span>
+                </a>
+            </li>
+                                <li>
+                <a href="#"
+                   class="sidebar__enlace activo"
+                   title="Resumen de Ventas" aria-current="page">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Resumen de Ventas</span>
+                </a>
+            </li>
+            </ul>
+
+    <div class="sidebar__pie">
+        <a href="../../index.html" class="sidebar__enlace sidebar__enlace--salir" title="Cerrar sesión">
+            <i class="fas fa-arrow-right-from-bracket"></i>
+            <span>Cerrar sesión</span>
+        </a>
+        <p class="sidebar__firma"><i class="far fa-registered"></i> RAM SECURITY</p>
+    </div>
+</aside>
+<div class="capa-oscura" id="capaOscura"></div>
+
+<div class="app">
+    <header class="barra">
+        <button type="button" class="boton-icono boton-icono--menu" id="abrirMenu" aria-label="Abrir menú" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <button type="button" class="boton-icono boton-icono--colapsar" id="colapsarMenu" aria-label="Contraer menú" title="Contraer / expandir menú">
+            <i class="fas fa-bars-staggered"></i>
+        </button>
+
+        <nav class="barra__ruta" aria-label="Ubicación">
+            <span>Supervisor</span>
+                            <i class="fas fa-chevron-right"></i>
+                                    <strong>Resumen de Ventas</strong>
+                                    </nav>
+
+        <div class="barra__acciones">
+            <button type="button" class="boton-icono" id="cambiarTema" aria-label="Cambiar entre modo claro y oscuro" title="Modo claro / oscuro">
+                <i class="fas fa-moon tema-icono-luna"></i>
+                <i class="fas fa-sun tema-icono-sol"></i>
+            </button>
+            <span class="usuario-chip" title="jcastillo">
+                <span class="avatar">J</span>
+                <span>jcastillo</span>
+            </span>
+        </div>
+    </header>
+
+    <main class="contenido">
+                    <div class="encabezado entrar">
+                <div>
+                    <h1 class="encabezado__titulo">
+                        <span class="encabezado__icono"><i class="fas fa-chart-line"></i></span>
+                        Resumen de Ventas                    </h1>
+                                            <p class="encabezado__subtitulo">Totales de tu equipo día por día.</p>
+                                    </div>
+                                    <div class="encabezado__acciones">
+                                                    <a href="ResumenSaleCob.html" class="boton boton--secundario"><i class="fas fa-right-left"></i> Resumen por Fecha de Cobro</a>
+                                            </div>
+                            </div>
+                <section class="tarjeta entrar entrar--2" aria-labelledby="tituloReporte">
+            <div class="tarjeta__cabecera">
+                <h2 class="tarjeta__titulo" id="tituloReporte"><i class="fas fa-chart-column"></i> Ventas por Fecha de Venta</h2>
+            </div>
+            <div class="tarjeta__cuerpo">
+                <form data-demo="1" method="GET" action="" class="filtros form-fechas" data-cargando>
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="First_Date">Fecha Inicial</label>
+                        <div class="campo__control">
+                            <i class="fas fa-calendar"></i>
+                            <input type="date" name="First_Date" id="First_Date" value="2026-11-01" class="entrada">
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="Second_Date">Fecha Final</label>
+                        <div class="campo__control">
+                            <i class="fas fa-calendar-check"></i>
+                            <input type="date" name="Second_Date" id="Second_Date" value="2026-11-17" class="entrada">
+                        </div>
+                    </div>
+                    <div class="filtros__acciones">
+                        <button type="submit" class="boton boton--primario"><i class="fas fa-magnifying-glass"></i> Filtrar</button>
+                        <a href="ResumenSale.html" class="boton boton--secundario"><i class="fas fa-rotate-left"></i> Deshacer filtros</a>
+                        <button type="button" class="boton boton--exito" id="btnExportarCsv" data-archivo="resumen_ventas_fecha_venta.csv">
+                            <i class="fas fa-file-csv"></i> Exportar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="tarjeta entrar entrar--3">
+            <div class="tabla-contenedor tabla-contenedor--corta">
+                <table class="tabla ventas-table">
+                    <thead>
+                        <tr>
+                                                            <th>Fecha de Venta</th>
+                                                            <th>Ventas Totales</th>
+                                                            <th>Validadas</th>
+                                                            <th>Ingresadas</th>
+                                                            <th>Cobradas</th>
+                                                            <th>Pendientes</th>
+                                                    </tr>
+                    </thead>
+                    <tbody>
+                                                    <tr>
+                                                                    <td class="fecha-cell">17/11/2026</td>
+                                                                    <td class="total-cell">2</td>
+                                                                    <td class="validadas-cell">0</td>
+                                                                    <td class="ingresadas-cell">0</td>
+                                                                    <td class="cobradas-cell">0</td>
+                                                                    <td class="pendientes-cell">2</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">16/11/2026</td>
+                                                                    <td class="total-cell">4</td>
+                                                                    <td class="validadas-cell">0</td>
+                                                                    <td class="ingresadas-cell">0</td>
+                                                                    <td class="cobradas-cell">0</td>
+                                                                    <td class="pendientes-cell">4</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">15/11/2026</td>
+                                                                    <td class="total-cell">3</td>
+                                                                    <td class="validadas-cell">1</td>
+                                                                    <td class="ingresadas-cell">0</td>
+                                                                    <td class="cobradas-cell">0</td>
+                                                                    <td class="pendientes-cell">2</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">13/11/2026</td>
+                                                                    <td class="total-cell">4</td>
+                                                                    <td class="validadas-cell">3</td>
+                                                                    <td class="ingresadas-cell">1</td>
+                                                                    <td class="cobradas-cell">0</td>
+                                                                    <td class="pendientes-cell">1</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">12/11/2026</td>
+                                                                    <td class="total-cell">4</td>
+                                                                    <td class="validadas-cell">2</td>
+                                                                    <td class="ingresadas-cell">1</td>
+                                                                    <td class="cobradas-cell">1</td>
+                                                                    <td class="pendientes-cell">2</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">11/11/2026</td>
+                                                                    <td class="total-cell">2</td>
+                                                                    <td class="validadas-cell">2</td>
+                                                                    <td class="ingresadas-cell">1</td>
+                                                                    <td class="cobradas-cell">1</td>
+                                                                    <td class="pendientes-cell">0</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">08/11/2026</td>
+                                                                    <td class="total-cell">4</td>
+                                                                    <td class="validadas-cell">4</td>
+                                                                    <td class="ingresadas-cell">4</td>
+                                                                    <td class="cobradas-cell">2</td>
+                                                                    <td class="pendientes-cell">0</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">07/11/2026</td>
+                                                                    <td class="total-cell">2</td>
+                                                                    <td class="validadas-cell">1</td>
+                                                                    <td class="ingresadas-cell">1</td>
+                                                                    <td class="cobradas-cell">1</td>
+                                                                    <td class="pendientes-cell">1</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">06/11/2026</td>
+                                                                    <td class="total-cell">2</td>
+                                                                    <td class="validadas-cell">2</td>
+                                                                    <td class="ingresadas-cell">2</td>
+                                                                    <td class="cobradas-cell">2</td>
+                                                                    <td class="pendientes-cell">0</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">05/11/2026</td>
+                                                                    <td class="total-cell">4</td>
+                                                                    <td class="validadas-cell">3</td>
+                                                                    <td class="ingresadas-cell">2</td>
+                                                                    <td class="cobradas-cell">1</td>
+                                                                    <td class="pendientes-cell">1</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">04/11/2026</td>
+                                                                    <td class="total-cell">4</td>
+                                                                    <td class="validadas-cell">3</td>
+                                                                    <td class="ingresadas-cell">2</td>
+                                                                    <td class="cobradas-cell">1</td>
+                                                                    <td class="pendientes-cell">1</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">03/11/2026</td>
+                                                                    <td class="total-cell">3</td>
+                                                                    <td class="validadas-cell">2</td>
+                                                                    <td class="ingresadas-cell">2</td>
+                                                                    <td class="cobradas-cell">2</td>
+                                                                    <td class="pendientes-cell">1</td>
+                                                            </tr>
+                                                    <tr>
+                                                                    <td class="fecha-cell">01/11/2026</td>
+                                                                    <td class="total-cell">7</td>
+                                                                    <td class="validadas-cell">4</td>
+                                                                    <td class="ingresadas-cell">4</td>
+                                                                    <td class="cobradas-cell">3</td>
+                                                                    <td class="pendientes-cell">3</td>
+                                                            </tr>
+                        
+                                                    <tr class="fila-totales">
+                                                                    <td>Suma Total</td>
+                                                                    <td>45</td>
+                                                                    <td>27</td>
+                                                                    <td>20</td>
+                                                                    <td>14</td>
+                                                                    <td>18</td>
+                                                            </tr>
+                        
+                                            </tbody>
+                </table>
+            </div>
+
+                    </section>
+    </main>
+</div>
+
+    <script src="assets/js/supervisor.js"></script>
+        <script src="assets/js/reportes.js"></script>
+        
+</body>
+</html>

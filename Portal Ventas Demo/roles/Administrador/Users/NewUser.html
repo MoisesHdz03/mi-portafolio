@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../../demo/demo-datos.js"></script><script src="../../../demo/demo.js"></script><link rel="stylesheet" href="../../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/Logoick.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../CSS/Dash_admin.css">
+        <link rel="stylesheet" href="../CSS/Ventas_registradas.css">
+        <link rel="stylesheet" href="../CSS/usuarios_admin.css">
+            <title>Registrar Usuario - Administración</title>
+</head>
+<body>
+    <!-- Aplica el modo oscuro guardado antes de dibujar la página (evita el destello blanco) -->
+<script src="../JS/tema-inicial.js"></script>
+<nav class="sidebar" id="sidebar" aria-label="Menú principal">
+    <div class="sidebar-brand">
+        <span class="sidebar-brand__logo"><i class="fas fa-shield-halved"></i></span>
+        <span class="sidebar-brand__texto">
+            <strong>Portal Ventas</strong>
+            <small>Administración</small>
+        </span>
+    </div>
+
+    <div class="sidebar-header">
+        <div class="avatar">AM</div>
+        <div class="user-info">
+            <h3>BIENVENIDO</h3>
+            <p>amorales</p>
+        </div>
+    </div>
+
+    <div class="sidebar-nav">
+                    <p class="sidebar-section">Navegación</p>
+                            <a href="../ventasregistradas.html" class="nav-item">
+                    <i class="fas fa-binoculars"></i>
+                    <span>Ver Ventas</span>
+                </a>
+                            <a href="../ver.html" class="nav-item">
+                    <i class="fas fa-filter"></i>
+                    <span>Filtros</span>
+                </a>
+                            <a href="../back_log.html" class="nav-item">
+                    <i class="fas fa-list-check"></i>
+                    <span>Backlog</span>
+                </a>
+                            <a href="../Sales/ResumenSale.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Resumen de Ventas</span>
+                </a>
+                            <a href="../Recuperaciones/recuperaciones.html" class="nav-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Bitácora de recuperaciones</span>
+                </a>
+                                <p class="sidebar-section">Usuarios</p>
+                            <a href="#" class="nav-item active" aria-current="page">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Crear un Usuario</span>
+                </a>
+                            <a href="Registered_Users.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Usuarios Registrados</span>
+                </a>
+                    
+        <p class="sidebar-section">Herramientas</p>
+        <a href="#" class="nav-item" data-bs-toggle="modal" data-bs-target="#modalPasswordVigente">
+            <i class="fas fa-key"></i>
+            <span>Consultar contraseña vigente</span>
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <button type="button" class="theme-toggle" aria-pressed="false">
+            <i class="fas fa-moon"></i>
+            <span>Modo Oscuro</span>
+        </button>
+        <a href="../../../index.html" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Cerrar Sesión</span>
+        </a>
+        <div class="brand">® RAM SECURITY</div>
+    </div>
+</nav>
+
+    <main class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Mostrar u ocultar menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-titulos">
+                    <h1>Registro de Nuevo Usuario</h1>
+                    <p class="page-subtitle">Complete el formulario para crear un nuevo usuario en el sistema</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="stat-card">
+                    <i class="fas fa-user-plus"></i>
+                    <div class="stat-info">
+                        <span class="stat-label">Nuevo Usuario</span>
+                        <span class="stat-value">#1752</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="content content--formulario">
+            <div class="filter-card form-card">
+                <div class="filter-header">
+                    <div class="filter-title">
+                        <i class="fas fa-user-circle"></i>
+                        Información del Usuario
+                    </div>
+                    <p class="form-description">Ingrese los datos del nuevo usuario del sistema</p>
+                </div>
+
+                <div class="filter-content">
+                    <form data-demo="1" id="FormUser" action="#demo" method="post" class="user-form" data-validar-nuevo>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="Id" class="form-label">
+                                    <i class="fas fa-hashtag"></i>
+                                    Identificador de Usuario
+                                </label>
+                                <input type="text" id="Id" class="form-input" value="1752" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Nombre" class="form-label">
+                                    <i class="fas fa-user"></i>
+                                    Nombre Completo
+                                </label>
+                                <input type="text" name="Nombre" id="Nombre" class="form-input" placeholder="Ingrese el nombre completo"
+                                       maxlength="50" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="usuario" class="form-label">
+                                    <i class="fas fa-at"></i>
+                                    Usuario
+                                </label>
+                                <input type="text" name="usuario" id="usuario" class="form-input" placeholder="Ingrese el nombre de usuario"
+                                       maxlength="20" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="form-label">
+                                    <i class="fas fa-lock"></i>
+                                    Contraseña
+                                </label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" name="password" id="password" class="form-input" placeholder="Ingrese una contraseña segura"
+                                           minlength="6" maxlength="25" required>
+                                    <button type="button" class="password-toggle" id="togglePassword" aria-label="Mostrar u ocultar contraseña">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role" class="form-label">
+                                    <i class="fas fa-user-tag"></i>
+                                    Rol del Usuario
+                                </label>
+                                <select name="role" id="role" class="form-input form-select" required>
+                                    <option value="">Seleccione el rol del usuario</option>
+                                                                            <option value="regular">Regular (Agente)</option>                                                                            <option value="backoffice">Backoffice</option>                                                                            <option value="backoffice-2">Backoffice 2</option>                                                                            <option value="cobrador">Cobrador</option>                                                                            <option value="super">Supervisor</option>                                                                            <option value="validador">Validador</option>                                                                            <option value="Comisionista">Comisionista</option>                                                                            <option value="Calidad">Calidad</option>                                                                            <option value="admin">Administrador</option>                                                                            <option value="Coordinador">Coordinador</option>                                                                            <option value="Gerente">Gerente</option>                                                                            <option value="Analyst">Analista</option>                                                                    </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Supervisor" class="form-label">
+                                    <i class="fas fa-user-tie"></i>
+                                    Supervisor a Cargo
+                                </label>
+                                <select name="Supervisor" id="Supervisor" class="form-input form-select">
+                                    <option value="">Seleccione un supervisor</option>
+                                                                            <option value="jcastillo">JORGE CASTILLO</option>                                                                            <option value="mfuentes">MARIANA FUENTES</option>                                                                    </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Estatus" class="form-label">
+                                    <i class="fas fa-toggle-on"></i>
+                                    Estatus del Usuario
+                                </label>
+                                <select name="Estatus" id="Estatus" class="form-input form-select" required>
+                                    <option value="">Seleccione el estatus</option>
+                                                                            <option value="ACTIVADO">Activo</option>                                                                            <option value="DESACTIVADO">Inactivo</option>                                                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="reset" class="btn btn-secondary">
+                                <i class="fas fa-times"></i>
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-check"></i>
+                                Registrar Usuario
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal para consultar la contraseña semanal de validación (password/password.js) -->
+<div class="modal fade" id="modalPasswordVigente" tabindex="-1" aria-labelledby="modalPasswordVigenteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalPasswordVigenteLabel">
+                    <i class="fas fa-key me-2"></i>
+                    Contraseña Vigente
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="text-muted mb-2">Contraseña semanal de validación</p>
+                <div class="text-center mb-3">
+                    <div class="alert alert-primary fs-3 fw-bold mb-2" id="passwordVigente">Consultando...</div>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnCopiarPassword">
+                        <i class="fas fa-copy"></i>
+                        Copiar contraseña
+                    </button>
+                </div>
+                <div class="mt-3">
+                    <span id="estadoPassword" class="badge bg-secondary fs-6">Consultando...</span>
+                </div>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-12 mb-3">
+                        <small class="text-muted d-block">Fecha de generación</small>
+                        <strong id="fechaGeneracion">--</strong>
+                    </div>
+                    <div class="col-12">
+                        <small class="text-muted d-block">Vigencia</small>
+                        <strong id="vigenciaPassword">--</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../JS/admin.js"></script>
+        <script src="../password/password.js"></script>
+        <script src="../assets/js/usuario-form.js"></script>
+        
+</body>
+</html>

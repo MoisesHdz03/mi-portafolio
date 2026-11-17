@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" role="img" aria-label="Promoción de internet">
+  <rect width="760" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="760" height="400" fill="#16a34a" opacity=".08"/>
+  <g fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round" opacity=".9">
+    <path d="M560 250a90 90 0 0 1 127 0"/>
+    <path d="M530 215a135 135 0 0 1 187 0"/>
+    <path d="M500 180a180 180 0 0 1 247 0"/>
+  </g>
+  <circle cx="623" cy="292" r="14" fill="#22c55e"/>
+  <text x="56" y="120" fill="#86efac" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="3">PROMOCIÓN</text>
+  <text x="56" y="205" fill="#ffffff" font-family="Arial, sans-serif" font-size="74" font-weight="800">Duplica tu</text>
+  <text x="56" y="285" fill="#ffffff" font-family="Arial, sans-serif" font-size="74" font-weight="800">velocidad</text>
+  <rect x="56" y="315" width="296" height="44" rx="22" fill="#22c55e"/>
+  <text x="204" y="344" fill="#0f172a" font-family="Arial, sans-serif" font-size="20" font-weight="700" text-anchor="middle">6 meses al mismo precio</text>
+</svg>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <title>Plantillas HSM | WhatsApp HSM</title>
+</head>
+<body>
+<main class="main-content">
+    <div class="encabezado">
+        <div>
+            <h1>Plantillas HSM</h1>
+            <p>Plantillas sincronizadas desde Twilio</p>
+        </div>
+        <div class="encabezado-acciones" id="accionesEncabezado"></div>
+    </div>
+
+    <div class="tarjeta">
+        <div class="tabla-herramientas">
+            <div class="buscador">
+                <i class="bi bi-search"></i>
+                <input type="search" class="form-control form-control-sm" id="buscar" placeholder="Buscar por nombre o SID">
+            </div>
+            <select class="form-select form-select-sm" id="filtro" aria-label="Filtrar por estado">
+                <option value="">Todos los estados</option>
+                <option value="activa">Activas</option>
+                <option value="desactivada">Desactivadas</option>
+            </select>
+            <span class="conteo" id="conteo"></span>
+        </div>
+        <div class="tabla-contenedor">
+            <table class="tabla tabla-compacta">
+                <thead>
+                    <tr id="encabezadoTabla"></tr>
+                </thead>
+                <tbody id="cuerpo"></tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/iconos.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+    'use strict';
+    const sesion = App.iniciar('campaigns');
+    if (!sesion) return;
+    const esFull = sesion.role === 'full_admin';
+    const e = App.e;
+
+    const ESTADO_TWILIO = {
+        approved: ['estado-verde', 'Approved'],
+        pending: ['estado-ambar', 'Pending'],
+        rejected: ['estado-rojo', 'Rejected'],
+        manual: ['estado-gris', 'Manual'],
+    };
+
+    // Encabezados (Acciones sólo para Administrador Full)
+    const columnas = ['ID', 'Nombre', 'Template SID', 'Variables', 'Idioma', 'Estado Twilio', 'Estado local', 'Última sincronización'];
+    if (esFull) columnas.push('Acciones');
+    document.getElementById('encabezadoTabla').innerHTML = columnas.map((c) => '<th>' + c + '</th>').join('');
+
+    if (esFull) {
+        document.getElementById('accionesEncabezado').innerHTML =
+            '<button type="button" class="btn btn-success" id="sincronizar"><i class="bi bi-arrow-repeat"></i> Sincronizar Plantillas</button>';
+    }
+
+    function fila(c) {
+        const variables = c.variables_count > 0
+            ? '<span class="contador">' + c.variables_count + '</span>'
+            : '<span class="estado estado-gris">Sin variables</span>';
+        let html = '<tr>' +
+            '<td class="num">' + c.id + '</td>' +
+            '<td class="fuerte">' + e(c.name) + '</td>' +
+            '<td><code class="sid-corto" title="' + e(c.template_sid) + '">' + e(c.template_sid) + '</code></td>' +
+            '<td>' + variables + '</td>' +
+            '<td>' + e(c.template_language) + '</td>' +
+            '<td>' + App.etiqueta(ESTADO_TWILIO, c.template_status) + '</td>' +
+            '<td>' + (c.status === 1 ? '<span class="estado estado-verde">Activa</span>' : '<span class="estado estado-rojo">Desactivada</span>') + '</td>' +
+            '<td>' + (c.last_sync ? App.fecha(c.last_sync) : '<span class="texto-tenue">Sin sincronizar</span>') + '</td>';
+        if (esFull) {
+            html += '<td class="acciones">' +
+                '<a href="view_template.html?id=' + c.id + '" class="btn btn-sm btn-suave"><i class="bi bi-eye"></i> Ver plantilla</a>' +
+                '<button type="button" class="btn btn-sm ' + (c.status === 1 ? 'btn-peligro-suave' : 'btn-exito-suave') + '" data-cambiar="' + c.id + '">' +
+                (c.status === 1 ? 'Desactivar' : 'Activar') + '</button>' +
+                '</td>';
+        }
+        return html + '</tr>';
+    }
+
+    const tabla = App.tablaPaginada({
+        filas: HSM.datos().campanas.slice().sort((a, b) => b.id - a.id),
+        cuerpo: document.getElementById('cuerpo'),
+        buscador: document.getElementById('buscar'),
+        filtro: document.getElementById('filtro'),
+        conteo: document.getElementById('conteo'),
+        columnas: columnas.length,
+        porPagina: 50,
+        vacio: 'No hay plantillas sincronizadas desde Twilio.',
+        dibujar: fila,
+        coincide: function (c, texto, filtro) {
+            if (filtro === 'activa' && c.status !== 1) return false;
+            if (filtro === 'desactivada' && c.status === 1) return false;
+            return !texto || c.name.toLowerCase().includes(texto) || c.template_sid.toLowerCase().includes(texto);
+        },
+    });
+
+    // Activar / desactivar
+    document.getElementById('cuerpo').addEventListener('click', function (ev) {
+        const boton = ev.target.closest('[data-cambiar]');
+        if (!boton) return;
+        const c = HSM.campana(boton.dataset.cambiar);
+        if (!confirm('¿Estás seguro de ' + (c.status === 1 ? 'desactivar' : 'activar') + ' esta plantilla?')) return;
+        c.status = c.status === 1 ? 0 : 1;
+        HSM.guardar();
+        tabla.redibujar();
+        App.avisar('La plantilla <b>' + e(c.name) + '</b> quedó ' + (c.status === 1 ? 'activa' : 'desactivada') + '.');
+    });
+
+    // Sincronizar con Twilio (simulado)
+    const botonSync = document.getElementById('sincronizar');
+    if (botonSync) {
+        botonSync.addEventListener('click', function () {
+            botonSync.disabled = true;
+            botonSync.classList.add('cargando');
+            botonSync.lastChild.textContent = ' Sincronizando...';
+            setTimeout(function () {
+                const ahora = HSM.fechaSql(new Date());
+                HSM.datos().campanas.forEach((c) => { c.last_sync = ahora; });
+                HSM.guardar();
+                tabla.redibujar();
+                botonSync.disabled = false;
+                botonSync.classList.remove('cargando');
+                botonSync.lastChild.textContent = ' Sincronizar Plantillas';
+                App.avisar('Se sincronizaron ' + HSM.datos().campanas.length + ' plantillas desde Twilio.');
+            }, 1400);
+        });
+    }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+PORTAL VENTAS - DEMO PARA PORTAFOLIO
+================================
+
+Cómo abrirla
+------------
+1. Abre "index.html" con doble clic (Chrome, Edge o Firefox).
+2. En "Perfil de demostración" elige un rol y presiona "Ingresar".
+3. La etiqueta "DEMO" (abajo a la derecha) regresa al inicio para cambiar de perfil.
+
+Perfiles incluidos
+------------------
+- Administrador: ventas, filtros, backlog, resúmenes con gráficas, bitácora de
+  recuperaciones, usuarios y papeleta con vista previa de archivos.
+- Gerencia y Supervisor: ventas, filtros y reportes.
+- Coordinador y Calidad: ventas, filtros, papeleta y documentación.
+- Backoffice: bandejas de Validación, Backoffice y Cobrador.
+- Agente de ventas y Comisionista: captura de venta y "mis ventas".
+- Analista: tableros.

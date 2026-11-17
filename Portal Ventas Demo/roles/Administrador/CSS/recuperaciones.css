@@ -1,0 +1,258 @@
+/* ==========================================================
+   ADMINISTRACIÓN · RECUPERACIONES
+   (Recuperaciones/recuperaciones.php y detalle_recuperacion.php)
+   Sólo lo propio de estas páginas; el resto viene de
+   Dash_admin.css y Ventas_registradas.css.
+   ========================================================== */
+
+/* Cinco filtros: se acomodan solos */
+.filter-grid {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.filter-grid .form-input {
+    width: 100%;
+    min-width: 0;
+}
+
+.form-input[type="date"] {
+    color-scheme: light;
+}
+
+body.dark-mode .form-input[type="date"] {
+    color-scheme: dark;
+}
+
+/* Barra sobre la tabla: título, total y filtros activos */
+.table-toolbar {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.table-toolbar-titulo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--texto);
+    font-weight: 600;
+}
+
+.table-toolbar-titulo i {
+    color: var(--acento);
+}
+
+.table-toolbar .badge {
+    border-color: transparent;
+    background: var(--acento-suave);
+    color: var(--acento);
+    font-weight: 600;
+}
+
+.chip-filtro {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 9px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+
+.chip-filtro b {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+/* ---------- Celdas ---------- */
+.data-table td.celda-id {
+    color: var(--acento);
+    font-weight: 600;
+}
+
+.data-table td.celda-tenue {
+    color: var(--texto-tenue);
+    font-variant-numeric: tabular-nums;
+}
+
+.data-table td.celda-fuerte {
+    color: var(--texto);
+    font-weight: 500;
+}
+
+.data-table td.celda-rol {
+    color: var(--texto-suave);
+    font-size: 12.5px;
+    text-transform: capitalize;
+}
+
+.data-table .celda-centro {
+    text-align: center;
+}
+
+/* La primera columna (ID de recuperación) no necesita quedar fija */
+.data-table th:first-child,
+.data-table td:first-child {
+    position: static;
+    box-shadow: none;
+}
+
+/* Número de cambios */
+.contador-cambios {
+    display: inline-grid;
+    place-items: center;
+    min-width: 26px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--oro) 16%, transparent);
+    color: var(--oro);
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.contador-cambios--grande {
+    display: inline-flex;
+    gap: 6px;
+    height: 26px;
+    padding: 0 11px;
+    font-size: 12.5px;
+}
+
+.contador-cambios--grande i {
+    font-size: 11px;
+}
+
+/* ---------- Detalle ---------- */
+/* La página se desplaza completa: la tabla de cambios es corta */
+.content--detalle .table-card {
+    flex: none;
+    min-height: 0;
+}
+
+.content--detalle .table-container {
+    flex: none;
+}
+
+.content--detalle .filter-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.info-grupos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 28px;
+}
+
+.info-grupo__titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px;
+    color: var(--texto-tenue);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.info-grupo__titulo i {
+    color: var(--acento);
+}
+
+.info-grupo dl {
+    margin: 0;
+}
+
+.info-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--borde);
+}
+
+.info-item:last-child {
+    border-bottom: 0;
+}
+
+.info-item dt {
+    color: var(--texto-suave);
+    font-weight: 500;
+}
+
+.info-item dd {
+    margin: 0;
+    color: var(--texto);
+    font-weight: 600;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+/* Tabla de cambios: antes → después (anterior y nuevo con el mismo ancho, la flecha en medio) */
+.tabla-cambios {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tabla-cambios th:first-child {
+    width: 26%;
+}
+
+.tabla-cambios td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.tabla-cambios .th-arrow,
+.tabla-cambios .td-arrow {
+    width: 40px;
+    text-align: center;
+}
+
+.tabla-cambios .td-arrow i {
+    color: var(--texto-tenue);
+    font-size: 12px;
+    transition: transform .25s var(--curva), color .25s ease;
+}
+
+.tabla-cambios tr:hover .td-arrow i {
+    color: var(--acento);
+    transform: translateX(3px);
+}
+
+.tabla-cambios .value-old {
+    color: var(--texto-tenue);
+    text-decoration: line-through;
+    text-decoration-color: color-mix(in srgb, var(--error) 55%, transparent);
+}
+
+.tabla-cambios .value-new {
+    color: var(--exito);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .info-grupos {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-wrap: wrap;
+    }
+}

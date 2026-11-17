@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../demo/demo-datos.js"></script><script src="../../demo/demo.js"></script><link rel="stylesheet" href="../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/Logoick.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="CSS/Dash_admin.css">
+        <link rel="stylesheet" href="CSS/Ventas_registradas.css">
+        <link rel="stylesheet" href="CSS/modificar_admin.css">
+            <title>Administracion - Update</title>
+</head>
+<body>
+    <!-- Aplica el modo oscuro guardado antes de dibujar la página (evita el destello blanco) -->
+<script src="JS/tema-inicial.js"></script>
+<nav class="sidebar" id="sidebar" aria-label="Menú principal">
+    <div class="sidebar-brand">
+        <span class="sidebar-brand__logo"><i class="fas fa-shield-halved"></i></span>
+        <span class="sidebar-brand__texto">
+            <strong>Portal Ventas</strong>
+            <small>Administración</small>
+        </span>
+    </div>
+
+    <div class="sidebar-header">
+        <div class="avatar">AM</div>
+        <div class="user-info">
+            <h3>BIENVENIDO</h3>
+            <p>amorales</p>
+        </div>
+    </div>
+
+    <div class="sidebar-nav">
+                    <p class="sidebar-section">Navegación</p>
+                            <a href="#" class="nav-item active" aria-current="page">
+                    <i class="fas fa-binoculars"></i>
+                    <span>Ver Ventas</span>
+                </a>
+                            <a href="ver.html" class="nav-item">
+                    <i class="fas fa-filter"></i>
+                    <span>Filtros</span>
+                </a>
+                            <a href="back_log.html" class="nav-item">
+                    <i class="fas fa-list-check"></i>
+                    <span>Backlog</span>
+                </a>
+                            <a href="Sales/ResumenSale.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Resumen de Ventas</span>
+                </a>
+                            <a href="Recuperaciones/recuperaciones.html" class="nav-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Bitácora de recuperaciones</span>
+                </a>
+                                <p class="sidebar-section">Usuarios</p>
+                            <a href="Users/NewUser.html" class="nav-item">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Crear un Usuario</span>
+                </a>
+                            <a href="Users/Registered_Users.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Usuarios Registrados</span>
+                </a>
+                    
+        <p class="sidebar-section">Herramientas</p>
+        <a href="#" class="nav-item" data-bs-toggle="modal" data-bs-target="#modalPasswordVigente">
+            <i class="fas fa-key"></i>
+            <span>Consultar contraseña vigente</span>
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <button type="button" class="theme-toggle" aria-pressed="false">
+            <i class="fas fa-moon"></i>
+            <span>Modo Oscuro</span>
+        </button>
+        <a href="../../index.html" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Cerrar Sesión</span>
+        </a>
+        <div class="brand">® RAM SECURITY</div>
+    </div>
+</nav>
+
+    <main class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Mostrar u ocultar menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-titulos">
+                    <h1>Modificar venta <span class="header-id">#310137</span></h1>
+                    <p class="page-subtitle">
+                        SERGIO ROSA ORTIZ RUIZ                         · Lead 9008413389                    </p>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="ventasregistradas.html" class="btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Regresar
+                </a>
+            </div>
+        </header>
+
+        <div class="content">
+            <form data-demo="1" class="form-update papeleta" id="formVenta" action="#demo" method="post">
+                <div class="papeleta-layout">
+                    <!-- Secciones de la papeleta -->
+                    <div class="papeleta-secciones">
+                                                    <section class="filter-card papeleta-seccion dates_user" id="seccion-dates_user">
+                                <div class="filter-header">
+                                    <h2 class="filter-title">
+                                        <i class="fas fa-user"></i>
+                                        Detalle de Usuario                                    </h2>
+                                </div>
+                                <div class="filter-content papeleta-campos">
+                                                                                                                        <div class="form-group campo">
+                                                <label class="form-label" for="usuario">Usuario (Login) <span class="marca marca--importante" title="Dato importante">*</span></label><input type="text" name="usuario" class="form-input" id="usuario" value="vreyes">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="nombreAgt">Nombre del agente:</label><input type="text" name="nombreAgt" class="form-input" id="nombreAgt" value="VALERIA REYES">                                            </div>
+                                                                                                            </div>
+                            </section>
+                                                    <section class="filter-card papeleta-seccion details_sale" id="seccion-details_sale">
+                                <div class="filter-header">
+                                    <h2 class="filter-title">
+                                        <i class="fas fa-file-signature"></i>
+                                        Detalle de venta                                    </h2>
+                                </div>
+                                <div class="filter-content papeleta-campos">
+                                                                                                                        <div class="form-group campo">
+                                                <label class="form-label" for="estatus">Estatus Validacion</label><select name="estatus" class="form-input form-select" id="estatus"><option value=""></option><option value="APROBADA" selected>APROBADA</option><option value="RECHAZADA">RECHAZADA</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="estatus-backoffice">Estatus BackOffice</label><select name="estatus_backoffice" class="form-input form-select" id="estatus-backoffice"><option value=""></option><option value="INGRESADA" selected>INGRESADA</option><option value="RECHAZADA">RECHAZADA</option></select>                                            </div>
+                                                                                                                                                                <div class="form-group campo campo--ancho">
+                                                <label class="form-label" for="ID_Grabacion_Validacion">ID de Grabación de Validación</label><input type="text" name="ID_Grabacion_Validacion" class="form-input" id="ID_Grabacion_Validacion" value="VAL-D071B09">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Motivo_Rechazo_Backoffice">Motivo</label><select name="Motivo_Rechazo_Backoffice" class="form-input form-select" id="Motivo_Rechazo_Backoffice"><option value="" selected></option><option value="13">ACTIVO</option><option value="25">CALLE NO REGISTRADA</option><option value="18">CAMBIO DE PAQUETE</option><option value="26">CANCELADO</option><option value="20">CLIENTE CUELGA</option><option value="21">COLONIA NO DISPONIBLE PARA VENTA</option><option value="27">COLONIA NO REGISTRADA</option><option value="28">CONTRATADO</option><option value="14">CORTADO</option><option value="24">ERROR DE NIP</option><option value="32">ERROR EN SISTEMA SFYC</option><option value="17">ERROR LLENADO DE PAPELETA</option><option value="22">FUERA DE COBERTURA</option><option value="19">NO CONTESTA FILTROS</option><option value="29">PENDIENTE DE COMPROBANTE</option><option value="16">POR INSTALAR</option><option value="15">PROCESO DE CANCELACION</option><option value="30">SUCURSAL NO DISPONIBLE</option><option value="23">TITULAR SOLICITA CANCELACION</option><option value="31">ZONA POR CONTRATOS</option></select>                                            </div>
+                                                                                    <div class="form-group campo campo--ancho">
+                                                <label class="form-label" for="Comentario_Rechazo_Backoffice">Comentario del rechazo</label><textarea name="Comentario_Rechazo_Backoffice" class="form-input" id="Comentario_Rechazo_Backoffice" cols="5" rows="2"></textarea>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Sus">Sus</label><input type="text" name="Sus" class="form-input" id="Sus" value="1033564">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="NumeroFolio">Numero de Folio</label><input type="text" name="NumeroFolio" class="form-input" id="NumeroFolio" value="40899132">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="FechaV">Fecha de venta <span class="marca marca--importante" title="Dato importante">*</span> <i class="fas fa-lock candado" title="No se puede modificar"></i></label><input type="text" class="form-input campo-lectura" id="FechaV" value="15/11/2026 12:16:41" placeholder="Sin fecha" readonly tabindex="-1">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="IDlead">ID lead <span class="marca marca--importante" title="Dato importante">*</span></label><input type="text" name="IDlead" class="form-input" id="IDlead" value="9008413389">                                            </div>
+                                                                                                                                                                <div class="form-group campo campo--ancho">
+                                                <label class="form-label" for="ID_Grabacion">ID de Grabación</label><input type="text" name="ID_Grabacion" class="form-input" id="ID_Grabacion" value="GRB-F9A296B1">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="TipoCliente">Tipo de cliente <span class="marca marca--importante" title="Dato importante">*</span></label><select name="TipoCliente" class="form-input form-select" id="TipoCliente"><option value=""></option><option value="Nuevo">Nuevo</option><option value="Actual" selected>Actual</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="CCE">CCE</label><select name="CCE" class="form-input form-select" id="CCE"><option value=""></option><option value="Afiliado">Afiliado</option><option value="MKT Inconcert / Llamadas">MKT Inconcert / Llamadas</option><option value="MKT Inconcert / Messenger">MKT Inconcert / Messenger</option><option value="MKT Inconcert / WhatsApp">MKT Inconcert / WhatsApp</option><option value="MKT Bitrix">MKT Bitrix</option><option value="Social Selling">Social Selling</option><option value="NEOTELL Llamada" selected>NEOTELL Llamada</option><option value="Llamada CCC">Llamada CCC</option><option value="Viont">Viont</option></select>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="NumeroSucursal">Numero de Sucursal <span class="marca marca--importante" title="Dato importante">*</span></label><input type="text" name="NumeroSucursal" class="form-input" id="NumeroSucursal" value="77">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Sucursal">Sucursal <span class="marca marca--importante" title="Dato importante">*</span></label><input type="text" name="Sucursal" class="form-input" id="Sucursal" value="TECAMACHALCO">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Region">Región <span class="marca" title="Dato de la papeleta">*</span></label><select name="Region" class="form-input form-select" id="Region"><option value=""></option><option value="OCCIDENTE">OCCIDENTE</option><option value="TCO">TCO</option><option value="BAJIO">BAJIO</option><option value="CENTRO">CENTRO</option><option value="GOLFO">GOLFO</option><option value="NORESTE">NORESTE</option><option value="NORTE">NORTE</option><option value="PACIFICO">PACIFICO</option><option value="SURESTE" selected>SURESTE</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="NumSuscriptor">Numero de Suscriptor</label><input type="text" name="NumSuscriptor" class="form-input" id="NumSuscriptor" value="69675634">                                            </div>
+                                                                                                            </div>
+                            </section>
+                                                    <section class="filter-card papeleta-seccion details_contact" id="seccion-details_contact">
+                                <div class="filter-header">
+                                    <h2 class="filter-title">
+                                        <i class="fas fa-address-card"></i>
+                                        Datos de Contacto                                    </h2>
+                                </div>
+                                <div class="filter-content papeleta-campos">
+                                                                                                                        <div class="form-group campo">
+                                                <label class="form-label" for="Segmento">Segmento <span class="marca" title="Dato de la papeleta">*</span></label><select name="Segmento" class="form-input form-select" id="Segmento"><option value=""></option><option value="RESIDENCIAL">Residencial</option><option value="NEGOCIO" selected>Negocio</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Apellidopaterno">Apellido Paterno <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Apellidopaterno" class="form-input" id="Apellidopaterno" value="ORTIZ">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Apellidomaterno">Apellido Materno <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Apellidomaterno" class="form-input" id="Apellidomaterno" value="RUIZ">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Nombre">Nombre <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Nombre" class="form-input" id="Nombre" value="SERGIO ROSA">                                            </div>
+                                                                                                                                                                <div class="form-group campo campo--ancho">
+                                                <label class="form-label" for="Fecha_Nacimiento">Fecha de Nacimiento <span class="marca" title="Dato de la papeleta">*</span></label><input type="date" name="Fecha_Nacimiento" class="form-input" id="Fecha_Nacimiento" value="1980-07-28">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Domicilio">Domicilio (calle y numero) <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Domicilio" class="form-input" id="Domicilio" value="CALLE CEDRO 1447">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="NumeroInterior">Interior (Mz / lote)</label><input type="text" name="NumeroInterior" class="form-input" id="NumeroInterior" value="11">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Colonia">Colonia <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Colonia" class="form-input" id="Colonia" value="LAS PALMAS">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Entrecalle1">Entrecalle 1 <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Entrecalle1" class="form-input" id="Entrecalle1" value="AV. DE LAS FLORES">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Entrecalle2">Entrecalle 2 <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Entrecalle2" class="form-input" id="Entrecalle2" value="BLVD. DEL SOL">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="CP">Codigo Postal <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="CP" class="form-input" id="CP" value="76050">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Coordenadas">Coordenadas <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Coordenadas" class="form-input" id="Coordenadas" value="21.395090, -104.667660">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Telefonocasa">Telefono de casa</label><input type="tel" name="Telefonocasa" class="form-input" id="Telefonocasa" value="5550144289">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Telefonoficina">Telefono de oficina</label><input type="tel" name="Telefonoficina" class="form-input" id="Telefonoficina" value="">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Telefonocelular">Telefono celular</label><input type="tel" name="Telefonocelular" class="form-input" id="Telefonocelular" value="5550965532">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Correo">Correo electronico <span class="marca" title="Dato de la papeleta">*</span></label><input type="email" name="Correo" class="form-input" id="Correo" value="sergio.ortiz86@ejemplo.com">                                            </div>
+                                                                                    <div class="form-group campo campo--ancho">
+                                                <label class="form-label" for="Comentarios">Comentarios del vendedor <span class="marca" title="Dato de la papeleta">*</span></label><textarea name="Comentarios" class="form-input" id="Comentarios" cols="30" rows="2">Edificio azul, segundo piso</textarea><small class="campo-ayuda">Orientación de la dirección</small>                                            </div>
+                                                                                                            </div>
+                            </section>
+                                                    <section class="filter-card papeleta-seccion details_product" id="seccion-details_product">
+                                <div class="filter-header">
+                                    <h2 class="filter-title">
+                                        <i class="fas fa-box-open"></i>
+                                        Detalle del Producto                                    </h2>
+                                </div>
+                                <div class="filter-content papeleta-campos">
+                                                                                                                        <div class="form-group campo">
+                                                <label class="form-label" for="Paquetes">Paquete <span class="marca" title="Dato de la papeleta">*</span></label><select name="Paquetes" class="form-input form-select" id="Paquetes"><option value=""></option><option value="Doble Pack" selected>Doble Pack</option><option value="Triple Pack">Triple Pack</option><option value="Servicios Premier">Servicios Premier</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Ventadeinternet">Venta de Internet <span class="marca" title="Dato de la papeleta">*</span></label><select name="Ventadeinternet" class="form-input form-select" id="Ventadeinternet"><option value=""></option><option value="100 megas">100 Megas</option><option value="200 megas" selected>200 Megas</option><option value="300 megas">300 Megas</option><option value="500 megas">500 Megas</option><option value="1000 megas">1000 Megas</option></select>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Ventadecable">Venta de Cable</label><select name="Ventadecable" class="form-input form-select" id="Ventadecable"><option value="" selected></option><option value="Conecta">Conecta</option><option value="Basico plus">Basico plus</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="VentadeTelefonia">Venta de Telefonia <span class="marca" title="Dato de la papeleta">*</span></label><select name="VentadeTelefonia" class="form-input form-select" id="VentadeTelefonia"><option value=""></option><option value="Ilimitado Plus">Ilimitado Plus</option><option value="-" selected>-</option></select>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="HD">HD</label><select name="HD" class="form-input form-select" id="HD"><option value=""></option><option value="Conecta" selected>Conecta</option><option value="HDTotal">HD Total</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="HDXVIEW">HD XVIEW</label><select name="HDXVIEW" class="form-input form-select" id="HDXVIEW"><option value=""></option><option value="XVIEW">XVIEW</option><option value="XVIEW+" selected>XVIEW +</option></select>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="TVADICIONAL">TV Adicional</label><select name="TVADICIONAL" class="form-input form-select" id="TVADICIONAL"><option value=""></option><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="LineaAdicional">Linea Adicional (solo negocios)</label><select name="LineaAdicional" class="form-input form-select" id="LineaAdicional"><option value=""></option><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="VentaSE">Venta de servicio de Streaming</label><select name="VentaSE" class="form-input form-select" id="VentaSE"><option value=""></option><option value="SI">SI</option><option value="NO" selected>NO</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Netflix">Netflix</label><select name="Netflix" class="form-input form-select" id="Netflix"><option value=""></option><option value="Anuncios">Anuncios</option><option value="Basico">Basico</option><option value="Estandar">Estandar</option><option value="Premium">Premium</option><option value="-" selected>-</option></select>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Disney">Disney</label><select name="Disney" class="form-input form-select" id="Disney"><option value=""></option><option value="Disney+ Premium">Disney+ Premium</option><option value="Disney+ Estandar">Disney+ Estandar</option><option value="Disney+ Anuncios Promo">Disney+ Anuncios Promo</option><option value="-" selected>-</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Amazon">AMAZON</label><select name="Amazon" class="form-input form-select" id="Amazon"><option value=""></option><option value="Amazon Prime">Amazon Prime</option><option value="-" selected>-</option></select>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="HBOMAX">HBO - MAX</label><select name="HBOMAX" class="form-input form-select" id="HBOMAX"><option value=""></option><option value="MAX Anuncios">MAX Anuncios</option><option value="MAX">MAX</option><option value="-" selected>-</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="megamovil">Megamovil <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="megamovil" class="form-input" id="megamovil" value="">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="modelo">Modelo <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="modelo" class="form-input" id="modelo" value="">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="IMEI">IMEI <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="IMEI" class="form-input" id="IMEI" value="">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Npromo">Numero de Promoción <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Npromo" class="form-input" id="Npromo" value="5410">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="CostoContratacion">Costo de Contratacion <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="CostoContratacion" class="form-input" id="CostoContratacion" value="0"><small class="campo-ayuda">Costo de contratacion</small>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Costopromo">Costo promocional <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Costopromo" class="form-input" id="Costopromo" value="549"><small class="campo-ayuda">Costo del paquete con la promocion</small>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Costorenta">Costo Renta <span class="marca" title="Dato de la papeleta">*</span></label><input type="text" name="Costorenta" class="form-input" id="Costorenta" value="749"><small class="campo-ayuda">Costo del paquete despues de la promoción</small>                                            </div>
+                                                                                                                                                                <div class="form-group campo campo--ancho">
+                                                <label class="form-label" for="ComentariosPV">Comentarios de producto vendido <span class="marca" title="Dato de la papeleta">*</span></label><textarea name="ComentariosPV" class="form-input" id="ComentariosPV" cols="30" rows="2">Cliente interesado en upgrade</textarea>                                            </div>
+                                                                                                            </div>
+                            </section>
+                                                    <section class="filter-card papeleta-seccion details_servicio" id="seccion-details_servicio">
+                                <div class="filter-header">
+                                    <h2 class="filter-title">
+                                        <i class="fas fa-tower-broadcast"></i>
+                                        Detalles del servicio                                    </h2>
+                                </div>
+                                <div class="filter-content papeleta-campos">
+                                                                                                                        <div class="form-group campo">
+                                                <label class="form-label" for="status_ingreso">Estatus Cobrador</label><select name="status_ingreso" class="form-input form-select" id="status_ingreso"><option value=""></option><option value="COBRADA" selected>Cobrada</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="venta_exitosa">REGISTRO_VENTA_EXITOSA</label><input type="text" name="venta_exitosa" class="form-input" id="venta_exitosa" value="VE-983157">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="fecha_venta">FECHA INGRESO VENTA <i class="fas fa-lock candado" title="No se puede modificar"></i></label><input type="text" class="form-input campo-lectura" id="fecha_venta" value="17/11/2026 13:20:00" placeholder="Sin fecha" readonly tabindex="-1">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="motivo_rechazo">MOTIVO DE RECHAZO</label><input type="text" name="motivo_rechazo" class="form-input" id="motivo_rechazo" value="">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="numero_plastico">Numero de Plastico</label><input type="text" name="numero_plastico" class="form-input" id="numero_plastico" value="">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Fecha_Vencimiento">Fecha de Vencimiento</label><input type="text" name="Fecha_Vencimiento" class="form-input" id="Fecha_Vencimiento" value="">                                            </div>
+                                                                                                                                                                <div class="form-group campo campo--ancho">
+                                                <label class="form-label" for="Banco">Banco</label><input type="text" name="Banco" class="form-input" id="Banco" value="">                                            </div>
+                                                                                                            </div>
+                            </section>
+                                                    <section class="filter-card papeleta-seccion additional" id="seccion-additional">
+                                <div class="filter-header">
+                                    <h2 class="filter-title">
+                                        <i class="fas fa-circle-plus"></i>
+                                        Adicionales                                    </h2>
+                                </div>
+                                <div class="filter-content papeleta-campos">
+                                                                                                                        <div class="form-group campo">
+                                                <label class="form-label" for="CDomicilio">Comprobante de Domicilio <span class="marca" title="Dato de la papeleta">*</span></label><select name="CDomicilio" class="form-input form-select" id="CDomicilio"><option value=""></option><option value="Si" selected>SI</option><option value="No">NO</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="NombreCom">Nombre comercial (en caso de ser negocio)</label><input type="text" name="nombreCom" class="form-input" id="NombreCom" value="">                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Paquetes2">Cliente desea facturar? <span class="marca" title="Dato de la papeleta">*</span></label><select name="Paquetes2" class="form-input form-select" id="Paquetes2"><option value=""></option><option value="SI">SI</option><option value="NO" selected>NO</option></select>                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="RFC">RFC</label><input type="text" name="RFC" class="form-input" id="RFC" value="">                                            </div>
+                                                                                                                                                                <div class="form-group campo campo--ancho">
+                                                <label class="form-label" for="Comentarios_Confirmacion">Motivo de rechazo <span class="marca" title="Dato de la papeleta">*</span></label><textarea name="Comentarios_Confirmacion" class="form-input" id="Comentarios_Confirmacion" cols="35" rows="3">Se aprobo</textarea>                                            </div>
+                                                                                                                                                                <div class="form-group campo">
+                                                <label class="form-label" for="Nombre_Referido">Nombre de Referencia</label><input type="text" name="Nombre_Referido" class="form-input" id="Nombre_Referido" value="NA">                                            </div>
+                                                                                    <div class="form-group campo">
+                                                <label class="form-label" for="Contacto_Referido">Contacto de Referencia</label><input type="tel" name="Contacto_Referido" class="form-input" id="Contacto_Referido" value="5550477042" pattern="\d{10}" maxlength="10">                                            </div>
+                                                                                                            </div>
+                            </section>
+                                            </div>
+
+                    <!-- Columna lateral: estatus, archivos y secciones -->
+                    <aside class="papeleta-lateral">
+                        <div class="filter-card">
+                            <div class="filter-header">
+                                <h2 class="filter-title"><i class="fas fa-signal"></i> Estatus</h2>
+                            </div>
+                            <div class="filter-content">
+                                <dl class="resumen-estatus">
+                                                                            <div>
+                                            <dt>Validación</dt>
+                                            <dd>
+                                                                                                    <span class="status-badge status-validado">APROBADA</span>
+                                                                                            </dd>
+                                        </div>
+                                                                            <div>
+                                            <dt>Backoffice</dt>
+                                            <dd>
+                                                                                                    <span class="status-badge status-validado">INGRESADA</span>
+                                                                                            </dd>
+                                        </div>
+                                                                            <div>
+                                            <dt>Cobrador</dt>
+                                            <dd>
+                                                                                                    <span class="status-badge status-validado">COBRADA</span>
+                                                                                            </dd>
+                                        </div>
+                                                                    </dl>
+                            </div>
+                        </div>
+
+                        <div class="filter-card">
+                            <div class="filter-header">
+                                <h2 class="filter-title"><i class="fas fa-paperclip"></i> Archivos de la venta</h2>
+                            </div>
+                            <div class="filter-content">
+                                <ul class="lista-archivos">
+                                                                                                                    <li class="archivo">
+                                            <span class="archivo-icono"><i class="fas fa-house-circle-check"></i></span>
+                                            <span class="archivo-texto">
+                                                <strong>Comprobante de domicilio</strong>
+                                                <small>PDF · 15/11/2026 12:16</small>
+                                            </span>
+                                                                                            <button type="button" class="btn btn-modificar btn-ver-archivo"
+                                                        data-url="../demo-archivos/481bbbe22ba6.pdf"
+                                                        data-titulo="Comprobante de domicilio"
+                                                        data-pdf="1">
+                                                    <i class="fas fa-eye"></i> Ver
+                                                </button>
+                                                                                    </li>
+                                                                                                                    <li class="archivo">
+                                            <span class="archivo-icono"><i class="fas fa-comment-dots"></i></span>
+                                            <span class="archivo-texto">
+                                                <strong>Conversación inicial</strong>
+                                                <small>PDF · 15/11/2026 12:16</small>
+                                            </span>
+                                                                                            <button type="button" class="btn btn-modificar btn-ver-archivo"
+                                                        data-url="../demo-archivos/fe1ba835aa62.pdf"
+                                                        data-titulo="Conversación inicial"
+                                                        data-pdf="1">
+                                                    <i class="fas fa-eye"></i> Ver
+                                                </button>
+                                                                                    </li>
+                                                                                                                    <li class="archivo">
+                                            <span class="archivo-icono"><i class="fas fa-comments"></i></span>
+                                            <span class="archivo-texto">
+                                                <strong>Conversación final</strong>
+                                                <small>PDF · 15/11/2026 12:16</small>
+                                            </span>
+                                                                                            <button type="button" class="btn btn-modificar btn-ver-archivo"
+                                                        data-url="../demo-archivos/4e656a571a8c.pdf"
+                                                        data-titulo="Conversación final"
+                                                        data-pdf="1">
+                                                    <i class="fas fa-eye"></i> Ver
+                                                </button>
+                                                                                    </li>
+                                                                    </ul>
+                                <p class="nota-archivos"><i class="fas fa-circle-info"></i> Los archivos sólo se pueden ver; no se descargan ni se modifican desde aquí.</p>
+                            </div>
+                        </div>
+
+                        <nav class="filter-card indice-secciones" aria-label="Secciones de la papeleta">
+                            <div class="filter-header">
+                                <h2 class="filter-title"><i class="fas fa-list"></i> Secciones</h2>
+                            </div>
+                            <div class="filter-content">
+                                                                    <a href="#seccion-dates_user"><i class="fas fa-user"></i> Detalle de Usuario</a>
+                                                                    <a href="#seccion-details_sale"><i class="fas fa-file-signature"></i> Detalle de venta</a>
+                                                                    <a href="#seccion-details_contact"><i class="fas fa-address-card"></i> Datos de Contacto</a>
+                                                                    <a href="#seccion-details_product"><i class="fas fa-box-open"></i> Detalle del Producto</a>
+                                                                    <a href="#seccion-details_servicio"><i class="fas fa-tower-broadcast"></i> Detalles del servicio</a>
+                                                                    <a href="#seccion-additional"><i class="fas fa-circle-plus"></i> Adicionales</a>
+                                                            </div>
+                        </nav>
+                    </aside>
+                </div>
+
+                <input type="hidden" name="CapturaDeVenta_Id" value="310137">
+
+                <!-- Barra de guardado (siempre a la vista) -->
+                <div class="barra-guardar">
+                    <span class="barra-guardar__estado" id="estadoCambios">
+                        <i class="fas fa-circle-check"></i>
+                        <span>Sin cambios</span>
+                    </span>
+                    <div class="barra-guardar__acciones">
+                        <a href="ventasregistradas.html" class="btn btn-secondary">Regresar</a>
+                        <button type="submit" name="enviar" value="Guardar" class="btn btn-primary">
+                            <i class="fas fa-floppy-disk"></i>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Modal para consultar la contraseña semanal de validación (password/password.js) -->
+<div class="modal fade" id="modalPasswordVigente" tabindex="-1" aria-labelledby="modalPasswordVigenteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalPasswordVigenteLabel">
+                    <i class="fas fa-key me-2"></i>
+                    Contraseña Vigente
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="text-muted mb-2">Contraseña semanal de validación</p>
+                <div class="text-center mb-3">
+                    <div class="alert alert-primary fs-3 fw-bold mb-2" id="passwordVigente">Consultando...</div>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnCopiarPassword">
+                        <i class="fas fa-copy"></i>
+                        Copiar contraseña
+                    </button>
+                </div>
+                <div class="mt-3">
+                    <span id="estadoPassword" class="badge bg-secondary fs-6">Consultando...</span>
+                </div>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-12 mb-3">
+                        <small class="text-muted d-block">Fecha de generación</small>
+                        <strong id="fechaGeneracion">--</strong>
+                    </div>
+                    <div class="col-12">
+                        <small class="text-muted d-block">Vigencia</small>
+                        <strong id="vigenciaPassword">--</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </main>
+
+    <!-- Vista previa de un archivo (sólo ver) -->
+    <div class="modal fade" id="modalArchivo" tabindex="-1" aria-labelledby="modalArchivoTitulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalArchivoTitulo">Archivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body vista-archivo" id="vistaArchivo"></div>
+            </div>
+        </div>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="JS/admin.js"></script>
+        <script src="password/password.js"></script>
+        <script src="assets/js/modificar.js"></script>
+        
+</body>
+</html>

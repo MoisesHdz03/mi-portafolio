@@ -1,0 +1,1059 @@
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+:root {
+    /* Paleta Backoffice  */
+    --sidebar-bg-from: #132e35;
+    --sidebar-bg-to: #1c4a52;
+    --accent: #17a398;
+    --accent-strong: #0f8377;
+    --accent-soft: #5ed3c6;
+    --accent-glow: rgba(23, 163, 152, 0.18);
+
+    --bg-app: #f2f7f6;
+    --bg-card: #ffffff;
+    --border-soft: #dfe9e7;
+    --text-main: #1f2d2b;
+    --text-muted: #6c7f7c;
+
+    --sidebar-width: 260px;
+    --sidebar-width-close: 78px;
+    --transition-speed: 0.3s;
+
+    /* Estados */
+    --status-danger: #e0685a;
+    --status-danger-bg: #fdeeec;
+    --status-success: #2fa876;
+    --status-success-bg: #e6f7f0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+/* ============ ESTRUCTURA BASE DEL SIDEBAR ============ */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, var(--sidebar-bg-from) 0%, var(--sidebar-bg-to) 100%);
+    color: rgba(255, 255, 255, 0.82);
+    box-shadow: 2px 0 14px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: width var(--transition-speed) ease;
+}
+
+.sidebar.close {
+    width: var(--sidebar-width-close);
+}
+
+.sidebar a {
+    text-decoration: none;
+}
+
+.sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============ HEADER ============ */
+.sidebar header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 92px;
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .text.logo {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.sidebar.close .text.logo {
+    opacity: 0;
+    width: 0;
+}
+
+.sidebar .text.logo .name {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent-soft);
+}
+
+.sidebar .text.logo .profe {
+    margin-top: 0.3rem;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.sidebar header .toggle {
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(23, 163, 152, 0.35);
+    transition: transform var(--transition-speed) ease;
+}
+
+.sidebar.close header .toggle {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* ============ CUERPO DEL MENÚ ============ */
+.sidebar .menu-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar .menu-bar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar .menu-bar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+}
+
+.sidebar .menu-links {
+    padding: 0.9rem 0;
+}
+
+.sidebar .nav-link {
+    position: relative;
+}
+
+.sidebar .nav-link a {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.72rem 1.4rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.87rem;
+    font-weight: 500;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+    transition: background-color var(--transition-speed) ease,
+                border-color var(--transition-speed) ease,
+                color var(--transition-speed) ease;
+}
+
+.sidebar .nav-link a:hover {
+    background-color: rgba(94, 211, 198, 0.1);
+    border-left-color: var(--accent-soft);
+    color: #ffffff;
+}
+
+/* Bandeja activa (marcada con id="Seleccion" en el <li>) */
+.sidebar .nav-link#Seleccion a {
+    background: linear-gradient(90deg, rgba(23, 163, 152, 0.22) 0%, rgba(23, 163, 152, 0.06) 100%);
+    border-left-color: var(--accent-soft);
+    color: #ffffff;
+    box-shadow: inset 0 0 0 1px rgba(94, 211, 198, 0.15);
+}
+
+.sidebar .icon {
+    min-width: 22px;
+    font-size: 1.1rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.sidebar .nav-text {
+    opacity: 1;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.sidebar.close .nav-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+/* ============ PIE DEL SIDEBAR ============ */
+.sidebar .bottom-content {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 0;
+}
+
+.sidebar .bottom-content a {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.72rem 1.4rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.87rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+.sidebar .bottom-content a:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: #ffffff;
+}
+
+/* --- Modo oscuro (switch) --- */
+.sidebar .mode {
+    padding: 0.4rem 1.4rem;
+}
+
+.sidebar .sun-moon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.4rem 0;
+    font-size: 0.87rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.sidebar .sun-moon .icon {
+    font-size: 1.05rem;
+    min-width: 22px;
+}
+
+.sidebar .sun-moon .sun {
+    display: none;
+}
+
+body.dark .sidebar .sun-moon .sun {
+    display: inline-block;
+}
+
+body.dark .sidebar .sun-moon .moon {
+    display: none;
+}
+
+.sidebar .mode-text {
+    opacity: 1;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.sidebar.close .mode-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.sidebar .toggle-switch {
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 22px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.sidebar.close .toggle-switch {
+    display: none;
+}
+
+.sidebar .toggle-switch .switch {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: left var(--transition-speed) ease;
+}
+
+body.dark .sidebar .toggle-switch {
+    background-color: var(--accent);
+}
+
+body.dark .sidebar .toggle-switch .switch {
+    left: 20px;
+}
+
+/* --- RAM SECURITY --- */
+.sidebar #RAM {
+    padding: 0.85rem 1.4rem 1.15rem 1.4rem;
+}
+
+.sidebar #RAM .text.nav-text {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============ MODO OSCURO — variables globales ============ */
+body.dark {
+    --bg-app: #131a26;
+    --bg-card: #1c2536;
+    --border-soft: #2c374a;
+    --text-main: #dbe2ee;
+    --text-muted: #8b96a8;
+}
+
+body.dark .sidebar {
+    background: linear-gradient(180deg, #0f1622 0%, #16202f 100%);
+}
+
+/* ============ RESPONSIVO ============ */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: var(--sidebar-width-close);
+    }
+
+    .sidebar .text.logo,
+    .sidebar .nav-text,
+    .sidebar .mode-text,
+    .sidebar .toggle-switch {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+    }
+}
+
+/* ============================================================
+   CONTENIDO PRINCIPAL — .home
+   ============================================================ */
+
+.home {
+    position: relative;
+    left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+    padding: 1.75rem 2rem 3rem 2rem;
+    transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
+}
+
+.sidebar.close ~ .home {
+    left: var(--sidebar-width-close);
+    width: calc(100% - var(--sidebar-width-close));
+}
+
+/* ============ TOPBAR (título + reloj en vivo) ============ */
+.home .above {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 1.1rem 1.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.home .above ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.home .above .nav-above {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.home .above .nav-above .icon,
+.home .above .nav-above > i {
+    color: var(--accent);
+}
+
+/* --- Reloj en vivo --- */
+.nav-above-clock {
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    color: var(--text-muted) !important;
+    background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 100%);
+    border: 1px solid var(--border-soft);
+    padding: 0.5rem 1rem 0.5rem 0.9rem;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-above-clock::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    box-shadow: 0 0 0 0 rgba(23, 163, 152, 0.6);
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+    0% { box-shadow: 0 0 0 0 rgba(23, 163, 152, 0.5); }
+    70% { box-shadow: 0 0 0 7px rgba(23, 163, 152, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(23, 163, 152, 0); }
+}
+
+.nav-above-clock i {
+    color: var(--accent) !important;
+}
+
+.nav-above-clock i {
+    color: var(--accent-soft) !important;
+}
+
+.clock-separator {
+    color: var(--border-soft);
+    margin: 0 0.15rem;
+}
+
+#clockTime {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* ============ FILTROS ============ */
+.table {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.filter-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.filter-card-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.filtros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    align-items: end;
+}
+
+.filtros-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.filtros-field .form-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 0.4rem;
+}
+
+.filtros-field .form-control {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border-soft);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    padding: 0.6rem 0.85rem;
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color var(--transition-speed) ease;
+}
+
+.filtros-field .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem rgba(91, 141, 239, 0.15);
+    outline: none;
+}
+
+.filtros-field .form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.filtros-acciones {
+    display: flex;
+    gap: 0.6rem;
+    grid-column: span 2;
+}
+
+.filtros-acciones .btn-search {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 0.62rem 1.3rem;
+    border-radius: 9px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(23, 163, 152, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.filtros-acciones .btn-search:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(23, 163, 152, 0.35);
+}
+
+.filtros-acciones .btn-clear {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 0.62rem 1.2rem;
+    border-radius: 9px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.filtros-acciones .btn-clear:hover {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    border-color: var(--accent-soft);
+}
+
+.filtros-field .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem var(--accent-glow);
+    outline: none;
+}
+
+/* ============ TABLA ============ */
+.contenedor-tabla {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    overflow-x: auto;
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+#tablaDatos {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#tablaDatos tr:first-child {
+    background: linear-gradient(90deg, var(--sidebar-bg-from) 0%, var(--sidebar-bg-to) 100%);
+}
+
+#tablaDatos tr:first-child th {
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: 0.75rem 0.9rem;
+}
+
+#tablaDatos td {
+    font-size: 0.82rem;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: var(--text-main);
+    background-color: var(--bg-card);
+    padding: 0.65rem 0.9rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+#tablaDatos.table-striped tbody tr:nth-of-type(odd) td {
+    background-color: var(--bg-app);
+}
+
+#tablaDatos tbody tr:hover td {
+    background-color: var(--accent-glow);
+}
+
+/* Columna "Acciones" fija */
+#tablaDatos th:first-child,
+#tablaDatos td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.06);
+}
+
+#tablaDatos tr:first-child th:first-child {
+    background-color: var(--sidebar-bg-from);
+    z-index: 3;
+}
+
+/* --- Badges de estado (RESERVADA / LIBRE) en tonos suaves --- */
+#tablaDatos .badge.bg-danger {
+    background-color: var(--status-danger-bg) !important;
+    color: var(--status-danger) !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 20px;
+    padding: 0.35rem 0.8rem;
+    box-shadow: inset 0 0 0 1px rgba(224, 104, 90, 0.25);
+}
+
+#tablaDatos .badge.bg-success {
+    background-color: var(--status-success-bg) !important;
+    color: var(--status-success) !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 20px;
+    padding: 0.35rem 0.8rem;
+    box-shadow: inset 0 0 0 1px rgba(47, 168, 118, 0.25);
+}
+
+/* --- Botones dentro de la tabla --- */
+#tablaDatos .btn-warning {
+    background-color: #eaf9f6;
+    border: 1px solid var(--accent-soft);
+    color: var(--accent-strong);
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 7px;
+    transition: all 0.2s ease;
+}
+
+#tablaDatos .btn-warning:hover {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+    border-color: var(--accent);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+#tablaDatos .btn-secondary {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 7px;
+    background-color: var(--bg-app);
+    border: 1px solid var(--border-soft);
+    color: var(--text-muted);
+}
+
+/* ============ RESPONSIVO ============ */
+@media (max-width: 1024px) {
+    .home {
+        left: var(--sidebar-width-close);
+        width: calc(100% - var(--sidebar-width-close));
+    }
+
+    .sidebar.close ~ .home {
+        left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .home {
+        padding: 1.25rem 1rem 2.5rem 1rem;
+    }
+
+    .home .above {
+        padding: 1rem 1.25rem;
+    }
+
+    .home .above ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filtros-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filtros-acciones {
+        grid-column: span 1;
+    }
+}
+
+/* ============================================================
+   RESPONSIVO — PANTALLA MAS 
+   ============================================================ */
+/* --- Overlay de fondo cuando el sidebar está abierto en móvil --- */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.sidebar-overlay.visible {
+    display: block;
+    opacity: 1;
+}
+
+@media (max-width: 640px) {
+    /* --- Sidebar como cajón deslizable, oculto por default --- */
+    .sidebar {
+        width: 260px;
+        transform: translateX(-100%);
+        transition: transform var(--transition-speed) ease;
+    }
+
+    .sidebar.close {
+        width: 260px; /* ya no se achica a íconos, se oculta por completo */
+        transform: translateX(-100%);
+    }
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
+    }
+
+    /* En móvil, el sidebar siempre muestra el texto completo cuando está abierto */
+    .sidebar .text.logo,
+    .sidebar .nav-text,
+    .sidebar .mode-text,
+    .sidebar .toggle-switch {
+        opacity: 1 !important;
+        width: auto !important;
+        overflow: visible !important;
+    }
+
+    .sidebar header .toggle {
+        display: none; /* el toggle circular no aplica en móvil, se usa el botón hamburguesa */
+    }
+
+    /* --- Botón hamburguesa fijo (nuevo, ver HTML abajo) --- */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        width: 42px;
+        height: 42px;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.3rem;
+        cursor: pointer;
+        z-index: 1001;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* --- Contenido principal a ancho completo, sin dejar hueco del sidebar --- */
+    .home,
+    .sidebar.close ~ .home {
+        left: 0 !important;
+        width: 100% !important;
+        padding: 4.5rem 1rem 2rem 1rem; /* espacio arriba para no chocar con el botón hamburguesa */
+    }
+
+    /* --- Topbar: apilar título y reloj --- */
+    .home .above ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+    }
+
+    .home .above .nav-above {
+        font-size: 0.95rem;
+    }
+
+    .nav-above-clock {
+        font-size: 0.78rem !important;
+        padding: 0.4rem 0.8rem;
+    }
+
+    /* --- Filtros: una sola columna, campos a ancho completo --- */
+    .filter-card {
+        padding: 1.1rem 1.1rem;
+    }
+
+    .filtros-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .filtros-acciones {
+        grid-column: span 1;
+        flex-direction: column;
+    }
+
+    .filtros-acciones .btn-search,
+    .filtros-acciones .btn-clear {
+        width: 100%;
+        justify-content: center;
+        padding: 0.7rem 1rem; /* más alto, fácil de tocar con el dedo */
+    }
+
+    .filtros-field .form-control {
+        padding: 0.65rem 0.85rem;
+        font-size: 1rem; /* evita el zoom automático de iOS en inputs */
+    }
+
+    /* --- Tabla: ajustar tamaños para que el scroll horizontal sea más manejable --- */
+    .contenedor-tabla {
+        padding: 0.5rem;
+        border-radius: 10px;
+        /* mejora el scroll táctil en iOS */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #tablaDatos tr:first-child th {
+        font-size: 0.65rem;
+        padding: 0.6rem 0.6rem;
+    }
+
+    #tablaDatos td {
+        font-size: 0.78rem;
+        padding: 0.55rem 0.6rem;
+    }
+
+    /* Botones dentro de la tabla, más fáciles de tocar */
+    #tablaDatos .btn-warning,
+    #tablaDatos .btn-secondary {
+        padding: 0.45rem 0.7rem;
+        font-size: 0.78rem;
+        white-space: nowrap;
+    }
+
+    /* Indicador visual de que la tabla se puede deslizar horizontalmente */
+    .contenedor-tabla::after {
+        content: "← desliza para ver más →";
+        display: block;
+        text-align: center;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        padding: 0.5rem 0;
+    }
+}
+
+/* --- Tablets (entre celular y escritorio) --- */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .filtros-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filtros-acciones {
+        grid-column: span 2;
+    }
+}
+
+/* ============ ANIMACIONES DE ENTRADA ============ */
+.home .above,
+.filter-card,
+.contenedor-tabla {
+    animation: fadeSlideUp 0.4s ease both;
+}
+
+.filter-card {
+    animation-delay: 0.05s;
+}
+
+.contenedor-tabla {
+    animation-delay: 0.1s;
+}
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tarjetas con leve elevación al pasar el mouse (sensación interactiva) */
+.filter-card:hover,
+.contenedor-tabla:hover {
+    box-shadow: 0 4px 14px rgba(23, 163, 152, 0.08);
+}
+
+/* ============================================================
+   MODO OSCURO
+   ============================================================ */
+body.dark {
+    --bg-app: #14171c;
+    --bg-card: #1b1f26;
+    --border-soft: #2a2f38;
+    --text-main: #dfe3e9;
+    --text-muted: #838c99;
+}
+
+/* --- Bordes de la tabla (incluye table-bordered de Bootstrap) --- */
+body.dark #tablaDatos.table-bordered,
+body.dark #tablaDatos.table-bordered > :not(caption) > * {
+    border-color: #262b33;
+}
+
+body.dark #tablaDatos.table-bordered > :not(caption) > * > * {
+    border-width: 1px;
+    border-color: #262b33;
+}
+
+body.dark #tablaDatos td,
+body.dark #tablaDatos th {
+    border-color: #262b33 !important;
+    border-bottom: 1px solid #262b33;
+}
+
+body.dark #tablaDatos.table-striped tbody tr:nth-of-type(odd) td {
+    background-color: #191d24;
+}
+
+body.dark #tablaDatos tbody tr:hover td {
+    background-color: rgba(23, 163, 152, 0.1);
+}
+
+body.dark #tablaDatos th:first-child,
+body.dark #tablaDatos td:first-child {
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Scrollbar horizontal del contenedor de tabla --- */
+body.dark .contenedor-tabla::-webkit-scrollbar {
+    height: 10px;
+}
+
+body.dark .contenedor-tabla::-webkit-scrollbar-track {
+    background-color: #1b1f26;
+}
+
+body.dark .contenedor-tabla::-webkit-scrollbar-thumb {
+    background-color: #333a45;
+    border-radius: 10px;
+    border: 2px solid #1b1f26;
+}
+
+body.dark .contenedor-tabla::-webkit-scrollbar-thumb:hover {
+    background-color: #454e5c;
+}
+
+/* Firefox */
+body.dark .contenedor-tabla {
+    scrollbar-color: #333a45 #1b1f26;
+    scrollbar-width: thin;
+}
+
+/* --- Botón "Modificar" --- */
+body.dark #tablaDatos .btn-warning {
+    background-color: #182a27;
+    border: 1px solid #276e64;
+    color: #6bd4c4;
+}
+
+body.dark #tablaDatos .btn-warning:hover {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+body.dark #tablaDatos .btn-secondary {
+    background-color: #20242c;
+    border: 1px solid #2a2f38;
+    color: #8b93a0;
+}
+
+/* --- Badges de estado (RESERVADA / LIBRE) --- */
+body.dark #tablaDatos .badge.bg-danger {
+    background-color: rgba(224, 104, 90, 0.15) !important;
+    color: #f0968a !important;
+    box-shadow: inset 0 0 0 1px rgba(224, 104, 90, 0.35);
+}
+
+body.dark #tablaDatos .badge.bg-success {
+    background-color: rgba(47, 168, 118, 0.15) !important;
+    color: #5fd6a3 !important;
+    box-shadow: inset 0 0 0 1px rgba(47, 168, 118, 0.35);
+}
+
+/* --- Encabezado de tabla --- */
+body.dark #tablaDatos tr:first-child {
+    background: linear-gradient(90deg, var(--sidebar-bg-from) 0%, var(--sidebar-bg-to) 100%);
+}
+
+body.dark #tablaDatos tr:first-child th:first-child {
+    background-color: var(--sidebar-bg-from);
+}
+
+/* --- Inputs de filtros --- */
+body.dark .filtros-field .form-control {
+    background-color: #1b1f26;
+    border-color: #2a2f38;
+    color: #dfe3e9;
+}
+
+body.dark .filtros-field .form-control::placeholder {
+    color: #5c6270;
+}
+
+body.dark .filtros-acciones .btn-clear {
+    background-color: #1b1f26;
+    border-color: #2a2f38;
+    color: #838c99;
+}
+
+body.dark .filtros-acciones .btn-clear:hover {
+    background-color: #20242c;
+    border-color: var(--accent-soft);
+    color: #dfe3e9;
+}
+
+/* --- Reloj en vivo --- */
+body.dark .nav-above-clock {
+    background: linear-gradient(135deg, rgba(23, 163, 152, 0.1) 0%, transparent 100%);
+    border-color: #2a2f38;
+}

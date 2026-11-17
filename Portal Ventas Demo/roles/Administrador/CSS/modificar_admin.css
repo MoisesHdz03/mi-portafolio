@@ -1,0 +1,464 @@
+/* ==========================================================
+   ADMINISTRACIÓN · MODIFICAR VENTA (modificar.php)
+   Sólo lo propio de esta página; el resto viene de
+   Dash_admin.css y Ventas_registradas.css.
+   ========================================================== */
+
+/* ---------- Encabezado ---------- */
+.header-titulos {
+    min-width: 0;
+}
+
+.header-titulos h1 {
+    margin: 0;
+}
+
+.header-id {
+    color: var(--acento);
+}
+
+.page-subtitle {
+    overflow: hidden;
+    margin: 2px 0 0;
+    color: var(--texto-tenue);
+    font-size: 12.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* La página se desplaza completa; la barra de guardado queda abajo */
+.content {
+    padding-bottom: 0;
+}
+
+/* ---------- Distribución: secciones + columna lateral ---------- */
+.papeleta-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 20px;
+    align-items: start;
+}
+
+.papeleta-secciones {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+}
+
+.papeleta-lateral {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.papeleta-seccion {
+    scroll-margin-top: 16px;
+    animation: aparecerSubiendo .4s var(--curva) both;
+}
+
+.papeleta-seccion:nth-child(2) { animation-delay: .04s; }
+.papeleta-seccion:nth-child(3) { animation-delay: .08s; }
+.papeleta-seccion:nth-child(4) { animation-delay: .12s; }
+.papeleta-seccion:nth-child(n+5) { animation-delay: .16s; }
+
+.papeleta .filter-title {
+    margin: 0;
+    font-size: inherit;
+}
+
+/* Campos en dos columnas; comentarios y campos sueltos a lo ancho */
+.papeleta .papeleta-campos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 18px;
+}
+
+.campo--ancho {
+    grid-column: 1 / -1;
+}
+
+.papeleta .form-input {
+    width: 100%;
+    min-width: 0;
+}
+
+.papeleta textarea.form-input {
+    height: auto;
+    min-height: 64px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    resize: vertical;
+}
+
+.campo-ayuda {
+    color: var(--texto-tenue);
+    font-size: 11.5px;
+}
+
+.marca {
+    color: var(--oro);
+    font-weight: 700;
+}
+
+.marca--importante {
+    color: var(--error);
+}
+
+/* Fechas de estatus y de venta: sólo lectura */
+.candado {
+    margin-left: 4px;
+    color: var(--texto-tenue);
+    font-size: 10px;
+}
+
+.form-input.campo-lectura {
+    border-style: dashed;
+    background: var(--superficie-suave);
+    color: var(--texto-suave);
+    cursor: default;
+}
+
+.form-input.campo-lectura:focus {
+    border-color: var(--borde-fuerte);
+    box-shadow: none;
+}
+
+/* Listas con la misma apariencia que los campos */
+.form-input.form-select {
+    padding-right: 32px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2386919f' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m3 6 5 5 5-5'/%3e%3c/svg%3e");
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-size: 12px;
+    cursor: pointer;
+}
+
+.form-input[type="date"] {
+    color-scheme: light;
+}
+
+body.dark-mode .form-input[type="date"] {
+    color-scheme: dark;
+}
+
+/* Campo que se cambió y aún no se guarda */
+.campo .form-label {
+    transition: color .2s ease;
+}
+
+.campo--cambiado .form-label {
+    color: var(--oro);
+}
+
+.campo--cambiado .form-input {
+    border-color: var(--oro);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--oro) 16%, transparent);
+}
+
+/* ---------- Columna lateral ---------- */
+.resumen-estatus {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+}
+
+.resumen-estatus > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.resumen-estatus dt {
+    color: var(--texto-suave);
+    font-weight: 500;
+}
+
+.resumen-estatus dd {
+    margin: 0;
+}
+
+.sin-dato {
+    color: var(--texto-tenue);
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Archivos */
+.lista-archivos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.archivo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-chico);
+    transition: border-color .2s ease, background-color .2s ease;
+}
+
+.archivo:not(.archivo--vacio):hover {
+    border-color: var(--acento);
+    background: var(--acento-suave);
+}
+
+.archivo-icono {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radio-chico);
+    background: var(--acento-suave);
+    color: var(--acento);
+}
+
+.archivo-texto {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.25;
+}
+
+.archivo-texto strong {
+    color: var(--texto);
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.archivo-texto small {
+    color: var(--texto-tenue);
+    font-size: 11.5px;
+}
+
+.archivo--vacio {
+    border-style: dashed;
+}
+
+.archivo--vacio .archivo-icono {
+    background: var(--superficie-suave);
+    color: var(--texto-tenue);
+}
+
+.nota-archivos {
+    display: flex;
+    gap: 6px;
+    margin: 12px 0 0;
+    color: var(--texto-tenue);
+    font-size: 11.5px;
+    line-height: 1.4;
+}
+
+.nota-archivos i {
+    margin-top: 2px;
+}
+
+/* Índice de secciones */
+.indice-secciones .filter-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+}
+
+.indice-secciones a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: var(--radio-chico);
+    color: var(--texto-suave);
+    font-size: 12.5px;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.indice-secciones a i {
+    width: 14px;
+    color: var(--texto-tenue);
+    font-size: 11.5px;
+}
+
+.indice-secciones a:hover {
+    background: var(--superficie-suave);
+    color: var(--acento);
+}
+
+.indice-secciones a:hover i {
+    color: var(--acento);
+}
+
+/* ---------- Barra de guardado ---------- */
+.barra-guardar {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 20px -28px 0;
+    padding: 12px 28px;
+    border-top: 1px solid var(--borde);
+    background: color-mix(in srgb, var(--superficie) 92%, transparent);
+    backdrop-filter: blur(6px);
+}
+
+.barra-guardar__estado {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--texto-tenue);
+    font-size: 12.5px;
+    transition: color .2s ease;
+}
+
+.barra-guardar__estado.hay-cambios {
+    color: var(--oro);
+    font-weight: 600;
+}
+
+.barra-guardar__acciones {
+    display: flex;
+    gap: 10px;
+}
+
+/* ---------- Vista previa del archivo ---------- */
+#modalArchivo .modal-content {
+    overflow: hidden;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    background: var(--superficie);
+    color: var(--texto);
+}
+
+#modalArchivo .modal-header {
+    border-bottom: 1px solid var(--borde);
+}
+
+/* Encabezado claro: la "X" va oscura (la de la contraseña es blanca sobre color) */
+#modalArchivo .modal-header .btn-close {
+    filter: none;
+    opacity: .6;
+}
+
+body.dark-mode #modalArchivo .modal-header .btn-close {
+    filter: invert(1) grayscale(1) brightness(2);
+}
+
+.vista-archivo {
+    display: grid;
+    place-items: center;
+    min-height: 60vh;
+    padding: 12px;
+    background: var(--superficie-suave);
+    user-select: none;
+}
+
+.vista-archivo img {
+    max-width: 100%;
+    max-height: 75vh;
+    border-radius: var(--radio-chico);
+    box-shadow: var(--sombra);
+    -webkit-user-drag: none;
+    animation: aparecer .3s ease both;
+}
+
+.vista-archivo iframe {
+    width: 100%;
+    height: 75vh;
+    border: 0;
+    border-radius: var(--radio-chico);
+    background: #fff;
+}
+
+.vista-archivo.cargando {
+    background-image: linear-gradient(90deg, transparent, color-mix(in srgb, var(--acento) 8%, transparent), transparent);
+    background-size: 200% 100%;
+    animation: cargandoArchivo 1.2s linear infinite;
+}
+
+@keyframes cargandoArchivo {
+    from { background-position: 100% 0; }
+    to   { background-position: -100% 0; }
+}
+
+.vista-error {
+    color: var(--error);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .papeleta-seccion,
+    .vista-archivo img,
+    .vista-archivo.cargando {
+        animation: none;
+    }
+}
+
+/* ---------- Pantallas medianas y chicas ---------- */
+@media (max-width: 1100px) {
+    .papeleta-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .papeleta-lateral {
+        position: static;
+        order: -1;
+    }
+
+    .indice-secciones {
+        display: none;
+    }
+}
+
+/* La barra de guardado llega de orilla a orilla (mismo margen que .content) */
+@media (max-width: 1024px) {
+    .barra-guardar {
+        margin-right: -20px;
+        margin-left: -20px;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-wrap: wrap;
+    }
+
+    .page-subtitle {
+        white-space: normal;
+    }
+
+    .barra-guardar {
+        margin-right: -14px;
+        margin-left: -14px;
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+}
+
+@media (max-width: 560px) {
+    .papeleta .papeleta-campos {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .barra-guardar__acciones,
+    .barra-guardar__acciones .btn {
+        flex: 1;
+    }
+}

@@ -1,0 +1,276 @@
+/* ==========================================================
+   GERENCIA · REPORTES (carpeta Sales)
+   Sólo lo propio de los reportes; el resto viene de
+   dashboard.css y ventas_registradas.css.
+   ========================================================== */
+
+/* En los reportes la página se desplaza completa (la tabla es corta) */
+.content {
+    gap: 18px;
+}
+
+.table-card.reporte-tabla {
+    flex: none;
+    min-height: 0;
+}
+
+.reporte-tabla .table-container {
+    flex: none;
+}
+
+/* Enlaces a los otros reportes en el encabezado */
+.reporte-enlaces {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.reporte-enlaces .btn {
+    height: 34px;
+}
+
+.reporte-enlaces .btn i {
+    color: var(--acento);
+}
+
+/* Filtros: hasta 4 campos por fila */
+.reporte-filtros {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.form-input[type="date"] {
+    min-width: 0;
+    color-scheme: light;
+}
+
+body.dark-mode .form-input[type="date"] {
+    color-scheme: dark;
+}
+
+/* "Graficar" marcado mientras la gráfica está a la vista */
+.btn.btn-activo {
+    border-color: var(--acento);
+    background: var(--acento-suave);
+    color: var(--acento);
+}
+
+.btn.btn-activo i {
+    color: var(--acento);
+}
+
+/* ---------- Gráfica ---------- */
+.reporte-grafica {
+    position: relative;
+    flex-shrink: 0;
+    height: 340px;
+    padding: 18px 20px 14px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    background: var(--superficie);
+    box-shadow: var(--sombra);
+    animation: aparecerSubiendo .4s var(--curva) .04s both;
+}
+
+/* ---------- Tabla ---------- */
+.ventas-table th {
+    line-height: 1.35;
+    white-space: normal;
+    vertical-align: bottom;
+}
+
+.ventas-table td {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Números del resumen: la columna de fecha en negritas y cada serie con su color */
+.ventas-table .fecha-cell {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+.ventas-table .total-cell {
+    color: var(--acento);
+    font-weight: 600;
+}
+
+.ventas-table .validadas-cell,
+.ventas-table .ingresadas-cell {
+    color: var(--encabezado-texto);
+}
+
+.ventas-table .cobradas-cell {
+    color: var(--exito);
+    font-weight: 600;
+}
+
+.ventas-table .pendientes-cell {
+    color: var(--alerta);
+}
+
+.ventas-table .rechazadas-cell {
+    color: var(--error);
+}
+
+/* Rendimiento por agente: tipo de vendedor y vendedores dados de baja */
+.ventas-table .tipo-cell {
+    color: var(--texto-suave);
+}
+
+.ventas-table .agente-baja {
+    color: var(--texto-tenue);
+    font-style: italic;
+}
+
+/* Listas desplegables de los filtros */
+.form-select {
+    padding-right: 32px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%238a93a3' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m3 6 5 5 5-5'/%3e%3c/svg%3e");
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-size: 12px;
+    cursor: pointer;
+}
+
+/* Fila de totales */
+.ventas-table .fila-totales td {
+    border-top: 2px solid var(--borde-fuerte);
+    border-bottom: 0;
+    background: var(--encabezado-fondo);
+    color: var(--encabezado-texto);
+    font-weight: 700;
+}
+
+.ventas-table tbody tr.fila-totales:hover td {
+    background: var(--encabezado-fondo);
+}
+
+/* Sin datos */
+.ventas-table .fila-vacia td,
+.ventas-table .fila-vacia:hover td {
+    background: var(--superficie);
+}
+
+.ventas-table .no-data {
+    padding: 44px 20px;
+    color: var(--texto-suave);
+    text-align: center;
+    white-space: normal;
+}
+
+.ventas-table .no-data i {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--borde-fuerte);
+    font-size: 28px;
+}
+
+/* La primera columna no se fija en los reportes (son pocas columnas) */
+.ventas-table th:first-child,
+.ventas-table td:first-child {
+    position: static;
+    box-shadow: none;
+}
+
+/* ---------- Paginación (includes/reportes.php: dibujarPaginacion) ---------- */
+.pagination-container {
+    border-top: 1px solid var(--borde);
+}
+
+.pagination-container .pagination {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 18px;
+    border-top: 0;
+}
+
+.pagination-container .pagination-info {
+    order: -1;
+    margin-right: auto;
+}
+
+.pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pagination-numbers a,
+.pagination-numbers .current,
+.pagination-ellipsis {
+    display: grid;
+    place-items: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border-radius: var(--radio-chico);
+    color: var(--texto-suave);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.pagination-numbers a:hover {
+    background: var(--superficie-suave);
+    color: var(--texto);
+}
+
+.pagination-numbers .current {
+    background: var(--acento);
+    color: #fff;
+}
+
+.pagination-ellipsis {
+    min-width: 20px;
+    padding: 0;
+    color: var(--texto-tenue);
+}
+
+.pagination-container .pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+}
+
+.pagination-container .pagination-btn i {
+    font-size: 11px;
+}
+
+.pagination-container .pagination-btn.disabled {
+    color: var(--texto-tenue);
+    cursor: not-allowed;
+    opacity: .6;
+}
+
+.pagination-container .pagination-btn.disabled:hover {
+    background: var(--superficie);
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-wrap: wrap;
+    }
+
+    .reporte-enlaces {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .reporte-filtros {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .reporte-grafica {
+        height: 280px;
+        padding: 12px;
+    }
+
+    .filter-actions {
+        flex-wrap: wrap;
+    }
+
+    .pagination-numbers {
+        display: none;
+    }
+}

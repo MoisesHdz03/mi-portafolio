@@ -1,0 +1,1185 @@
+/* ==========================================================
+   LOGIN · PORTAL VENTAS
+   Misma paleta de siempre: azul noche (#0f172a / #1e293b),
+   verde azulado (#14b8a6 / #0d9488 / #0f766e / #134e4a) y
+   acentos azul, morado y verde.
+   - Pantallas grandes: presentación a la izquierda, acceso a la derecha.
+   - Pantallas chicas: sólo el acceso, con la marca arriba.
+   ========================================================== */
+
+:root {
+  --noche: #0f172a;
+  --pizarra: #1e293b;
+  --teal-oscuro: #134e4a;
+  --teal: #14b8a6;
+  --teal-medio: #0d9488;
+  --teal-profundo: #0f766e;
+  --teal-claro: #5eead4;
+  --azul: #3b82f6;
+  --azul-claro: #93c5fd;
+  --morado-claro: #c4b5fd;
+  --verde-claro: #86efac;
+  --cielo: #7dd3fc;
+
+  --texto: #111827;
+  --texto-medio: #374151;
+  --texto-suave: #6b7280;
+  --texto-tenue: #9ca3af;
+  --borde: #e5e7eb;
+  --fondo-campo: #f9fafb;
+  --exito: #059669;
+
+  --curva: cubic-bezier(.2, .7, .2, 1);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Sin scroll: todo cabe en la pantalla (los tamaños se ajustan a la altura más abajo).
+   Si se abre el teclado del celular, el navegador sigue llevando el campo a la vista. */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  color: var(--texto);
+  background: var(--noche);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* ---------- Distribución ---------- */
+.login-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(420px, 1fr);
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* ==========================================================
+   PANEL IZQUIERDO · PRESENTACIÓN
+   ========================================================== */
+.hero-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 56px clamp(40px, 6vw, 96px);
+  background: linear-gradient(135deg, var(--noche) 0%, var(--pizarra) 55%, var(--teal-oscuro) 100%);
+  color: #fff;
+}
+
+/* Cuadrícula tenue y dos luces suaves de fondo */
+.hero-fondo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(20, 184, 166, .16), transparent 38%),
+    radial-gradient(circle at 88% 85%, rgba(59, 130, 246, .14), transparent 42%),
+    linear-gradient(rgba(20, 184, 166, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 184, 166, .06) 1px, transparent 1px);
+  background-size: auto, auto, 48px 48px, 48px 48px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent);
+}
+
+.hero-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 680px;
+  animation: subir .6s var(--curva) both;
+}
+
+/* Marca */
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-medio));
+  box-shadow: 0 12px 30px -10px rgba(20, 184, 166, .6);
+}
+
+.logo-icon i {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.logo-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  line-height: 1.1;
+  background: linear-gradient(to right, #fff, #a7f3d0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-subtitle {
+  color: var(--cielo);
+  font-size: .82rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+/* Título */
+.hero-title {
+  font-size: clamp(2.2rem, 3.4vw, 3.1rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.12;
+}
+
+.hero-title-gradient {
+  display: block;
+  background: linear-gradient(to right, var(--teal), var(--azul));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+  max-width: 34rem;
+  margin-top: 14px;
+  color: #cbd5e1;
+  font-size: 1.05rem;
+}
+
+/* Misión, visión, valores y seguridad */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.feature-card {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .04);
+  transition: border-color .25s ease, background-color .25s ease, transform .25s var(--curva);
+}
+
+.feature-card:hover {
+  border-color: rgba(20, 184, 166, .35);
+  background: rgba(255, 255, 255, .06);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.feature-icon-teal   { background: rgba(20, 184, 166, .18); color: var(--teal-claro); }
+.feature-icon-blue   { background: rgba(59, 130, 246, .18); color: var(--azul-claro); }
+.feature-icon-purple { background: rgba(147, 51, 234, .18); color: var(--morado-claro); }
+.feature-icon-green  { background: rgba(34, 197, 94, .18); color: var(--verde-claro); }
+
+.feature-title {
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: .98rem;
+  font-weight: 600;
+}
+
+.feature-description {
+  color: #94a3b8;
+  font-size: .86rem;
+  line-height: 1.5;
+}
+
+.valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+.valores li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(196, 181, 253, .1);
+  color: #cbd5e1;
+  font-size: .8rem;
+}
+
+.valores i {
+  color: var(--morado-claro);
+  font-size: .72rem;
+}
+
+/* Cifras */
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  padding-top: 24px;
+}
+
+.stat-item {
+  padding: 0 8px;
+  text-align: center;
+}
+
+.stat-item + .stat-item {
+  border-left: 1px solid rgba(255, 255, 255, .08);
+}
+
+.stat-number {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+}
+
+.stat-teal   { color: var(--teal-claro); }
+.stat-blue   { color: var(--azul-claro); }
+.stat-purple { color: var(--morado-claro); }
+
+.stat-label {
+  margin-top: 2px;
+  color: #94a3b8;
+  font-size: .82rem;
+}
+
+/* ==========================================================
+   PANEL DERECHO · ACCESO
+   ========================================================== */
+.login-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 32px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(20, 184, 166, .08), transparent 40%),
+    #f1f5f9;
+}
+
+/* Hora y fecha */
+.reloj {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--texto-suave);
+  font-size: .82rem;
+  animation: aparecer .5s ease .1s both;
+}
+
+.reloj i {
+  color: var(--teal-medio);
+}
+
+.time-display {
+  color: var(--texto);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.reloj-separador {
+  width: 1px;
+  height: 14px;
+  background: var(--borde);
+}
+
+/* Tarjeta */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 36px 34px 28px;
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 24px 48px -24px rgba(15, 23, 42, .25);
+  animation: subir .55s var(--curva) .05s both;
+}
+
+/* Marca en pantallas chicas */
+.mobile-logo {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+.mobile-logo-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-medio));
+  box-shadow: 0 10px 22px -10px rgba(20, 184, 166, .7);
+}
+
+.mobile-logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mobile-logo-icon i {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.mobile-logo-text h1 {
+  color: var(--texto);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  line-height: 1.1;
+}
+
+.mobile-logo-text p {
+  color: var(--teal-medio);
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
+/* Encabezado */
+.login-header {
+  margin-bottom: 28px;
+}
+
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 16px;
+  padding: 4px 11px 4px 9px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: var(--exito);
+  font-size: .78rem;
+  font-weight: 600;
+}
+
+.status-indicator i {
+  display: none;
+}
+
+.status-punto {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--exito);
+}
+
+.status-punto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--exito);
+  animation: latido 2s ease-out infinite;
+}
+
+.login-title {
+  color: var(--texto);
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.2;
+}
+
+.login-subtitle {
+  margin-top: 6px;
+  color: var(--texto-suave);
+  font-size: .95rem;
+}
+
+/* Formulario */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--texto-medio);
+  font-size: .85rem;
+  font-weight: 600;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  z-index: 2;
+  color: var(--texto-tenue);
+  font-size: .9rem;
+  transform: translateY(-50%);
+  transition: color .2s ease;
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 46px 0 44px;
+  border: 1.5px solid var(--borde);
+  border-radius: 12px;
+  background: var(--fondo-campo);
+  color: var(--texto);
+  font: inherit;
+  font-size: 1rem;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.form-input::placeholder {
+  color: #c0c6cf;
+}
+
+.form-input:hover {
+  border-color: #d1d5db;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--teal);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, .12);
+}
+
+.input-group:focus-within .input-icon {
+  color: var(--teal);
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 9px;
+  background: none;
+  color: var(--texto-tenue);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.password-toggle:hover {
+  background: #f1f5f9;
+  color: var(--texto-medio);
+}
+
+.password-toggle:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 1px;
+}
+
+/* Botón (sigue siendo el input "Ingresar" de siempre) */
+.login-button {
+  width: 100%;
+  height: 50px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(to right, var(--teal-medio), var(--teal-profundo));
+  box-shadow: 0 12px 24px -12px rgba(13, 148, 136, .8);
+  color: #fff;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background .25s ease, box-shadow .25s ease, transform .15s ease;
+}
+
+.login-button:hover {
+  background: linear-gradient(to right, var(--teal-profundo), var(--teal-oscuro));
+  box-shadow: 0 16px 30px -12px rgba(13, 148, 136, .9);
+  transform: translateY(-1px);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+.login-button:focus-visible {
+  outline: 3px solid rgba(20, 184, 166, .45);
+  outline-offset: 2px;
+}
+
+/* Mientras se envía */
+.login-button.enviando {
+  opacity: .8;
+  pointer-events: none;
+}
+
+/* Pie de la tarjeta */
+.login-footer {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--borde);
+  text-align: center;
+}
+
+.security-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  color: var(--texto-suave);
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+.security-badge i {
+  color: var(--teal-medio);
+}
+
+.footer-text {
+  color: var(--texto-suave);
+  font-size: .76rem;
+}
+
+.footer-version {
+  color: var(--texto-tenue);
+  font-size: .75rem;
+  text-align: center;
+}
+
+/* ==========================================================
+   ANIMACIONES (sutiles)
+   ========================================================== */
+
+/* Luces del fondo que se mueven muy despacio */
+.hero-section::before,
+.hero-section::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.hero-section::before {
+  top: -10%;
+  left: -8%;
+  width: 46vh;
+  height: 46vh;
+  background: rgba(20, 184, 166, .22);
+  animation: flotarLuz 18s ease-in-out infinite alternate;
+}
+
+.hero-section::after {
+  right: -10%;
+  bottom: -14%;
+  width: 56vh;
+  height: 56vh;
+  background: rgba(59, 130, 246, .16);
+  animation: flotarLuz 22s ease-in-out -6s infinite alternate-reverse;
+}
+
+/* La cuadrícula avanza lentamente */
+.hero-fondo {
+  animation: moverCuadricula 40s linear infinite;
+}
+
+/* Entrada escalonada de la presentación */
+.hero-content {
+  animation: none;
+}
+
+.hero-content > * {
+  animation: subir .7s var(--curva) both;
+}
+
+.hero-content > .logo-section  { animation-delay: .05s; }
+.hero-content > .hero-header   { animation-delay: .15s; }
+.hero-content > .features-grid { animation: none; }
+.hero-content > .stats-section { animation-delay: .65s; }
+
+.feature-card {
+  animation: subir .6s var(--curva) both;
+}
+
+.feature-card:nth-child(1) { animation-delay: .3s; }
+.feature-card:nth-child(2) { animation-delay: .38s; }
+.feature-card:nth-child(3) { animation-delay: .46s; }
+.feature-card:nth-child(4) { animation-delay: .54s; }
+
+/* El ícono de la tarjeta se mueve un poco al pasar el mouse */
+.feature-icon {
+  transition: transform .35s var(--curva);
+}
+
+.feature-card:hover .feature-icon {
+  transform: translateY(-2px) rotate(-6deg) scale(1.06);
+}
+
+/* Logo con un brillo que respira */
+.logo-icon,
+.mobile-logo-icon {
+  animation: respirar 4s ease-in-out infinite;
+}
+
+/* "Empresarial" con el degradado en movimiento lento */
+.hero-title-gradient {
+  background-size: 200% auto;
+  background-image: linear-gradient(to right, var(--teal), var(--azul), var(--teal));
+  animation: degradado 8s linear infinite;
+}
+
+/* Tarjeta de acceso: entra y luego sus partes aparecen en orden */
+.login-header,
+.login-form .form-group,
+.login-button,
+.login-footer,
+.mobile-logo {
+  animation: subir .55s var(--curva) both;
+}
+
+.mobile-logo                    { animation-delay: .1s; }
+.login-header                   { animation-delay: .15s; }
+.login-form .form-group:nth-of-type(1) { animation-delay: .25s; }
+.login-form .form-group:nth-of-type(2) { animation-delay: .32s; }
+.login-button                   { animation-delay: .4s; }
+.login-footer                   { animation-delay: .48s; }
+.footer-version                 { animation: aparecer .6s ease .6s both; }
+
+/* Botón con un destello que cruza al pasar el mouse */
+.login-button {
+  position: relative;
+  overflow: hidden;
+  background-size: 200% 100%;
+  background-image: linear-gradient(110deg, var(--teal-medio) 0%, var(--teal-profundo) 45%, #2dd4bf 50%, var(--teal-profundo) 55%, var(--teal-medio) 100%);
+  background-position: 100% 0;
+  transition: background-position .7s var(--curva), box-shadow .25s ease, transform .15s ease;
+}
+
+.login-button:hover {
+  background-image: linear-gradient(110deg, var(--teal-medio) 0%, var(--teal-profundo) 45%, #2dd4bf 50%, var(--teal-profundo) 55%, var(--teal-medio) 100%);
+  background-size: 200% 100%;
+  background-position: 0 0;
+}
+
+/* El ícono del campo da un pequeño salto al entrar */
+.input-group:focus-within .input-icon {
+  animation: saltito .35s var(--curva);
+}
+
+/* El ícono del reloj da una vuelta por minuto, como una manecilla */
+.reloj i {
+  animation: girarReloj 60s linear infinite;
+}
+
+@keyframes subir {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes aparecer {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes latido {
+  0%   { opacity: .6; transform: scale(1); }
+  100% { opacity: 0; transform: scale(2.6); }
+}
+
+@keyframes flotarLuz {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(8vw, 6vh) scale(1.12); }
+}
+
+@keyframes moverCuadricula {
+  from { background-position: 0 0, 0 0, 0 0, 0 0; }
+  to   { background-position: 0 0, 0 0, 48px 48px, 48px 48px; }
+}
+
+@keyframes respirar {
+  0%, 100% { box-shadow: 0 12px 30px -10px rgba(20, 184, 166, .55); }
+  50%      { box-shadow: 0 12px 34px -6px rgba(20, 184, 166, .85); }
+}
+
+@keyframes degradado {
+  to { background-position: 200% center; }
+}
+
+@keyframes saltito {
+  0%   { transform: translateY(-50%) scale(1); }
+  50%  { transform: translateY(-50%) scale(1.25); }
+  100% { transform: translateY(-50%) scale(1); }
+}
+
+@keyframes girarReloj {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================
+   RESPONSIVO
+   El panel de acceso nunca necesita scroll: espacios, campos y
+   letras se reducen según la altura disponible.
+   ========================================================== */
+
+.login-section {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Pantallas medianas: el panel de presentación se compacta */
+@media (max-width: 1280px) {
+  .login-container {
+    grid-template-columns: minmax(0, 1fr) minmax(400px, 460px);
+  }
+
+  .hero-content {
+    gap: 32px;
+  }
+
+  .feature-card {
+    padding: 15px;
+  }
+}
+
+/* Tabletas y teléfonos: sólo el acceso, sobre el fondo de la marca */
+@media (max-width: 1023px) {
+  .login-container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-section {
+    display: none;
+  }
+
+  .login-section {
+    background:
+      radial-gradient(circle at 15% 10%, rgba(20, 184, 166, .22), transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(59, 130, 246, .18), transparent 45%),
+      linear-gradient(135deg, var(--noche) 0%, var(--pizarra) 55%, var(--teal-oscuro) 100%);
+    background-size: 160% 160%, 160% 160%, 100% 100%;
+    animation: fondoMovil 20s ease-in-out infinite alternate;
+  }
+
+  .reloj {
+    border-color: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, .06);
+    color: #cbd5e1;
+  }
+
+  .reloj i {
+    color: var(--teal-claro);
+  }
+
+  .time-display {
+    color: #fff;
+  }
+
+  .reloj-separador {
+    background: rgba(255, 255, 255, .15);
+  }
+
+  .login-card {
+    border-color: transparent;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .5);
+  }
+
+  .mobile-logo {
+    display: flex;
+  }
+
+  .login-header {
+    text-align: center;
+  }
+
+  .footer-version {
+    color: #94a3b8;
+  }
+}
+
+@keyframes fondoMovil {
+  from { background-position: 0% 0%, 100% 100%, 0 0; }
+  to   { background-position: 30% 20%, 70% 80%, 0 0; }
+}
+
+/* Teléfonos */
+@media (max-width: 480px) {
+  .login-section {
+    gap: 14px;
+    padding: 16px 14px;
+  }
+
+  .login-card {
+    padding: 24px 20px 20px;
+    border-radius: 16px;
+  }
+
+  .mobile-logo {
+    margin-bottom: 18px;
+  }
+
+  .login-header {
+    margin-bottom: 20px;
+  }
+
+  .status-indicator {
+    margin-bottom: 10px;
+  }
+
+  .login-title {
+    font-size: 1.4rem;
+  }
+
+  .login-subtitle {
+    font-size: .88rem;
+  }
+
+  .reloj {
+    gap: 8px;
+    padding: 5px 12px;
+    font-size: .76rem;
+  }
+
+  .login-footer {
+    margin-top: 20px;
+    padding-top: 16px;
+  }
+}
+
+/* ---------- Pantallas bajas (acceso) ---------- */
+@media (max-height: 760px) {
+  .login-section {
+    gap: 14px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .login-card {
+    padding-top: 26px;
+    padding-bottom: 20px;
+  }
+
+  .login-header {
+    margin-bottom: 20px;
+  }
+
+  .status-indicator {
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-input,
+  .login-button {
+    height: 46px;
+  }
+
+  .login-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+
+  .mobile-logo {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-height: 660px) {
+  .login-section {
+    gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .login-card {
+    padding: 20px 20px 16px;
+  }
+
+  .mobile-logo {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .mobile-logo-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .mobile-logo-text h1 {
+    font-size: 1.1rem;
+  }
+
+  .login-header {
+    margin-bottom: 14px;
+  }
+
+  .status-indicator {
+    margin-bottom: 8px;
+    font-size: .72rem;
+  }
+
+  .login-title {
+    font-size: 1.3rem;
+  }
+
+  .login-subtitle {
+    margin-top: 2px;
+    font-size: .84rem;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .form-label {
+    margin-bottom: 5px;
+    font-size: .8rem;
+  }
+
+  .form-input,
+  .login-button {
+    height: 42px;
+    font-size: .95rem;
+  }
+
+  .login-button {
+    margin-top: 6px;
+  }
+
+  .login-footer {
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  .security-badge {
+    margin-bottom: 4px;
+    font-size: .74rem;
+  }
+
+  .footer-text,
+  .footer-version {
+    font-size: .7rem;
+  }
+
+  .reloj {
+    padding: 4px 12px;
+    font-size: .74rem;
+  }
+}
+
+@media (max-height: 600px) {
+  .form-input,
+  .login-button {
+    height: 40px;
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .mobile-logo {
+    margin-bottom: 10px;
+  }
+
+  .login-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+}
+
+/* Muy bajas (teléfonos chicos o acostados): se ocultan la hora y el texto del pie */
+@media (max-height: 560px) {
+  .reloj,
+  .footer-text,
+  .footer-version {
+    display: none;
+  }
+
+  .mobile-logo {
+    margin-bottom: 8px;
+  }
+
+  .mobile-logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .login-header {
+    margin-bottom: 10px;
+  }
+
+  .status-indicator {
+    display: none;
+  }
+
+  .login-footer {
+    margin-top: 10px;
+    padding-top: 8px;
+  }
+
+  .security-badge {
+    margin-bottom: 0;
+  }
+}
+
+/* ---------- Pantallas bajas (presentación, computadora) ---------- */
+@media (min-width: 1024px) and (max-height: 820px) {
+  .hero-section {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .hero-content {
+    gap: 24px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.9rem, 2.8vw, 2.4rem);
+  }
+
+  .hero-description {
+    margin-top: 8px;
+    font-size: .98rem;
+  }
+
+  .feature-card {
+    padding: 13px;
+  }
+
+  .stats-section {
+    padding-top: 16px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 700px) {
+  .hero-content {
+    gap: 18px;
+  }
+
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-description {
+    font-size: .92rem;
+  }
+
+  .features-grid {
+    gap: 10px;
+  }
+
+  .feature-card {
+    gap: 12px;
+    padding: 11px 13px;
+  }
+
+  .feature-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .feature-description {
+    font-size: .8rem;
+    line-height: 1.4;
+  }
+
+  .valores {
+    gap: 4px;
+  }
+
+  .valores li {
+    padding: 1px 8px;
+    font-size: .74rem;
+  }
+
+  .stat-number {
+    font-size: 1.4rem;
+  }
+
+  .stats-section {
+    padding-top: 12px;
+  }
+}
+
+/* Computadoras con muy poca altura: la descripción y las cifras se ocultan */
+@media (min-width: 1024px) and (max-height: 600px) {
+  .hero-description,
+  .stats-section {
+    display: none;
+  }
+}
+
+/* Teléfono acostado: sólo lo indispensable para entrar */
+@media (max-height: 440px) {
+  .mobile-logo,
+  .login-subtitle {
+    display: none;
+  }
+
+  .login-card {
+    padding: 16px 20px 12px;
+  }
+}

@@ -1,0 +1,85 @@
+CONSTRUCTOR FORMS · DEMO
+====================
+
+Demo de portafolio de Constructor Forms: el mismo diseño y las mismas reglas de la
+aplicación real (Blazor Server, .NET 10), hecha solo con HTML, CSS y JavaScript
+para que se pueda abrir sin servidor ni base de datos.
+
+Todos los datos son ficticios: campañas, usuarios, clientes, CURP, teléfonos,
+folios y catálogos se generan al abrir la demo. No hay credenciales reales ni
+conexión a ningún servicio; el NIP por SMS es simulado.
+
+
+CÓMO ABRIRLA
+------------
+Opción 1: doble clic en index.html (Chrome, Edge o Firefox).
+Opción 2: con un servidor estático, por ejemplo:
+    php -S 127.0.0.1:8770
+  y abrir http://127.0.0.1:8770
+
+En la pantalla de inicio de sesión hay botones para entrar con cada rol.
+Si prefieres escribirlo, todos los usuarios usan la contraseña Demo1234.
+
+    Administrador ........... admin.demo
+    Gerente ................. gerente.demo
+    Coordinador ............. coordinador.demo
+    Supervisor .............. supervisor.demo
+    Agente .................. agente.demo
+    Afiliado ................ afiliado.demo
+    BackOffice .............. backoffice.demo
+    Supervisor BackOffice ... supbackoffice.demo
+
+Abajo a la derecha está la etiqueta DEMO con "Cambiar de usuario" y
+"Restablecer datos" (vuelve a generar todo como al principio).
+
+
+QUÉ SE PUEDE PROBAR
+-------------------
+Agente / Afiliado
+  - Inicio con avance del periodo, meta y lo que falta por día.
+  - Capturar con el motor real del formulario: campos condicionales,
+    obligatorios con condición, fórmulas (SUMA, REDONDEAR, MIN, MAX, SI, EDAD),
+    catálogo de planes con sus datos, secciones repetibles, adjuntos simulados,
+    validación de CURP, CP y teléfono, borradores y folio al enviar.
+  - Mi meta: la asignada por periodo y una meta personal (diaria, semanal,
+    quincenal o mensual).
+
+Supervisor
+  - Supervisión: tablero del equipo, capturas con filtros.
+  - Corregir una captura: solo los campos marcados como corregibles, con motivo
+    obligatorio e historial de qué cambió.
+  - Mis agentes y Metas (con avisos de reparto y "Copiar del periodo anterior").
+
+BackOffice / Supervisor BackOffice
+  - Bandejas de validación y cobro, con el candado de quién trabaja cada venta.
+  - Trabajar una venta: estatus por etapa, campos editables y, en ventas de
+    afiliado, el NIP: se envía (sale un aviso con el SMS simulado), se verifica,
+    hay 5 intentos y vale 10 minutos. Al quinto error la venta se rechaza sola.
+  - El Supervisor BackOffice puede aprobar sin NIP con la contraseña de la
+    semana (la genera el Administrador en "Contraseña sin NIP"), y consultar el
+    NIP vigente de una venta.
+  - Panel con tarjetas, cobradas por día, motivos de rechazo y rankings.
+
+Administrador / Gerente / Coordinador
+  - Campañas, Usuarios, Bitácora, Formularios (con historial de versiones),
+    Constructor en solo lectura (con vista previa que valida como el servidor),
+    Catálogos, Estadísticas, Capturas y Mi campaña.
+  - Las pantallas de administración son de consulta: los botones de edición se
+    muestran como en la app, pero no cambian nada.
+  - Las descargas salen en CSV (la app real genera Excel).
+
+Tema claro, oscuro o automático y menú lateral como en la app real; se ve bien
+en celular.
+
+
+ARCHIVOS
+--------
+  *.html ............. una página por pantalla
+  css/app.css ........ estilos generales de la app real
+  css/componentes.css  estilos de cada componente de la app real
+  css/demo.css ....... solo la etiqueta DEMO y los accesos del login
+  js/tema.js, reloj.js  los mismos scripts de la app real
+  js/demo/ ........... datos de ejemplo, reglas, motor del formulario y menú
+  js/paginas/ ........ el código de cada pantalla
+
+Los cambios que hagas se guardan en el navegador (localStorage) y solo los ves tú.

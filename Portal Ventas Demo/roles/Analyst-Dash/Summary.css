@@ -1,0 +1,620 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+    color: #333;
+    min-height: 100vh;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ====== SIDEBAR ====== */
+.sidebar {
+    width: 280px;
+    background: linear-gradient(180deg, #0B1E26 0%, #0E2F36 100%);
+    padding: 30px 20px;
+    box-shadow: 4px 0 20px rgba(11, 30, 38, 0.3);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    animation: slideInDown 0.6s ease-out;
+}
+
+.logo i {
+    font-size: 28px;
+    color: #00C6A5;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.logo h2 {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 16px;
+    color: #B9C3CA;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: rgba(0, 198, 165, 0.1);
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.nav-item:hover::before {
+    width: 100%;
+}
+
+.nav-item:hover {
+    color: #00C6A5;
+    transform: translateX(8px);
+}
+
+.nav-item.active {
+    background: rgba(0, 198, 165, 0.15);
+    color: #00C6A5;
+    border-left: 3px solid #00C6A5;
+}
+
+.nav-item i {
+    font-size: 18px;
+}
+
+/* ====== MAIN CONTENT ====== */
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 40px;
+    background: #f5f7fa;
+}
+
+.header {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.header h1 {
+    color: #0B1E26;
+    font-size: 32px;
+    margin-bottom: 25px;
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.filtros-container h3 {
+    color: #0E2F36;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.filtros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filtro-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filtro-item label {
+    color: #555;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.filtro-item select,
+.filtro-item input {
+    padding: 10px 12px;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.filtro-item select:focus,
+.filtro-item input:focus {
+    outline: none;
+    border-color: #00C6A5;
+    box-shadow: 0 0 0 3px rgba(0, 198, 165, 0.1);
+}
+
+.filtro-item select:hover,
+.filtro-item input:hover {
+    border-color: #009678;
+}
+
+.filtros-botones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-aplicar,
+.btn-limpiar {
+    padding: 11px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-aplicar {
+    background: linear-gradient(135deg, #009678 0%, #007B62 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 150, 120, 0.3);
+}
+
+.btn-aplicar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 150, 120, 0.4);
+}
+
+.btn-limpiar {
+    background: white;
+    color: #009678;
+    border: 2px solid #e0e6ed;
+}
+
+.btn-limpiar:hover {
+    background: #f5f7fa;
+    border-color: #009678;
+}
+
+/* ====== TABLA ====== */
+.tabla-periodos-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.8s ease-out;
+    overflow-x: auto;
+    max-height: 70vh; /* altura máxima */
+    overflow-y: auto;
+}
+
+.tabla-periodos-container h3 {
+    color: #0B1E26;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.tabla-periodos {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+}
+
+.tabla-periodos thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(180deg, #0E2F36 0%, #0B1E26 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-periodos th {
+    color: #FFFFFF;
+    padding: 8px 10px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 2px solid #009678;
+}
+
+.tabla-periodos tbody tr {
+    border-bottom: 1px solid #e8ecf1;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: slideInUp 0.6s ease-out backwards;
+}
+
+.tabla-periodos tbody tr:nth-child(1) {
+    animation-delay: 0.05s;
+}
+.tabla-periodos tbody tr:nth-child(2) {
+    animation-delay: 0.1s;
+}
+.tabla-periodos tbody tr:nth-child(3) {
+    animation-delay: 0.15s;
+}
+.tabla-periodos tbody tr:nth-child(4) {
+    animation-delay: 0.2s;
+}
+.tabla-periodos tbody tr:nth-child(5) {
+    animation-delay: 0.25s;
+}
+.tabla-periodos tbody tr:nth-child(n+6) {
+    animation-delay: 0.3s;
+}
+
+.tabla-periodos tbody tr:hover {
+    background: linear-gradient(90deg, rgba(0, 198, 165, 0.08) 0%, rgba(0, 150, 120, 0.08) 100%);
+    transform: translateX(4px);
+    box-shadow: inset 3px 0 0 #00C6A5;
+}
+
+.tabla-periodos td {
+    padding: 5px 8px;
+    color: #333;
+    text-align: center;
+}
+
+.tabla-periodos td:nth-child(1) {
+    font-weight: 600;
+    color: #0B1E26;
+}
+
+/* ====== FILA TOTAL ====== */
+.tabla-periodos tbody tr[style*="font-weight:bold"] {
+    background: linear-gradient(90deg, #f0f7f5 0%, #f8fdfb 100%);
+    font-weight: 700;
+    border-top: 2px solid #009678;
+    border-bottom: 2px solid #009678;
+}
+
+.tabla-periodos tbody tr[style*="font-weight:bold"] td {
+    color: #0B1E26;
+    font-size: 15px;
+}
+
+/* ====== ANIMACIONES DE NÚMEROS ====== */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes popcorn {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(8px, -15px) scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 198, 165, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(0, 198, 165, 0.6), inset 0 0 10px rgba(0, 198, 165, 0.2);
+    }
+}
+
+/* ====== RUBIK CUBE 3D ====== */
+.rubik-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 1s ease-out;
+}
+
+.rubik-cube {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateCube 8s infinite linear;
+}
+
+.rubik-face {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    opacity: 0.95;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    backface-visibility: hidden;
+}
+
+.rubik-face.front {
+    background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+    transform: translateZ(40px);
+}
+
+.rubik-face.back {
+    background: linear-gradient(135deg, #4ECDC4, #6FE4DE);
+    transform: rotateY(180deg) translateZ(40px);
+}
+
+.rubik-face.right {
+    background: linear-gradient(135deg, #FFE66D, #FFF099);
+    transform: rotateY(90deg) translateZ(40px);
+}
+
+.rubik-face.left {
+    background: linear-gradient(135deg, #95E1D3, #B8F3ED);
+    transform: rotateY(-90deg) translateZ(40px);
+}
+
+.rubik-face.top {
+    background: linear-gradient(135deg, #009678, #00C6A5);
+    transform: rotateX(90deg) translateZ(40px);
+}
+
+.rubik-face.bottom {
+    background: linear-gradient(135deg, #0B1E26, #0E2F36);
+    transform: rotateX(-90deg) translateZ(40px);
+}
+
+.rubik-square {
+    flex: 0 0 calc(33.33% - 2px);
+    height: calc(33.33% - 2px);
+    background: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rubik-square:hover {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+}
+
+@keyframes rotateCube {
+    0% {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .filtros-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabla-periodos {
+        font-size: 5px;
+    }
+
+    .tabla-periodos th,
+    .tabla-periodos td {
+        padding: 8px 6px;
+    }
+
+    .rubik-cube {
+        width: 60px;
+        height: 60px;
+    }
+
+    .rubik-face {
+        width: 60px;
+        height: 60px;
+    }
+
+    .rubik-face.front,
+    .rubik-face.back {
+        transform: translateZ(30px);
+    }
+
+    .rubik-face.right {
+        transform: rotateY(90deg) translateZ(30px);
+    }
+
+    .rubik-face.left {
+        transform: rotateY(-90deg) translateZ(30px);
+    }
+
+    .rubik-face.top {
+        transform: rotateX(90deg) translateZ(30px);
+    }
+
+    .rubik-face.bottom {
+        transform: rotateX(-90deg) translateZ(30px);
+    }
+}
+
+/* ====== GRUPOS DE COLUMNAS ====== */
+.grupo-validacion {
+    background-color: #e6f7f4; /* verde claro */
+    border-left: 1px solid rgba(0, 150, 120, 0.2);
+    border-right: 1px solid rgba(0, 150, 120, 0.2);
+}
+
+.grupo-backoffice {
+    background-color: #e6f0f7; /* azul claro */
+    border-left: 1px solid rgba(11, 30, 38, 0.2);
+    border-right: 1px solid rgba(11, 30, 38, 0.2);
+}
+
+.grupo-cobro {
+    background-color: #f7f0e6; /* naranja claro */
+    border-left: 1px solid rgba(150, 120, 0, 0.2);
+    border-right: 1px solid rgba(150, 120, 0, 0.2);
+}
+
+/* ====== TABLA DE TOTALES ====== */
+.tabla-totales-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.tabla-totales-container h3 {
+    color: #0B1E26;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.tabla-totales {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.tabla-totales thead {
+    background: linear-gradient(180deg, #0E2F36 0%, #0B1E26 100%);
+}
+
+.tabla-totales th {
+    color: #FFFFFF;
+    padding: 8px 8px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 2px solid #009678;
+}
+
+.tabla-totales tbody tr {
+    border-bottom: 1px solid #e8ecf1;
+}
+
+.tabla-totales td {
+    padding: 5px 5px;
+    color: #333;
+    text-align: center;
+}
+
+.tabla-totales td:nth-child(1) {
+    font-weight: 600;
+    color: #0B1E26;
+}
+
+/* Estilo de fila total (igual que en la tabla principal) */
+.fila-total {
+    background: linear-gradient(90deg, #f0f7f5 0%, #f8fdfb 100%);
+    font-weight: 700;
+    border-top: 2px solid #009678;
+    border-bottom: 2px solid #009678;
+}
+
+.fila-total td {
+    color: #0B1E26;
+    font-size: 15px;
+}

@@ -1,0 +1,636 @@
+/*==========================================================
+    LAYOUT: sidebar, contenido, encabezado y progreso
+==========================================================*/
+:root {
+    --sidebar-width: 264px;
+    --sidebar-collapsed: 76px;
+}
+
+/*==========================================================
+    SIDEBAR
+==========================================================*/
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, var(--sidebar-bg) 0%, var(--sidebar-bg-2) 100%);
+    color: var(--sidebar-text);
+    z-index: 1000;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: width 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed);
+}
+
+.sidebar-header {
+    padding: 22px 18px 18px;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    flex: 0 0 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-bright));
+    color: #fff;
+    font-size: 18px;
+    box-shadow: 0 6px 16px rgba(0, 150, 120, 0.35);
+}
+
+.logo-text,
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    white-space: nowrap;
+    transition: opacity 0.2s var(--ease);
+}
+
+.brand-name {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: var(--sidebar-text-strong);
+}
+
+.brand-subtitle {
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--sidebar-text);
+}
+
+/* Perfil */
+.user-profile {
+    margin: 0 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--sidebar-line);
+}
+
+.profile-avatar {
+    flex: 0 0 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(25, 194, 155, 0.16);
+    color: var(--brand-bright);
+    font-size: 22px;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sidebar-text-strong);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-role {
+    font-size: 12px;
+    color: var(--sidebar-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Menú */
+.sidebar-menu {
+    flex: 1;
+    padding: 18px 0 8px;
+}
+
+.menu-section + .menu-section {
+    margin-top: 18px;
+}
+
+.menu-title {
+    display: block;
+    padding: 0 24px 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: rgba(166, 187, 184, 0.6);
+    white-space: nowrap;
+    transition: opacity 0.2s var(--ease);
+}
+
+.menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-item {
+    margin: 2px 12px;
+}
+
+.menu-item a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: background-color var(--transition), color var(--transition);
+}
+
+.menu-item a i {
+    flex: 0 0 22px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.menu-item a span {
+    white-space: nowrap;
+    transition: opacity 0.2s var(--ease);
+}
+
+.menu-item a:hover {
+    background: var(--sidebar-hover);
+    color: var(--sidebar-text-strong);
+}
+
+.menu-item.active a {
+    background: rgba(25, 194, 155, 0.14);
+    color: var(--sidebar-text-strong);
+}
+
+.menu-item.active a::before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--brand-bright);
+}
+
+.menu-item.active a i {
+    color: var(--brand-bright);
+}
+
+/* Interruptor de modo oscuro */
+.mode-toggle .toggle-switch {
+    margin-left: auto;
+    flex: 0 0 38px;
+    height: 22px;
+    position: relative;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.12);
+    transition: background-color var(--transition);
+}
+
+.mode-toggle .switch {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.25s var(--ease);
+}
+
+body.dark-mode .mode-toggle .toggle-switch {
+    background: var(--brand);
+}
+
+body.dark-mode .mode-toggle .switch {
+    transform: translateX(16px);
+}
+
+/* Pie: cerrar sesión */
+.sidebar-footer {
+    padding: 14px 12px 18px;
+    border-top: 1px solid var(--sidebar-line);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: #f08c99;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: background-color var(--transition), color var(--transition);
+}
+
+.logout-btn i {
+    flex: 0 0 22px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.logout-btn:hover {
+    background: rgba(240, 106, 124, 0.14);
+    color: #ffb3bd;
+}
+
+/* Sidebar contraído */
+.sidebar.collapsed .logo-section,
+.sidebar.collapsed .user-profile {
+    justify-content: center;
+}
+
+.sidebar.collapsed .user-profile {
+    padding: 8px;
+    background: transparent;
+    border-color: transparent;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .profile-info,
+.sidebar.collapsed .menu-item a span,
+.sidebar.collapsed .logout-btn span {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.sidebar.collapsed .menu-title {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.sidebar.collapsed .menu-item a,
+.sidebar.collapsed .logout-btn {
+    justify-content: center;
+    gap: 0;
+}
+
+.sidebar.collapsed .toggle-switch {
+    display: none;
+}
+
+/* Botón contraer / expandir */
+.sidebar-toggle {
+    position: fixed;
+    top: 30px;
+    left: calc(var(--sidebar-width) - 16px);
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: var(--shadow);
+    transition: left 0.3s var(--ease), color var(--transition), transform var(--transition);
+}
+
+.sidebar-toggle:hover {
+    color: var(--brand);
+    transform: scale(1.08);
+}
+
+.sidebar.collapsed ~ .sidebar-toggle {
+    left: calc(var(--sidebar-collapsed) - 16px);
+}
+
+/*==========================================================
+    CONTENIDO PRINCIPAL
+==========================================================*/
+.main-content {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    padding: 28px 36px 56px;
+    transition: margin-left 0.3s var(--ease);
+}
+
+.sidebar.collapsed ~ .main-content {
+    margin-left: var(--sidebar-collapsed);
+}
+
+.main-content > .page-header,
+.main-content > .form-progress,
+.main-content > .container-fluid {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-content > .container-fluid {
+    padding: 0;
+}
+
+/*==========================================================
+    ENCABEZADO
+==========================================================*/
+.page-header {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 26px 30px;
+    margin-bottom: 16px;
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(420px 180px at 100% 0%, var(--brand-soft), transparent 70%),
+        radial-gradient(260px 140px at 82% 120%, var(--accent-soft), transparent 70%),
+        var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.page-greeting {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    margin-bottom: 10px;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    color: var(--brand-strong);
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+body.dark-mode .page-greeting {
+    color: var(--brand-bright);
+}
+
+.page-greeting i {
+    color: var(--accent);
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 4px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--text);
+}
+
+.page-title i {
+    color: var(--brand);
+    font-size: 24px;
+}
+
+.page-subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.page-date {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: var(--surface-3);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.page-date span::first-letter {
+    text-transform: uppercase;
+}
+
+.page-date i {
+    color: var(--brand);
+}
+
+/*==========================================================
+    PROGRESO DE LA VENTA
+==========================================================*/
+.form-progress {
+    position: sticky;
+    top: 12px;
+    z-index: 50;
+    margin-bottom: 20px;
+    padding: 14px 18px 12px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+}
+
+.progress-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.progress-head i {
+    color: var(--brand);
+    margin-right: 4px;
+}
+
+.progress-head strong {
+    font-size: 14px;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-track {
+    height: 6px;
+    border-radius: 6px;
+    background: var(--surface-3);
+    overflow: hidden;
+}
+
+.progress-track span {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--brand), var(--brand-bright));
+    transition: width 0.5s var(--ease);
+}
+
+.progress-track.is-full span {
+    background: linear-gradient(90deg, var(--brand), var(--brand-bright), var(--accent));
+    background-size: 200% 100%;
+    animation: progresoBrillo 2.4s linear infinite;
+}
+
+@keyframes progresoBrillo {
+    to { background-position: -200% 0; }
+}
+
+.progress-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.progress-steps a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px 5px 6px;
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color var(--transition), color var(--transition);
+}
+
+.progress-steps a:hover {
+    background: var(--surface-3);
+    color: var(--text);
+}
+
+.progress-steps a.is-current {
+    background: var(--brand-soft);
+    color: var(--brand-strong);
+}
+
+body.dark-mode .progress-steps a.is-current {
+    color: var(--brand-bright);
+}
+
+.step-dot {
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-strong);
+    background: var(--surface);
+    font-size: 9px;
+    color: transparent;
+    transition: all 0.25s var(--ease);
+}
+
+.progress-steps a.is-complete .step-dot {
+    border-color: var(--brand);
+    background: var(--brand);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/*==========================================================
+    RESPONSIVE
+    En pantallas chicas el sidebar queda como barra de iconos;
+    al contraerlo se oculta por completo.
+==========================================================*/
+@media (max-width: 992px) {
+    .main-content {
+        padding: 20px 20px 48px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: var(--sidebar-collapsed);
+    }
+
+    .sidebar .logo-text,
+    .sidebar .profile-info,
+    .sidebar .menu-item a span,
+    .sidebar .logout-btn span,
+    .sidebar .toggle-switch {
+        display: none;
+    }
+
+    .sidebar .menu-title {
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .sidebar .logo-section,
+    .sidebar .user-profile,
+    .sidebar .menu-item a,
+    .sidebar .logout-btn {
+        justify-content: center;
+    }
+
+    .sidebar .user-profile {
+        padding: 8px;
+        background: transparent;
+        border-color: transparent;
+    }
+
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+
+    .main-content,
+    .sidebar.collapsed ~ .main-content {
+        margin-left: var(--sidebar-collapsed);
+        padding: 16px 14px 40px;
+    }
+
+    .sidebar.collapsed ~ .main-content {
+        margin-left: 0;
+        padding-left: 52px;
+    }
+
+    .sidebar-toggle {
+        left: calc(var(--sidebar-collapsed) - 16px);
+    }
+
+    .sidebar.collapsed ~ .sidebar-toggle {
+        left: 10px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 21px;
+    }
+
+    .form-progress {
+        position: static;
+    }
+
+    .progress-steps a {
+        font-size: 12px;
+    }
+}

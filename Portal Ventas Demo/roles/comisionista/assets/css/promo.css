@@ -1,0 +1,784 @@
+/*==========================================================
+    RECORDATORIO COMERCIAL (PROMO)
+==========================================================*/
+
+/*=========================
+    VARIABLES
+=========================*/
+.srp-overlay{
+    --srp-tinta:#1e1b4b;        /* texto principal */
+    --srp-tinta-suave:#5b5f7a;  /* texto secundario */
+    --srp-indigo:#4f46e5;
+    --srp-indigo-hondo:#3f3d9e;
+    --srp-azul:#2563eb;
+    --srp-ambar:#f59e0b;
+    --srp-ambar-claro:#fcd34d;
+    --srp-menta:#34d399;
+    --srp-coral:#fb7185;
+    --srp-papel:#fffdf8;        /* fondo del modal */
+    --srp-azul-fondo:#eef2ff;
+    --srp-ambar-fondo:#fff6e0;
+    --srp-menta-fondo:#ecfdf5;
+    --srp-coral-fondo:#fff1f2;
+    --srp-suave:cubic-bezier(.2,.8,.2,1);
+    --srp-candado:2s;           /* debe coincidir con SEGUNDOS_CANDADO en el JS */
+}
+
+/*=========================
+    OVERLAY
+=========================*/
+.srp-overlay{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:24px;
+    background:rgba(30,27,75,.62);
+    z-index:999999;
+    opacity:0;
+    visibility:hidden;
+    /* Al cerrar: visibility espera a que termine el fundido */
+    transition:opacity .3s ease, visibility 0s linear .3s;
+}
+
+.srp-overlay.active{
+    opacity:1;
+    visibility:visible;
+    /* Al abrir: visible de inmediato, para que el modal pueda recibir el foco */
+    transition:opacity .3s ease, visibility 0s;
+}
+
+.srp-overlay,
+.srp-overlay *,
+.srp-overlay *::before,
+.srp-overlay *::after{
+    box-sizing:border-box;
+}
+
+/*=========================
+    MODAL
+=========================*/
+.srp-modal{
+    position:relative;
+    width:100%;
+    max-width:540px;
+    max-height:92vh;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    border-radius:28px;
+    background:var(--srp-papel);
+    color:var(--srp-tinta);
+    font-family:inherit;
+    box-shadow:0 30px 80px rgba(30,27,75,.35);
+    outline:none;
+}
+
+.srp-overlay.active .srp-modal{
+    animation:srpEntrada .55s var(--srp-suave) both;
+}
+
+@keyframes srpEntrada{
+    from{
+        opacity:0;
+        transform:translateY(26px) scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+/* Entrada escalonada: cada bloque usa --srp-d como retraso */
+.srp-overlay.active .srp-etiqueta,
+.srp-overlay.active .srp-hero h2,
+.srp-overlay.active .srp-sub,
+.srp-overlay.active .srp-dato,
+.srp-overlay.active .srp-notas{
+    animation:srpSube .5s var(--srp-suave) both;
+    animation-delay:var(--srp-d, 0s);
+}
+
+@keyframes srpSube{
+    from{
+        opacity:0;
+        transform:translateY(14px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/*=========================
+    ENCABEZADO
+=========================*/
+.srp-hero{
+    position:relative;
+    flex-shrink:0;
+    overflow:hidden;
+    padding:34px 64px 38px 36px;
+    color:#fff;
+    background:linear-gradient(135deg, var(--srp-indigo-hondo), #4a56c9 60%, #4573d6);
+}
+
+/* Formas decorativas */
+.srp-forma{
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+}
+
+.srp-forma-1{
+    width:150px;
+    height:150px;
+    right:-46px;
+    bottom:-70px;
+    background:var(--srp-ambar-claro);
+    opacity:.9;
+    animation:srpDeriva1 11s ease-in-out infinite alternate;
+}
+
+.srp-forma-2{
+    width:74px;
+    height:74px;
+    right:92px;
+    bottom:-34px;
+    border:10px solid var(--srp-menta);
+    opacity:.75;
+    animation:srpDeriva2 13s ease-in-out infinite alternate;
+}
+
+.srp-forma-3{
+    width:16px;
+    height:16px;
+    right:150px;
+    top:30px;
+    background:var(--srp-coral);
+    opacity:.9;
+    animation:srpDeriva3 9s ease-in-out infinite alternate;
+}
+
+@keyframes srpDeriva1{
+    to{ transform:translate(-12px,-10px) scale(1.05); }
+}
+
+@keyframes srpDeriva2{
+    to{ transform:translate(14px,-8px); }
+}
+
+@keyframes srpDeriva3{
+    to{ transform:translate(-10px,12px); }
+}
+
+/* Etiqueta */
+.srp-etiqueta{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 14px 6px 10px;
+    border-radius:999px;
+    background:rgba(255,255,255,.16);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    --srp-d:.10s;
+}
+
+.srp-etiqueta-punto{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--srp-menta);
+    animation:srpLatido 2.4s ease-in-out infinite;
+}
+
+@keyframes srpLatido{
+    0%,100%{
+        box-shadow:0 0 0 0 rgba(52,211,153,.55);
+    }
+
+    60%{
+        box-shadow:0 0 0 7px rgba(52,211,153,0);
+    }
+}
+
+/* Título */
+.srp-hero h2{
+    position:relative;
+    margin:18px 0 0;
+    color:#fff;
+    font-size:27px;
+    font-weight:800;
+    line-height:1.3;
+    letter-spacing:-.01em;
+    --srp-d:.18s;
+}
+
+/* "por solo $200" como etiqueta pegada: entra completa, siempre legible */
+.srp-marca{
+    display:inline-block;
+    margin-top:6px;
+    padding:1px 12px;
+    border-radius:8px 12px 9px 13px;
+    background:var(--srp-ambar-claro);
+    color:var(--srp-tinta);
+    white-space:normal;
+    transform:rotate(-1.5deg);
+    transform-origin:left center;
+}
+
+.srp-overlay.active .srp-marca{
+    animation:srpSello .5s var(--srp-suave) .6s both;
+}
+
+@keyframes srpSello{
+    from{
+        opacity:0;
+        transform:rotate(-5deg) scale(1.18);
+    }
+
+    to{
+        opacity:1;
+        transform:rotate(-1.5deg) scale(1);
+    }
+}
+
+.srp-sub{
+    position:relative;
+    margin:14px 0 0;
+    color:rgba(255,255,255,.88);
+    font-size:15px;
+    --srp-d:.26s;
+}
+
+/*=========================
+    BOTÓN CERRAR (CON CANDADO)
+=========================*/
+.srp-cerrar{
+    position:absolute;
+    z-index:2;
+    top:16px;
+    right:16px;
+    width:40px;
+    height:40px;
+    padding:0;
+    border:0;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#fff;
+    color:var(--srp-tinta);
+    font-family:inherit;
+    font-size:24px;
+    font-weight:700;
+    line-height:1;
+    cursor:pointer;
+    transition:transform .25s var(--srp-suave), box-shadow .25s ease;
+}
+
+.srp-cerrar:not(:disabled){
+    animation:srpListo .45s var(--srp-suave);
+}
+
+@keyframes srpListo{
+    0%{ transform:scale(.8); }
+    60%{ transform:scale(1.12); }
+    100%{ transform:scale(1); }
+}
+
+.srp-cerrar:hover:not(:disabled){
+    transform:rotate(90deg);
+    box-shadow:0 6px 16px rgba(30,27,75,.3);
+}
+
+.srp-cerrar:disabled{
+    cursor:not-allowed;
+    background:rgba(255,255,255,.16);
+    color:#fff;
+    font-size:15px;
+}
+
+.srp-cerrar:focus-visible{
+    outline:3px solid var(--srp-ambar-claro);
+    outline-offset:3px;
+}
+
+/* Anillo que se vacía mientras dura el candado */
+.srp-cerrar-anillo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    transform:rotate(-90deg);
+    opacity:0;
+}
+
+.srp-cerrar-anillo circle{
+    fill:none;
+    stroke:var(--srp-ambar-claro);
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-dasharray:106.9;
+    stroke-dashoffset:0;
+}
+
+.srp-cerrar:disabled .srp-cerrar-anillo{
+    opacity:1;
+}
+
+.srp-overlay.active .srp-cerrar:disabled .srp-cerrar-anillo circle{
+    animation:srpAnillo var(--srp-candado) linear both;
+}
+
+@keyframes srpAnillo{
+    to{
+        stroke-dashoffset:106.9;
+    }
+}
+
+.srp-cerrar-txt{
+    position:relative;
+}
+
+/*=========================
+    CUERPO
+=========================*/
+.srp-cuerpo{
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+    padding:30px 36px 34px;
+    /* El scroll vive aquí: el encabezado y la × se quedan fijos */
+    flex:1 1 auto;
+    min-height:0;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.srp-cuerpo > *{
+    flex-shrink:0;
+}
+
+/*=========================
+    SCROLLBAR
+=========================*/
+.srp-cuerpo::-webkit-scrollbar{
+    width:14px;
+}
+
+.srp-cuerpo::-webkit-scrollbar-track{
+    margin:10px 0 18px;
+    background:transparent;
+}
+
+.srp-cuerpo::-webkit-scrollbar-thumb{
+    /* El borde transparente deja la píldora separada de la orilla */
+    border:4px solid transparent;
+    border-radius:999px;
+    background:linear-gradient(180deg, var(--srp-indigo), var(--srp-menta)) padding-box;
+    opacity:.8;
+}
+
+.srp-cuerpo::-webkit-scrollbar-thumb:hover{
+    border-width:3px;
+    background:linear-gradient(180deg, var(--srp-indigo-hondo), var(--srp-indigo)) padding-box;
+}
+
+/* Firefox y navegadores sin ::-webkit-scrollbar */
+@supports not selector(::-webkit-scrollbar){
+    .srp-cuerpo{
+        scrollbar-width:thin;
+        scrollbar-color:var(--srp-indigo) transparent;
+    }
+}
+
+/*=========================
+    VELOCIDAD Y PRECIO
+=========================*/
+.srp-datos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.srp-dato{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    padding:20px 22px 22px;
+    border-radius:20px;
+}
+
+.srp-dato-vel{
+    background:var(--srp-azul-fondo);
+    --srp-d:.34s;
+}
+
+.srp-dato-precio{
+    background:var(--srp-ambar-fondo);
+    --srp-d:.42s;
+}
+
+.srp-dato-valor{
+    font-size:46px;
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums;
+}
+
+.srp-dato-vel .srp-dato-valor{
+    color:var(--srp-indigo-hondo);
+}
+
+.srp-dato-precio .srp-dato-valor{
+    color:#b45309;
+}
+
+.srp-dato-valor small{
+    margin-left:3px;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:0;
+    opacity:.75;
+}
+
+.srp-dato-pie{
+    margin-top:8px;
+    color:var(--srp-tinta-suave);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+/* Barra de velocidad */
+.srp-barra{
+    display:block;
+    height:6px;
+    margin-top:14px;
+    border-radius:999px;
+    overflow:hidden;
+    background:rgba(79,70,229,.15);
+}
+
+.srp-barra span{
+    display:block;
+    width:100%;
+    height:100%;
+    border-radius:inherit;
+    background:linear-gradient(90deg, var(--srp-indigo), var(--srp-menta));
+    transform-origin:left center;
+}
+
+.srp-overlay.active .srp-barra span{
+    animation:srpBarra 1s var(--srp-suave) .6s both;
+}
+
+@keyframes srpBarra{
+    from{
+        transform:scaleX(0);
+    }
+
+    to{
+        transform:scaleX(1);
+    }
+}
+
+/* Chispa del precio */
+.srp-chispa{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:22px;
+    height:22px;
+    fill:var(--srp-ambar);
+    animation:srpChispa 3.6s ease-in-out infinite;
+}
+
+@keyframes srpChispa{
+    0%,100%{
+        transform:scale(1) rotate(0deg);
+        opacity:.9;
+    }
+
+    50%{
+        transform:scale(.72) rotate(40deg);
+        opacity:.55;
+    }
+}
+
+/*=========================
+    PLATAFORMAS
+=========================*/
+.srp-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+.srp-chips li{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px 8px 12px;
+    border-radius:999px;
+    background:var(--srp-chip-fondo);
+    color:var(--srp-tinta);
+    font-size:14px;
+    font-weight:600;
+    transition:transform .25s var(--srp-suave);
+}
+
+.srp-chips li::before{
+    content:"";
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--srp-chip-punto);
+}
+
+.srp-chips li:hover{
+    transform:translateY(-3px);
+}
+
+.srp-chips li:nth-child(4n+1){ --srp-chip-fondo:var(--srp-azul-fondo);  --srp-chip-punto:var(--srp-indigo); }
+.srp-chips li:nth-child(4n+2){ --srp-chip-fondo:var(--srp-coral-fondo); --srp-chip-punto:var(--srp-coral); }
+.srp-chips li:nth-child(4n+3){ --srp-chip-fondo:var(--srp-menta-fondo); --srp-chip-punto:var(--srp-menta); }
+.srp-chips li:nth-child(4n+4){ --srp-chip-fondo:var(--srp-ambar-fondo); --srp-chip-punto:var(--srp-ambar); }
+
+.srp-overlay.active .srp-chips li{
+    animation:srpChip .45s var(--srp-suave) both;
+}
+
+.srp-overlay.active .srp-chips li:nth-child(1){ animation-delay:.55s; }
+.srp-overlay.active .srp-chips li:nth-child(2){ animation-delay:.61s; }
+.srp-overlay.active .srp-chips li:nth-child(3){ animation-delay:.67s; }
+.srp-overlay.active .srp-chips li:nth-child(4){ animation-delay:.73s; }
+.srp-overlay.active .srp-chips li:nth-child(5){ animation-delay:.79s; }
+.srp-overlay.active .srp-chips li:nth-child(6){ animation-delay:.85s; }
+.srp-overlay.active .srp-chips li:nth-child(n+7){ animation-delay:.91s; }
+
+@keyframes srpChip{
+    from{
+        opacity:0;
+        transform:translateY(8px) scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+/*=========================
+    AHORRO POR DOMICILIAR
+=========================*/
+.srp-ahorro{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 18px;
+    border:2px dashed var(--srp-menta);
+    border-radius:20px;
+    background:var(--srp-menta-fondo);
+    --srp-d:.85s;
+}
+
+.srp-ahorro-icono{
+    flex-shrink:0;
+    width:44px;
+    height:44px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:var(--srp-menta);
+}
+
+.srp-ahorro-icono svg{
+    width:22px;
+    height:22px;
+    fill:#fff;
+}
+
+.srp-ahorro p{
+    margin:0;
+    color:var(--srp-tinta);
+    font-size:14px;
+    line-height:1.5;
+}
+
+.srp-ahorro strong{
+    color:var(--srp-indigo-hondo);
+    font-weight:800;
+}
+
+.srp-ahorro-monto{
+    display:inline-block;
+    padding:0 8px;
+    border-radius:8px;
+    background:var(--srp-ambar-claro);
+    color:var(--srp-tinta);
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.srp-overlay.active .srp-ahorro{
+    animation:srpSube .5s var(--srp-suave) both;
+    animation-delay:var(--srp-d, 0s);
+}
+
+/*=========================
+    NOTAS
+=========================*/
+.srp-notas{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin:0;
+    padding:20px 0 0;
+    border-top:2px dashed rgba(79,70,229,.2);
+    list-style:none;
+    color:var(--srp-tinta-suave);
+    font-size:12.5px;
+    line-height:1.5;
+    --srp-d:.95s;
+}
+
+.srp-notas li{
+    position:relative;
+    padding-left:18px;
+}
+
+.srp-notas li::before{
+    content:"*";
+    position:absolute;
+    left:2px;
+    top:1px;
+    color:var(--srp-ambar);
+    font-size:15px;
+    font-weight:800;
+    line-height:1.2;
+}
+
+/*=========================
+    CELULAR
+=========================*/
+@media (max-width:576px){
+    .srp-overlay{
+        padding:12px;
+    }
+
+    .srp-modal{
+        border-radius:22px;
+    }
+
+    .srp-hero{
+        padding:26px 60px 30px 22px;
+    }
+
+    .srp-hero h2{
+        font-size:21px;
+    }
+
+    .srp-sub{
+        font-size:14px;
+    }
+
+    .srp-forma-1{
+        width:92px;
+        height:92px;
+        right:-36px;
+        bottom:-48px;
+    }
+
+    .srp-forma-2,
+    .srp-forma-3{
+        display:none;
+    }
+
+    .srp-cuerpo{
+        gap:20px;
+        padding:22px 22px 26px;
+    }
+
+    .srp-datos{
+        gap:12px;
+    }
+
+    .srp-dato{
+        padding:16px 16px 18px;
+    }
+
+    .srp-dato-valor{
+        font-size:34px;
+    }
+
+    .srp-dato-valor small{
+        font-size:13px;
+    }
+
+    .srp-dato-pie{
+        font-size:11px;
+    }
+
+    .srp-chispa{
+        width:16px;
+        height:16px;
+        top:10px;
+        right:10px;
+    }
+
+    .srp-chips li{
+        font-size:13px;
+        padding:7px 13px 7px 10px;
+    }
+
+    .srp-ahorro{
+        gap:12px;
+        padding:14px;
+    }
+    
+    .srp-ahorro-icono{
+        width:38px;
+        height:38px;
+    }
+    
+    .srp-ahorro p{
+        font-size:13px;
+    }
+}
+
+/*=========================
+    REDUCIR ANIMACIONES (solo dentro del popup)
+=========================*/
+@media (prefers-reduced-motion:reduce){
+    .srp-overlay,
+    .srp-overlay *,
+    .srp-overlay *::before,
+    .srp-overlay *::after{
+        animation:none !important;
+        transition:none !important;
+    }
+}
+
+/*=========================
+    IMPRESIÓN
+=========================*/
+@media print{
+    .srp-overlay{
+        display:none !important;
+    }
+}

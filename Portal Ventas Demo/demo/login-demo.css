@@ -1,0 +1,91 @@
+/* Lista de perfiles con la misma apariencia que los campos del login */
+.form-select-demo {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 40px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m3 6 5 5 5-5'/%3e%3c/svg%3e");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+  background-size: 13px;
+}
+
+.demo-nota {
+  display: flex;
+  gap: 7px;
+  margin-top: 10px;
+  padding: 8px 11px;
+  border-radius: 10px;
+  background: #f0fdfa;
+  color: #0f766e;
+  font-size: .78rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.demo-nota i {
+  margin-top: 2px;
+}
+
+/* La etiqueta "Demo" no hace falta en el inicio */
+.demo-etiqueta {
+  display: none;
+}
+
+/* Con el campo extra, en pantallas bajas se compacta un poco más
+   (la nota se oculta: el campo "Perfil de demostración" ya lo explica) */
+@media (max-height: 920px) {
+  .demo-nota {
+    display: none;
+  }
+
+  .login-header {
+    margin-bottom: 18px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-height: 760px) {
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .form-label {
+    margin-bottom: 4px;
+  }
+
+  .login-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+
+  .footer-text {
+    display: none;
+  }
+}
+
+@media (max-height: 640px) {
+  .status-indicator,
+  .footer-version {
+    display: none;
+  }
+
+  .form-input,
+  .login-button {
+    height: 38px;
+  }
+
+  .login-header {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-height: 560px) {
+  .login-subtitle,
+  .login-footer {
+    display: none;
+  }
+}

@@ -1,0 +1,400 @@
+/* ==========================================================
+   ADMINISTRACIÓN · BASE Y MENÚ LATERAL (Ver Ventas)
+   Paleta empresarial: grafito en el menú, gris acero de fondo,
+   acento petróleo y un toque dorado en la marca.
+   Las variables se usan también en Ventas_registradas.css.
+   ========================================================== */
+
+:root {
+    --fondo: #e7ebf0;
+    --superficie: #f9fafb;
+    --superficie-suave: #f0f3f6;
+    --borde: #d8dee6;
+    --borde-fuerte: #c2cbd6;
+
+    --texto: #17202c;
+    --texto-suave: #4c5868;
+    --texto-tenue: #86919f;
+
+    --acento: #0b6e79;
+    --acento-hover: #085a63;
+    --acento-suave: #dff0f1;
+    --oro: #b8892d;
+
+    --exito: #1f7a4d;
+    --exito-suave: #e3f2ea;
+    --alerta: #9a6a12;
+    --alerta-suave: #f6eedb;
+    --error: #b4322a;
+    --error-suave: #f8e8e6;
+
+    /* Menú lateral grafito */
+    --menu-fondo: #141c28;
+    --menu-fondo-2: #0f1620;
+    --menu-borde: rgba(255, 255, 255, .07);
+    --menu-texto: #aeb8c6;
+    --menu-icono: #6f7c8d;
+    --menu-activo: rgba(63, 181, 191, .14);
+    --menu-marca: #3fb5bf;
+    --menu-seccion: #5d697a;
+
+    /* Encabezados de tabla y tarjetas */
+    --encabezado-fondo: #e3e9ef;
+    --encabezado-texto: #2f4a62;
+
+    --radio: 10px;
+    --radio-chico: 7px;
+    --sombra: 0 1px 2px rgba(20, 28, 40, .06), 0 2px 8px rgba(20, 28, 40, .04);
+    --sombra-flotante: 0 14px 36px rgba(20, 28, 40, .18);
+    --curva: cubic-bezier(.2, .7, .2, 1);
+    --menu-ancho: 256px;
+}
+
+/* Modo oscuro (assets: JS/admin.js agrega body.dark-mode y lo recuerda) */
+body.dark-mode {
+    --fondo: #0e131a;
+    --superficie: #161d27;
+    --superficie-suave: #1b2330;
+    --borde: #263141;
+    --borde-fuerte: #344256;
+    --texto: #e6ebf1;
+    --texto-suave: #a3aebd;
+    --texto-tenue: #6d7888;
+    --acento: #3fb5bf;
+    --acento-hover: #65c7cf;
+    --acento-suave: rgba(63, 181, 191, .13);
+    --oro: #d6ad5c;
+    --exito: #6fc597;
+    --exito-suave: rgba(111, 197, 151, .12);
+    --alerta: #dcb563;
+    --alerta-suave: rgba(220, 181, 99, .12);
+    --error: #e48a82;
+    --error-suave: rgba(228, 138, 130, .12);
+    --menu-fondo: #0c1118;
+    --menu-fondo-2: #090d13;
+    --encabezado-fondo: #1a2330;
+    --encabezado-texto: #9fb4c8;
+    --sombra: none;
+    color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+}
+
+:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: 2px;
+}
+
+/* ---------- Menú lateral ---------- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    width: var(--menu-ancho);
+    height: 100vh;
+    background: linear-gradient(180deg, var(--menu-fondo) 0%, var(--menu-fondo-2) 100%);
+    color: var(--menu-texto);
+    transform: translateX(0);
+    transition: transform .28s var(--curva), box-shadow .28s var(--curva);
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+}
+
+/* Marca */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 20px 20px 16px;
+}
+
+.sidebar-brand__logo {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(214, 173, 92, .35);
+    border-radius: 9px;
+    background: rgba(214, 173, 92, .1);
+    color: #d6ad5c;
+    font-size: 15px;
+}
+
+.sidebar-brand__texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.sidebar-brand__texto strong {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .01em;
+}
+
+.sidebar-brand__texto small {
+    color: var(--menu-icono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* Usuario */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 12px 6px;
+    padding: 12px;
+    border: 1px solid var(--menu-borde);
+    border-radius: var(--radio);
+    background: rgba(255, 255, 255, .03);
+}
+
+.avatar {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--menu-marca), #0b6e79);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .04em;
+}
+
+.user-info {
+    min-width: 0;
+}
+
+.user-info h3 {
+    margin-bottom: 1px;
+    color: var(--menu-icono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .08em;
+}
+
+.user-info p {
+    overflow: hidden;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Opciones agrupadas por sección */
+.sidebar-nav {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+    padding: 6px 12px 12px;
+    scrollbar-width: none;
+}
+
+.sidebar-section {
+    margin: 14px 12px 6px;
+    color: var(--menu-seccion);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.sidebar-section:first-child {
+    margin-top: 8px;
+}
+
+.nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: var(--radio-chico);
+    color: var(--menu-texto);
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.nav-item i {
+    width: 16px;
+    color: var(--menu-icono);
+    font-size: 13.5px;
+    text-align: center;
+    transition: color .15s ease, transform .2s var(--curva);
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, .05);
+    color: #fff;
+}
+
+.nav-item:hover i {
+    color: var(--menu-texto);
+    transform: translateX(2px);
+}
+
+.nav-item.active {
+    background: var(--menu-activo);
+    color: #fff;
+}
+
+.nav-item.active i {
+    color: var(--menu-marca);
+}
+
+/* Línea de acento a la izquierda de la opción activa */
+.nav-item.active::before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    bottom: 7px;
+    left: -12px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--menu-marca);
+}
+
+/* Pie del menú */
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px 12px;
+    border-top: 1px solid var(--menu-borde);
+}
+
+.theme-toggle,
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: var(--radio-chico);
+    background: none;
+    color: var(--menu-texto);
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.theme-toggle i,
+.logout-btn i {
+    width: 16px;
+    color: var(--menu-icono);
+    text-align: center;
+    transition: color .15s ease, transform .5s var(--curva);
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, .05);
+    color: #fff;
+}
+
+.theme-toggle:hover i {
+    color: var(--menu-marca);
+    transform: rotate(-20deg);
+}
+
+body.dark-mode .theme-toggle i {
+    color: #e0b85e;
+}
+
+.logout-btn:hover {
+    background: rgba(228, 138, 130, .13);
+    color: #f4b4ad;
+}
+
+.logout-btn:hover i {
+    color: #f4b4ad;
+}
+
+.brand {
+    padding: 10px 12px 2px;
+    color: var(--menu-seccion);
+    font-size: 11px;
+    letter-spacing: .04em;
+}
+
+/* ---------- Cambio de tema ---------- */
+/* El tema nuevo se dibuja encima y crece en círculo desde el botón (JS/admin.js) */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+    z-index: 2;
+}
+
+/* Navegadores sin View Transitions: los colores se desvanecen */
+.tema-en-transicion,
+.tema-en-transicion *,
+.tema-en-transicion *::before,
+.tema-en-transicion *::after {
+    transition: background-color .6s ease, border-color .6s ease, color .6s ease, box-shadow .6s ease !important;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: var(--sombra-flotante);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}

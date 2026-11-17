@@ -1,0 +1,128 @@
+/* ==========================================================
+   ADMINISTRACIÓN · BACKLOG (back_log.php)
+   Sólo lo propio de esta página; el resto viene de
+   Dash_admin.css y Ventas_registradas.css.
+   ========================================================== */
+
+/* Cuatro filtros en una fila */
+.filter-grid {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.form-input[type="date"] {
+    min-width: 0;
+    color-scheme: light;
+}
+
+body.dark-mode .form-input[type="date"] {
+    color-scheme: dark;
+}
+
+/* Barra sobre la tabla: total y filtros activos */
+.table-toolbar {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.table-toolbar-titulo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--texto);
+    font-weight: 600;
+}
+
+.table-toolbar-titulo i {
+    color: var(--acento);
+}
+
+.table-toolbar .badge {
+    border-color: transparent;
+    background: var(--acento-suave);
+    color: var(--acento);
+    font-weight: 600;
+}
+
+.chip-filtro {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 9px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+
+.chip-filtro b {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+.table-toolbar-nota {
+    margin-left: auto;
+    color: var(--texto-tenue);
+    font-size: 12px;
+}
+
+/* Columnas: el cambio se lee de un vistazo */
+.data-table td.celda-id {
+    color: var(--acento);
+    font-weight: 600;
+}
+
+.data-table td.celda-tenue {
+    color: var(--texto-tenue);
+}
+
+.data-table td.celda-nuevo {
+    color: var(--acento);
+    font-weight: 600;
+}
+
+.data-table td.celda-anterior {
+    color: var(--texto-tenue);
+}
+
+.data-table td.celda-anterior:not(:empty)::before {
+    content: "\f1da";
+    margin-right: 6px;
+    font-family: "Font Awesome 6 Free";
+    font-size: 11px;
+    font-weight: 900;
+    opacity: .7;
+}
+
+.data-table td.celda-autor {
+    color: var(--texto-suave);
+    font-style: italic;
+}
+
+/* La primera columna (ID de actualización) no necesita quedar fija */
+.data-table th:first-child,
+.data-table td:first-child {
+    position: static;
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .table-toolbar-nota {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* Los campos pueden encogerse dentro de su columna (los de texto tienen un ancho mínimo natural) */
+.filter-grid .form-input {
+    width: 100%;
+    min-width: 0;
+}

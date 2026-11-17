@@ -1,0 +1,310 @@
+<script>console.log('[v2] Database connected successfully');</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../demo/demo-datos.js"></script><script src="../../demo/demo.js"></script><link rel="stylesheet" href="../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero de Resumen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/Logoick.png" type="image/x-icon">
+    <link rel="stylesheet" href="Summary.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                <h2>Seguridad Hogar</h2>
+            </div>
+            <nav class="nav-menu">
+                <!--<a href="Dashboard-analyst.html" class="nav-item">-->
+                <!--    <i class="fas fa-chart-line"></i>-->
+                <!--    <span>Dashboard</span>-->
+                <!--</a>-->
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-table"></i>
+                    <span>Tablero Resumen</span>
+                </a>
+                <a href="SummaryByHour.html" class="nav-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Tablero por Hora</span>
+                </a>
+                <a href="#demo" class="nav-item">
+                    <i class='fas fa-calendar icon' title="Intervalo de ventas"></i>
+                    <span class="text nav-text">Intervalo de ventas</span>
+                </a>
+                <a href="../../index.html" class="nav-item">
+                    <i class="fas fa-right-from-bracket"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Tablero de Ventas por Periodo</h1>
+                <div class="filtros-container">
+                    <h3>Filtros del Reporte</h3>
+                    <div class="filtros-grid">
+                        <div class="filtro-item">
+                            <label for="mesSelect">Mes</label>
+                            <select id="mesSelect" onchange="filtrarMes()">
+                                <option value="">Seleccionar mes...</option>
+                                <option value="01">Enero</option>
+                                <option value="02">Febrero</option>
+                                <option value="03">Marzo</option>
+                                <option value="04">Abril</option>
+                                <option value="05">Mayo</option>
+                                <option value="06">Junio</option>
+                                <option value="07">Julio</option>
+                                <option value="08">Agosto</option>
+                                <option value="09">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="filtro-item">
+                            <label for="fechaInicio">Desde</label>
+                            <input type="date" id="fechaInicio">
+                        </div>
+                        <div class="filtro-item">
+                            <label for="fechaFin">Hasta</label>
+                            <input type="date" id="fechaFin">
+                        </div>
+                    </div>
+                    <div class="filtros-botones">
+                        <button class="btn-aplicar" onclick="aplicarRango()">
+                            <i class="fa-solid fa-filter"></i> Aplicar Filtros
+                        </button>
+                        <button class="btn-limpiar" onclick="window.location.href='SummaryByPeriod.php'">
+                            <i class="fa-solid fa-eraser"></i> Limpiar
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="tabla-totales-container">
+                <h3>Resumen General de Totales</h3>
+                <table class="tabla-totales">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Ventas Brutas</th>
+                            <th colspan="3">Validación</th>
+                            <th colspan="3">Ingreso (Backoffice)</th>
+                            <th colspan="3">Cobro</th>
+                            <th>Cobradas por Fecha de Cobro</th>
+                            <th>Ventas Domiciliadas</th>
+                            <th>Ventas Domiciliadas</th>
+                            <th>% Domiciliadas</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Aprobadas</th>
+                            <th>Pendientes</th>
+                            <th>Rechazadas</th>
+                            <th>Ingresadas</th>
+                            <th>Pendientes</th>
+                            <th>Rechazadas</th>
+                            <th>Cobradas</th>
+                            <th>Pendientes</th>
+                            <th>Rechazadas</th>
+                            <th></th>
+                            <th>(Fecha de venta)</th>
+                            <th>(Fecha de cobro)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fila-total">
+                            <td style="text-align:center;">TOTAL</td>
+                            <td>0</td>
+                            <td class="grupo-validacion">0</td>
+                            <td class="grupo-validacion">0</td>
+                            <td class="grupo-validacion">0</td>
+                            <td class="grupo-backoffice">0</td>
+                            <td class="grupo-backoffice">0</td>
+                            <td class="grupo-backoffice">0</td>
+                            <td class="grupo-cobro">0</td>
+                            <td class="grupo-cobro">0</td>
+                            <td class="grupo-cobro">0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tabla-periodos-container">
+                <h3>Reporte por Periodos (Día / Mes / Año)</h3>
+                <table class="tabla-periodos">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Ventas Brutas</th>
+                            <th scope="colgroup" colspan="3">Validación</th>
+                            <th scope="colgroup" colspan="3">Ingreso (Backoffice)</th>
+                            <th scope="colgroup" colspan="3">Cobro</th>
+                            <th scope="col">Cobradas por Fecha de Cobro</th>
+                            <th scope="col">Ventas Domiciliadas</th>
+                            <th scope="col">Ventas Domiciliadas</th>
+                            <th scope="col">Domiciliadas / Cobradas</th>
+                        </tr>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">Aprobadas</th>
+                            <th scope="col">Pendientes</th>
+                            <th scope="col">Rechazadas</th>
+                            <th scope="col">Ingresadas</th>
+                            <th scope="col">Pendientes</th>
+                            <th scope="col">Rechazadas</th>
+                            <th scope="col">Cobradas</th>
+                            <th scope="col">Pendientes</th>
+                            <th scope="col">Rechazadas</th>
+                            <th scope="col"></th>
+                            <th scope="col">(Fecha de venta)</th>
+                            <th scope="col">(Fecha de cobro)</th>
+                            <th scope="col">(Fecha de cobro)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPeriodosBody">
+                                            </tbody>
+                    <tfoot>
+                        <tr class="fila-total">
+                            <td style="text-align:center;">TOTAL</td>
+                            <td>0</td>
+                            <td class="grupo-validacion">0</td>
+                            <td class="grupo-validacion">0</td>
+                            <td class="grupo-validacion">0</td>
+                            <td class="grupo-backoffice">0</td>
+                            <td class="grupo-backoffice">0</td>
+                            <td class="grupo-backoffice">0</td>
+                            <td class="grupo-cobro">0</td>
+                            <td class="grupo-cobro">0</td>
+                            <td class="grupo-cobro">0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0%</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Agregado: Cubo de Rubik 3D animado en la parte inferior -->
+            <div class="rubik-container">
+                <div class="rubik-cube">
+                    <div class="rubik-face front">
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                    </div>
+                    <div class="rubik-face back">
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                    </div>
+                    <div class="rubik-face right">
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                    </div>
+                    <div class="rubik-face left">
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                    </div>
+                    <div class="rubik-face top">
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                    </div>
+                    <div class="rubik-face bottom">
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                        <div class="rubik-square"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function aplicarRango() {
+            let inicio = document.getElementById("fechaInicio").value;
+            let fin = document.getElementById("fechaFin").value;
+
+            if (!inicio || !fin) {
+                alert("Selecciona ambas fechas para aplicar el rango.");
+                return;
+            }
+
+            if (inicio > fin) {
+                alert("La fecha inicial no puede ser mayor que la final.");
+                return;
+            }
+
+            window.location.href = "?inicio=" + inicio + "&fin=" + fin;
+        }
+
+        function filtrarMes() {
+            let mes = document.getElementById("mesSelect").value;
+            if (mes) {
+                window.location.href = "?mes=" + mes;
+            }
+        }
+
+        window.addEventListener('load', function() {
+            const rows = document.querySelectorAll('.tabla-periodos tbody tr');
+            rows.forEach(row => {
+                row.style.animation = 'glow 2s ease-in-out';
+            });
+        });
+    </script>
+</body>
+</html>

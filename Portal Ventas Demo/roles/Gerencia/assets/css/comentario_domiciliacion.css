@@ -1,0 +1,260 @@
+/* ==========================================================
+   GERENCIA · COMENTARIO DE DOMICILIACIÓN Y TABLA VACÍA
+   Botón junto al ID de la venta y su ventana (assets/js/comentario.js).
+   Variables de color en dashboard.css.
+   ========================================================== */
+
+/* Mensaje cuando no hay ventas */
+.tabla-vacia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 100%;
+    min-height: 240px;
+    padding: 48px 24px;
+    color: var(--texto-suave);
+    text-align: center;
+    animation: aparecer .4s ease both;
+}
+
+.tabla-vacia i {
+    color: var(--borde-fuerte);
+    font-size: 32px;
+}
+
+/* ---------- Botón junto al ID ---------- */
+.venta-id-cell {
+    white-space: nowrap;
+}
+
+.comentario-venta-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    margin-right: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 14px;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.comentario-venta-btn:hover {
+    background: var(--superficie-suave);
+}
+
+.comentario-venta-btn.sin-comentario {
+    color: var(--borde-fuerte);
+}
+
+.comentario-venta-btn.sin-comentario:hover {
+    color: var(--texto-suave);
+}
+
+.comentario-venta-btn.tiene-comentario {
+    color: var(--exito);
+}
+
+.comentario-venta-btn.tiene-comentario:hover {
+    background: var(--exito-suave);
+}
+
+/* ---------- Ventana ---------- */
+.comentario-modal[hidden] {
+    display: none !important;
+}
+
+.comentario-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(20, 21, 23, .42);
+    animation: aparecer .2s ease both;
+}
+
+.comentario-modal-panel {
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 22px 24px 20px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--superficie);
+    color: var(--texto);
+    box-shadow: var(--sombra-flotante);
+    animation: ventanaEntra .24s var(--curva) both;
+}
+
+.comentario-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.comentario-modal-header h2 {
+    margin-bottom: 2px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.comentario-modal-header p {
+    color: var(--texto-tenue);
+    font-size: 13px;
+}
+
+.comentario-cerrar {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: var(--radio-chico);
+    background: transparent;
+    color: var(--texto-tenue);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.comentario-cerrar:hover {
+    background: var(--superficie-suave);
+    color: var(--texto);
+}
+
+.comentario-modal-panel label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--texto-suave);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.comentario-modal-panel textarea {
+    display: block;
+    width: 100%;
+    min-height: 132px;
+    padding: 10px 12px;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-chico);
+    background: var(--superficie);
+    color: var(--texto);
+    font: inherit;
+    line-height: 1.55;
+    resize: vertical;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.comentario-modal-panel textarea:focus {
+    border-color: var(--acento);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--acento-suave);
+}
+
+.comentario-contador {
+    display: block;
+    margin-top: 6px;
+    color: var(--texto-tenue);
+    font-size: 12px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.comentario-mensaje {
+    min-height: 18px;
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+.comentario-mensaje.exito {
+    color: var(--exito);
+}
+
+.comentario-mensaje.error {
+    color: var(--error);
+}
+
+.comentario-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.comentario-btn-secundario,
+.comentario-btn-guardar {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: var(--radio-chico);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease;
+}
+
+.comentario-btn-secundario {
+    border: 1px solid var(--borde-fuerte);
+    background: var(--superficie);
+    color: var(--texto);
+}
+
+.comentario-btn-secundario:hover {
+    background: var(--superficie-suave);
+}
+
+.comentario-btn-guardar {
+    border: 1px solid var(--acento);
+    background: var(--acento);
+    color: #fff;
+}
+
+.comentario-btn-guardar:hover {
+    border-color: var(--acento-hover);
+    background: var(--acento-hover);
+}
+
+.comentario-btn-guardar:disabled {
+    cursor: wait;
+    opacity: .6;
+}
+
+@keyframes ventanaEntra {
+    from { opacity: 0; transform: translateY(8px) scale(.985); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 600px) {
+    .comentario-modal {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .comentario-modal-panel {
+        max-width: none;
+        border-radius: 14px 14px 0 0;
+        padding: 20px 18px;
+    }
+
+    .comentario-modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .comentario-btn-secundario,
+    .comentario-btn-guardar {
+        width: 100%;
+    }
+}

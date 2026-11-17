@@ -1,0 +1,1174 @@
+/* ==========================================================================
+   Constructor Forms: estilos globales.
+
+   1. Variables base (claro) y modo oscuro.
+   2. Capa por rol: cada rol solo cambia el valor de algunas variables.
+   3. Elementos y clases compartidas (botones, campos, tablas, tarjetas...).
+   4. Layout: menú lateral, barra en celular y contenido.
+   5. Animaciones y movimiento reducido.
+
+   Las páginas solo deben usar variables (var(--principal), var(--texto)...),
+   nunca colores escritos a mano: así el modo oscuro y los roles funcionan solos.
+   ========================================================================== */
+
+/* 1. Variables base ------------------------------------------------------- */
+
+:root {
+    color-scheme: light;
+
+    --fuente: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+    --fuente-numeros: "Segoe UI", system-ui, sans-serif;
+
+    --fondo: #f5f7f7;
+    --superficie: #ffffff;
+    --superficie-2: #f0f4f4;
+    --superficie-3: #e6eded;
+    --borde: #dce4e3;
+    --borde-fuerte: #b9c8c6;
+
+    --texto: #1f2933;
+    --texto-2: #52606d;
+    --texto-3: #7b8794;
+
+    --exito: #15803d;
+    --exito-fondo: #e7f6ec;
+    --aviso: #b45309;
+    --aviso-fondo: #fff4e5;
+    --error: #b91c1c;
+    --error-fondo: #fdecec;
+
+    --sombra-1: 0 1px 2px rgba(16, 42, 40, 0.06), 0 1px 3px rgba(16, 42, 40, 0.08);
+    --sombra-2: 0 6px 16px rgba(16, 42, 40, 0.12);
+    --velo: rgba(10, 25, 24, 0.5);
+
+    /* Valores por omisión (los del supervisor); cada rol los ajusta abajo. */
+    --principal: #0f766e;
+    --principal-hover: #115e59;
+    --principal-suave: #e3f3f1;
+    --principal-texto: #0f766e;
+    --sobre-principal: #ffffff;
+    --acento: #0891b2;
+    --acento-calido: #d97706;
+    --anillo: rgba(15, 118, 110, 0.28);
+
+    --menu-fondo: #0f766e;
+    --menu-texto: #e6f6f4;
+    --menu-activo: rgba(255, 255, 255, 0.16);
+    --menu-hover: rgba(255, 255, 255, 0.09);
+
+    --radio: 8px;
+    --radio-grande: 12px;
+    --duracion: 180ms;
+    --duracion-lenta: 360ms;
+    --curva: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --elevar: -1px;
+    --entrar-desde: 4px;
+    --relleno-control: 0.45rem 0.9rem;
+    --relleno-celda: 0.55rem 0.75rem;
+    --peso-titulo: 600;
+}
+
+/* El script de tema pone data-tema="oscuro" en <html>, ya resuelto (también en "automático"). */
+:root[data-tema="oscuro"] {
+    color-scheme: dark;
+
+    --fondo: #0e1615;
+    --superficie: #15201f;
+    --superficie-2: #1b2928;
+    --superficie-3: #223231;
+    --borde: #2a3b39;
+    --borde-fuerte: #3c514e;
+
+    --texto: #e5eeed;
+    --texto-2: #a9b9b7;
+    --texto-3: #7f9290;
+
+    --exito: #4ade80;
+    --exito-fondo: #12301f;
+    --aviso: #fbbf24;
+    --aviso-fondo: #33260b;
+    --error: #f87171;
+    --error-fondo: #3a1717;
+
+    --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --sombra-2: 0 8px 20px rgba(0, 0, 0, 0.45);
+    --velo: rgba(0, 0, 0, 0.6);
+
+    --principal: #14b8a6;
+    --principal-hover: #2dd4bf;
+    --principal-suave: rgba(20, 184, 166, 0.14);
+    --principal-texto: #5eead4;
+    --sobre-principal: #04201d;
+    --acento: #22d3ee;
+    --acento-calido: #fbbf24;
+    --anillo: rgba(45, 212, 191, 0.35);
+
+    --menu-fondo: #0d2f2c;
+    --menu-texto: #d5ecea;
+}
+
+/* 2. Capa por rol (el layout pone data-rol en el contenedor) --------------- */
+
+/* Agente: el más fresco y animado; trabaja aquí todo el día. */
+[data-rol="agente"] {
+    --principal: #0d9488;
+    --principal-hover: #0f766e;
+    --principal-suave: #e0f5f2;
+    --principal-texto: #0f766e;
+    --acento: #06b6d4;
+    --acento-calido: #f59e0b;
+    --anillo: rgba(13, 148, 136, 0.3);
+    --menu-fondo: linear-gradient(180deg, #0d9488 0%, #0e7490 100%);
+    --radio: 10px;
+    --radio-grande: 14px;
+    --duracion: 220ms;
+    --duracion-lenta: 420ms;
+    --curva: cubic-bezier(0.34, 1.4, 0.64, 1);
+    --elevar: -2px;
+    --entrar-desde: 8px;
+    --relleno-control: 0.55rem 1rem;
+    --relleno-celda: 0.6rem 0.8rem;
+}
+
+/* Supervisor: usa los valores por omisión de :root (fresco, pero ordenado). */
+[data-rol="supervisor"] {
+    --menu-fondo: #0f766e;
+}
+
+/* Coordinador: corporativo, tonos más profundos y más datos por pantalla. */
+[data-rol="coordinador"] {
+    --principal: #115e59;
+    --principal-hover: #134e4a;
+    --principal-suave: #e2efed;
+    --principal-texto: #115e59;
+    --acento: #0e7490;
+    --acento-calido: #b45309;
+    --anillo: rgba(17, 94, 89, 0.28);
+    --menu-fondo: #115e59;
+    --radio: 6px;
+    --radio-grande: 10px;
+    --duracion: 150ms;
+    --curva: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --elevar: 0px;
+    --entrar-desde: 2px;
+    --relleno-control: 0.4rem 0.85rem;
+    --relleno-celda: 0.45rem 0.7rem;
+}
+
+/* Administrador: el más sobrio y formal, con la jerarquía más marcada. */
+[data-rol="administrador"] {
+    --principal: #134e4a;
+    --principal-hover: #0b2f2c;
+    --principal-suave: #e3eceb;
+    --principal-texto: #134e4a;
+    --acento: #475569;
+    --acento-calido: #a16207;
+    --anillo: rgba(19, 78, 74, 0.28);
+    --menu-fondo: #0b2f2c;
+    --radio: 4px;
+    --radio-grande: 8px;
+    --duracion: 150ms;
+    --curva: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --elevar: 0px;
+    --entrar-desde: 0px;
+    --relleno-control: 0.4rem 0.85rem;
+    --relleno-celda: 0.45rem 0.7rem;
+    --peso-titulo: 650;
+}
+
+/* En oscuro cada rol usa un verde azulado más claro del mismo matiz. */
+:root[data-tema="oscuro"] [data-rol="agente"] {
+    --principal: #2dd4bf;
+    --principal-hover: #5eead4;
+    --principal-suave: rgba(45, 212, 191, 0.15);
+    --principal-texto: #5eead4;
+    --acento: #22d3ee;
+    --acento-calido: #fbbf24;
+    --menu-fondo: linear-gradient(180deg, #0b3b37 0%, #0a3442 100%);
+}
+
+:root[data-tema="oscuro"] [data-rol="supervisor"] {
+    --menu-fondo: #0d3532;
+}
+
+:root[data-tema="oscuro"] [data-rol="coordinador"] {
+    --principal: #26a69a;
+    --principal-hover: #3cbcb0;
+    --principal-suave: rgba(38, 166, 154, 0.15);
+    --principal-texto: #6fd3c8;
+    --acento: #38bdf8;
+    --acento-calido: #f59e0b;
+    --menu-fondo: #0c2f2c;
+}
+
+:root[data-tema="oscuro"] [data-rol="administrador"] {
+    --principal: #4fa89f;
+    --principal-hover: #6cbdb4;
+    --principal-suave: rgba(79, 168, 159, 0.15);
+    --principal-texto: #8fd1c9;
+    --acento: #94a3b8;
+    --acento-calido: #eab308;
+    --menu-fondo: #081f1d;
+}
+
+:root[data-tema="oscuro"] [data-rol] {
+    --sobre-principal: #04201d;
+    --anillo: rgba(45, 212, 191, 0.35);
+}
+
+/* 3. Elementos y clases compartidas --------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    background-color: var(--fondo);
+    color: var(--texto);
+    font-family: var(--fuente);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+    color: var(--texto);
+    font-weight: var(--peso-titulo);
+    line-height: 1.25;
+}
+
+h1 {
+    margin: 0 0 1.25rem;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+}
+
+h1:focus {
+    outline: none;
+}
+
+h2 {
+    margin: 0 0 0.6rem;
+    font-size: 1.2rem;
+}
+
+a {
+    color: var(--principal-texto);
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    color: var(--principal-hover);
+}
+
+button,
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: var(--relleno-control);
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio);
+    background-color: var(--superficie);
+    color: var(--texto);
+    font: inherit;
+    line-height: 1.3;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--duracion) var(--curva), border-color var(--duracion) var(--curva),
+        color var(--duracion) var(--curva), box-shadow var(--duracion) var(--curva), transform var(--duracion) var(--curva);
+}
+
+button:hover:not(:disabled),
+.boton:hover {
+    border-color: var(--principal);
+    background-color: var(--principal-suave);
+    transform: translateY(var(--elevar));
+}
+
+button:active:not(:disabled),
+.boton:active {
+    transform: translateY(0) scale(0.98);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* El botón de la acción principal de la vista. */
+button.principal,
+.boton.principal,
+button[type="submit"] {
+    border-color: var(--principal);
+    background-color: var(--principal);
+    color: var(--sobre-principal);
+    box-shadow: var(--sombra-1);
+}
+
+button.principal:hover:not(:disabled),
+.boton.principal:hover,
+button[type="submit"]:hover:not(:disabled) {
+    border-color: var(--principal-hover);
+    background-color: var(--principal-hover);
+    color: var(--sobre-principal);
+    box-shadow: var(--sombra-2);
+}
+
+button.secundario,
+.boton.secundario {
+    background-color: transparent;
+}
+
+button.peligro {
+    border-color: var(--error);
+    color: var(--error);
+}
+
+button.peligro:hover:not(:disabled) {
+    border-color: var(--error);
+    background-color: var(--error-fondo);
+}
+
+button.enlace {
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--principal-texto);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+button.enlace:hover:not(:disabled) {
+    background: none;
+    transform: none;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+select,
+textarea {
+    padding: 0.42rem 0.6rem;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio);
+    background-color: var(--superficie);
+    color: var(--texto);
+    font: inherit;
+    transition: border-color var(--duracion) var(--curva), box-shadow var(--duracion) var(--curva);
+}
+
+/* Chrome 156 no pinta el texto de las opciones cuando el select es muy ancho (un campo a 12
+   columnas en pantalla grande mide unos 1500 px): la lista sale con las filas en blanco. */
+select {
+    max-width: 40rem;
+}
+
+/* La lista que despliega un select la pinta el navegador. Si no se le dan colores, en Windows
+   puede tomar los del tema del sistema y no los de la app (texto blanco sobre fondo blanco). */
+option {
+    background-color: var(--superficie);
+    color: var(--texto);
+}
+
+option:disabled {
+    color: var(--texto-3);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--principal);
+    box-shadow: 0 0 0 3px var(--anillo);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--principal);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--texto-3);
+}
+
+:focus-visible {
+    outline: 2px solid var(--principal);
+    outline-offset: 2px;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: none;
+}
+
+.valid.modified:not([type="checkbox"]) {
+    border-color: var(--exito);
+}
+
+.invalid {
+    border-color: var(--error) !important;
+}
+
+.validation-message {
+    color: var(--error);
+    font-size: 0.85rem;
+}
+
+.detalle {
+    color: var(--texto-2);
+    font-size: 0.9rem;
+}
+
+.tarjeta {
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-grande);
+    background-color: var(--superficie);
+    box-shadow: var(--sombra-1);
+}
+
+.etiqueta {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.05rem 0.5rem;
+    border-radius: 999px;
+    background-color: var(--principal-suave);
+    color: var(--principal-texto);
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.etiqueta-exito {
+    background-color: var(--exito-fondo);
+    color: var(--exito);
+}
+
+.etiqueta-aviso {
+    background-color: var(--aviso-fondo);
+    color: var(--aviso);
+}
+
+.etiqueta-error {
+    background-color: var(--error-fondo);
+    color: var(--error);
+}
+
+.etiqueta-neutra {
+    background-color: var(--superficie-3);
+    color: var(--texto-2);
+}
+
+/* Nombres que ya usaban las páginas para sus etiquetas de estado. */
+.etiqueta-verde {
+    background-color: var(--exito-fondo);
+    color: var(--exito);
+}
+
+.etiqueta-roja {
+    background-color: var(--error-fondo);
+    color: var(--error);
+}
+
+.etiqueta-naranja {
+    background-color: var(--aviso-fondo);
+    color: var(--aviso);
+}
+
+.etiqueta-gris {
+    background-color: var(--superficie-3);
+    color: var(--texto-2);
+}
+
+.etiqueta-azul {
+    background-color: var(--principal-suave);
+    color: var(--principal-texto);
+}
+
+/* Texto de error o de advertencia dentro de un formulario o modal. */
+p.error,
+.texto-error {
+    margin: 0;
+    color: var(--error);
+}
+
+.advertencia {
+    color: var(--aviso);
+}
+
+.migas {
+    margin: 0 0 0.25rem;
+    color: var(--texto-2);
+    font-size: 0.9rem;
+}
+
+/* Un <label> con un <InputFile> escondido que se ve como botón. */
+.boton-archivo {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--relleno-control);
+    border: 1px solid var(--principal);
+    border-radius: var(--radio);
+    color: var(--principal-texto);
+    cursor: pointer;
+    transition: background-color var(--duracion) var(--curva), transform var(--duracion) var(--curva);
+}
+
+.boton-archivo:hover {
+    background-color: var(--principal-suave);
+    transform: translateY(var(--elevar));
+}
+
+.boton-archivo input[type="file"] {
+    display: none;
+}
+
+.desplazable {
+    overflow-x: auto;
+}
+
+.encabezado-pagina {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.encabezado-pagina h1 {
+    margin: 0;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Los botones al pie de un modal o formulario. */
+.botones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+/* Un formulario en columna: etiqueta arriba, campo abajo. */
+.campos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.campos label,
+label.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-weight: 600;
+}
+
+.campos label input,
+.campos label select,
+.campos label textarea,
+label.campo input,
+label.campo select,
+label.campo textarea {
+    font-weight: normal;
+}
+
+.campos .casilla,
+label.casilla {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: normal;
+}
+
+small {
+    color: var(--texto-2);
+    font-weight: normal;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0.6rem 0.85rem 0.8rem;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-grande);
+}
+
+legend {
+    padding: 0 0.3rem;
+    font-weight: 600;
+}
+
+.inactivo,
+.inactiva {
+    opacity: 0.6;
+}
+
+.fecha,
+.folio {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.caja-aviso {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid transparent;
+    border-radius: var(--radio);
+    background-color: var(--aviso-fondo);
+    color: var(--aviso);
+}
+
+.caja-error {
+    padding: 0.6rem 0.85rem;
+    border-radius: var(--radio);
+    background-color: var(--error-fondo);
+    color: var(--error);
+}
+
+.caja-exito {
+    padding: 0.6rem 0.85rem;
+    border-radius: var(--radio);
+    background-color: var(--exito-fondo);
+    color: var(--exito);
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-grande);
+    background-color: var(--superficie);
+}
+
+.tabla th,
+.tabla td {
+    padding: var(--relleno-celda);
+    border-bottom: 1px solid var(--borde);
+    text-align: left;
+}
+
+.tabla th {
+    background-color: var(--superficie-2);
+    color: var(--texto-2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla tbody tr {
+    transition: background-color var(--duracion) var(--curva);
+}
+
+.tabla tbody tr:hover {
+    background-color: var(--principal-suave);
+}
+
+.tabla .numero,
+.numero {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.filtros label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--texto-2);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.paginacion {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    color: var(--texto-2);
+}
+
+.vacio {
+    padding: 1.5rem;
+    border: 1px dashed var(--borde-fuerte);
+    border-radius: var(--radio-grande);
+    color: var(--texto-2);
+    text-align: center;
+}
+
+/* Páginas de cuenta (iniciar sesión, cambiar contraseña, acceso denegado): una tarjeta centrada. */
+.cuenta {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0 2rem;
+}
+
+.cuenta-tarjeta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+    padding: 1.75rem 1.75rem 1.5rem;
+    animation: aparecer-escala var(--duracion-lenta) var(--curva) both;
+}
+
+.cuenta-tarjeta h1 {
+    margin: 0;
+}
+
+.cuenta-tarjeta form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.cuenta-tarjeta p {
+    margin: 0;
+}
+
+.cuenta-marca {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--principal-texto);
+    font-weight: 700;
+}
+
+.cuenta-marca .marca-icono {
+    background-color: var(--principal);
+    color: var(--sobre-principal);
+}
+
+.campo-cuenta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.campo-cuenta label {
+    font-weight: 600;
+}
+
+.cuenta-enviar {
+    width: 100%;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}
+
+.bienvenida {
+    max-width: 640px;
+}
+
+.bienvenida h1 {
+    margin-bottom: 0.4rem;
+}
+
+.bienvenida .etiqueta {
+    margin-right: 0.35rem;
+}
+
+/* 4. Layout ---------------------------------------------------------------- */
+
+.contenedor {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--fondo);
+}
+
+.contenido {
+    flex: 1;
+    min-width: 0;
+    padding: 1.75rem 2.25rem 3rem;
+}
+
+.menu-interruptor {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.barra-movil {
+    display: none;
+}
+
+.menu-lateral {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    width: 236px;
+    height: 100vh;
+    flex-shrink: 0;
+    overflow-y: auto;
+    padding: 1.1rem 0.85rem;
+    background: var(--menu-fondo);
+    color: var(--menu-texto);
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0.35rem 0.9rem;
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.marca-icono {
+    display: inline-grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: var(--radio);
+    background-color: rgba(255, 255, 255, 0.16);
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+}
+
+.rol-actual {
+    display: block;
+    color: var(--menu-texto);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    opacity: 0.75;
+    text-transform: uppercase;
+}
+
+.menu-icono {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.menu-controles {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.menu-controles button {
+    display: inline-grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    padding: 0;
+    border: none;
+    border-radius: var(--radio);
+    box-shadow: none;
+    background: transparent;
+    color: var(--menu-texto);
+}
+
+.menu-controles button:hover:not(:disabled) {
+    background-color: var(--menu-hover);
+    color: #ffffff;
+    transform: none;
+}
+
+.menu-controles span {
+    display: inline-grid;
+}
+
+.menu-controles .si-iconos,
+.boton-mostrar-menu {
+    display: none;
+}
+
+.menu-lateral a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radio);
+    color: var(--menu-texto);
+    text-decoration: none;
+    transition: background-color var(--duracion) var(--curva), transform var(--duracion) var(--curva);
+}
+
+.menu-lateral a:hover {
+    background-color: var(--menu-hover);
+    color: #ffffff;
+}
+
+.menu-lateral a.active {
+    background-color: var(--menu-activo);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 #ffffff;
+}
+
+[data-rol="agente"] .menu-lateral a:hover {
+    transform: translateX(3px);
+}
+
+.menu-pie {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.88rem;
+}
+
+.menu-pie .usuario-nombre {
+    padding: 0 0.75rem 0.25rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.menu-pie form {
+    margin: 0;
+}
+
+.menu-pie button {
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.45rem 0.75rem;
+    border: none;
+    border-radius: var(--radio);
+    background: transparent;
+    color: var(--menu-texto);
+    text-align: left;
+}
+
+.menu-pie button:hover:not(:disabled) {
+    background-color: var(--menu-hover);
+    color: #ffffff;
+    transform: none;
+}
+
+/* En computadora, el menú puede quedar en solo iconos u oculto (data-menu lo pone tema.js). */
+@media (min-width: 861px) {
+    .menu-lateral {
+        transition: width var(--duracion) var(--curva);
+    }
+
+    [data-menu="iconos"] .menu-lateral {
+        width: 60px;
+        padding-inline: 0.5rem;
+        scrollbar-width: thin;
+    }
+
+    [data-menu="iconos"] .menu-texto,
+    [data-menu="iconos"] .usuario-nombre,
+    [data-menu="iconos"] .menu-controles .si-completo {
+        display: none;
+    }
+
+    [data-menu="iconos"] .menu-controles .si-iconos {
+        display: inline-grid;
+    }
+
+    [data-menu="iconos"] .marca {
+        justify-content: center;
+        margin-inline: 0;
+    }
+
+    [data-menu="iconos"] .menu-controles {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    [data-menu="iconos"] .menu-lateral a,
+    [data-menu="iconos"] .menu-pie button {
+        justify-content: center;
+        padding-inline: 0;
+    }
+
+    [data-menu="oculto"] .menu-lateral {
+        display: none;
+    }
+
+    [data-menu="oculto"] .contenido {
+        padding-left: 3.25rem;
+    }
+
+    [data-menu="oculto"] .boton-mostrar-menu {
+        position: fixed;
+        top: 0.6rem;
+        left: 0.6rem;
+        z-index: 30;
+        display: inline-grid;
+        width: 2.25rem;
+        height: 2.25rem;
+        place-items: center;
+        padding: 0;
+        border: none;
+        border-radius: var(--radio);
+        background: var(--menu-fondo);
+        color: #ffffff;
+        box-shadow: var(--sombra-2);
+    }
+
+    [data-menu="oculto"] .boton-mostrar-menu:hover:not(:disabled) {
+        background-color: var(--menu-fondo);
+        transform: none;
+        filter: brightness(1.15);
+    }
+}
+
+/* En pantallas chicas el menú se vuelve una barra con botón. */
+@media (max-width: 860px) {
+    .menu-controles {
+        display: none;
+    }
+
+    .contenedor {
+        flex-direction: column;
+    }
+
+    .barra-movil {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 1rem;
+        background: var(--menu-fondo);
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .boton-menu {
+        display: inline-grid;
+        width: 2.25rem;
+        height: 2.25rem;
+        place-items: center;
+        border-radius: var(--radio);
+        background-color: rgba(255, 255, 255, 0.14);
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .menu-lateral {
+        position: fixed;
+        top: 3.4rem;
+        left: 0;
+        z-index: 40;
+        width: min(85vw, 300px);
+        height: calc(100vh - 3.4rem);
+        box-shadow: var(--sombra-2);
+        transform: translateX(-105%);
+        transition: transform var(--duracion-lenta) var(--curva);
+    }
+
+    .menu-interruptor:checked ~ .menu-lateral {
+        transform: translateX(0);
+    }
+
+    .menu-lateral .marca {
+        display: none;
+    }
+
+    .contenido {
+        padding: 1.1rem 1rem 2.5rem;
+    }
+}
+
+/* 5. Animaciones ----------------------------------------------------------- */
+
+/* Cambio de tema (wwwroot/js/tema.js): la página nueva se pinta encima de la anterior en un
+   círculo que crece desde el botón. Se quita el desvanecimiento que el navegador pone por defecto. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+    z-index: 1;
+}
+
+@keyframes entrar {
+    from {
+        opacity: 0;
+        transform: translateY(var(--entrar-desde));
+    }
+}
+
+@keyframes aparecer-escala {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+}
+
+@keyframes destello {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(21, 128, 61, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.25);
+    }
+}
+
+/* Cada bloque nuevo de la página entra con un desvanecimiento; en el agente, además, sube un poco. */
+.contenido > * {
+    animation: entrar var(--duracion-lenta) var(--curva) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Errores de Blazor y de conexión (vienen de la plantilla). */
+.blazor-error-boundary {
+    padding: 1rem 1rem 1rem 1.25rem;
+    border-radius: var(--radio);
+    background-color: var(--error);
+    color: #ffffff;
+}
+
+.blazor-error-boundary::after {
+    content: "Ocurrió un error inesperado.";
+}

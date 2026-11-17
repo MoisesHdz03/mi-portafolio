@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../../demo/demo-datos.js"></script><script src="../../../demo/demo.js"></script><link rel="stylesheet" href="../../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/Logoick.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
+        <link rel="stylesheet" href="../assets/css/dashboard.css">
+        <link rel="stylesheet" href="../assets/css/comentario_domiciliacion.css">
+        <link rel="stylesheet" href="../assets/css/ventas_registradas.css">
+        <link rel="stylesheet" href="../assets/css/reportes.css">
+            <title>Gerente - Resumen de Ventas</title>
+</head>
+<body>
+    <!-- Aplica el modo oscuro guardado antes de dibujar la página (evita el destello blanco) -->
+<script src="../assets/js/tema-inicial.js"></script>
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="avatar">AD</div>
+        <div class="user-info">
+            <h3>BIENVENIDO</h3>
+            <p>rvaldez</p>
+        </div>
+    </div>
+    <div class="sidebar-nav">
+                    <a href="../ventasregistradas.html" class="nav-item">
+                <i class="fas fa-binoculars"></i>
+                <span>Ver Ventas</span>
+            </a>
+                    <a href="../ver.html" class="nav-item">
+                <i class="fas fa-filter"></i>
+                <span>Filtros</span>
+            </a>
+                    <a href="#" class="nav-item active">
+                <i class="fas fa-chart-line"></i>
+                <span>Resumen de Ventas</span>
+            </a>
+            </div>
+    <div class="sidebar-footer">
+        <button type="button" class="theme-toggle" aria-pressed="false">
+            <i class="fas fa-moon"></i>
+            <span>Modo Oscuro</span>
+        </button>
+        <a href="../../../index.html" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Cerrar Sesión</span>
+        </a>
+        <div class="brand">® RAM SECURITY</div>
+    </div>
+</nav>
+
+    <main class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Mostrar u ocultar menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Resumen de Ventas por Agente</h1>
+            </div>
+            <nav class="header-right reporte-enlaces" aria-label="Otros reportes">
+                                    <a href="ResumenSale.html" class="btn btn-group">
+                        <i class="fas fa-arrow-left"></i>
+                        Regresar                    </a>
+                            </nav>
+        </header>
+
+        <div class="content">
+            <!-- Filtros -->
+            <div class="filter-card">
+                <div class="filter-header">
+                    <div class="filter-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Filtros de Ventas                    </div>
+                </div>
+                <div class="filter-content">
+                    <form data-demo="1" method="GET" action="" class="form-fechas">
+                        <div class="filter-grid reporte-filtros">
+                                                                                            <div class="form-group">
+                                    <label for="Tipo" class="form-label">Tipo de vendedor</label>
+                                                                            <select name="Tipo" id="Tipo" class="form-input form-select">
+                                                                                            <option value="" selected>Todos</option>
+                                                                                            <option value="agentes">Agentes</option>
+                                                                                            <option value="comisionistas">Comisionistas</option>
+                                                                                    </select>
+                                                                    </div>
+                                                                                            <div class="form-group">
+                                    <label for="Agent" class="form-label">Agente</label>
+                                                                            <input type="text" name="Agent" id="Agent" value="" class="form-input">
+                                                                    </div>
+                                                                                            <div class="form-group">
+                                    <label for="Supervisor" class="form-label">Supervisor</label>
+                                                                            <input type="text" name="Supervisor" id="Supervisor" value="" class="form-input">
+                                                                    </div>
+                                                                                            <div class="form-group">
+                                    <label for="Date_Sale" class="form-label">Fecha Inicio</label>
+                                                                            <input type="date" name="Date_Sale" id="Date_Sale" value="2026-11-01" class="form-input">
+                                                                    </div>
+                                                                                            <div class="form-group">
+                                    <label for="Pay_Date" class="form-label">Fecha Final</label>
+                                                                            <input type="date" name="Pay_Date" id="Pay_Date" value="2026-11-17" class="form-input">
+                                                                    </div>
+                                                    </div>
+                        <div class="filter-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Filtrar
+                            </button>
+                                                                                    <a href="GroupAgent.html" class="btn btn-secondary">
+                                <i class="fas fa-undo"></i> Restablecer
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            
+            <!-- Tabla -->
+            <div class="table-card reporte-tabla">
+                <div class="table-container">
+                    <table class="data-table ventas-table">
+                        <thead>
+                            <tr>
+                                                                    <th>Agente</th>
+                                                                    <th>Tipo</th>
+                                                                    <th>Supervisor</th>
+                                                                    <th>Ventas Brutas</th>
+                                                                    <th>Ventas Cobradas <br> (Fecha de Venta)</th>
+                                                                    <th>% de Cobro <br> (Cobradas / Brutas)</th>
+                                                                    <th>Ventas Cobradas <br> (Fecha de Cobro)</th>
+                                                            </tr>
+                        </thead>
+                        <tbody>
+                                                            <tr>
+                                                                            <td>cgarcia</td>
+                                                                            <td class="tipo-cell">Agente</td>
+                                                                            <td>jcastillo</td>
+                                                                            <td class="total-cell">12</td>
+                                                                            <td class="cobradas-cell">1</td>
+                                                                            <td>8.33%</td>
+                                                                            <td class="cobradas-cell">5</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td>kmendoza</td>
+                                                                            <td class="tipo-cell">Comisionista</td>
+                                                                            <td>jcastillo</td>
+                                                                            <td class="total-cell">8</td>
+                                                                            <td class="cobradas-cell">5</td>
+                                                                            <td>62.50%</td>
+                                                                            <td class="cobradas-cell">7</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td>mlopez</td>
+                                                                            <td class="tipo-cell">Agente</td>
+                                                                            <td>jcastillo</td>
+                                                                            <td class="total-cell">9</td>
+                                                                            <td class="cobradas-cell">2</td>
+                                                                            <td>22.22%</td>
+                                                                            <td class="cobradas-cell">4</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td>nrios</td>
+                                                                            <td class="tipo-cell">Agente</td>
+                                                                            <td>jcastillo</td>
+                                                                            <td class="total-cell">7</td>
+                                                                            <td class="cobradas-cell">4</td>
+                                                                            <td>57.14%</td>
+                                                                            <td class="cobradas-cell">4</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td>sherrera</td>
+                                                                            <td class="tipo-cell">Agente</td>
+                                                                            <td>jcastillo</td>
+                                                                            <td class="total-cell">9</td>
+                                                                            <td class="cobradas-cell">2</td>
+                                                                            <td>22.22%</td>
+                                                                            <td class="cobradas-cell">4</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td>ajimenez</td>
+                                                                            <td class="tipo-cell">Agente</td>
+                                                                            <td>mfuentes</td>
+                                                                            <td class="total-cell">6</td>
+                                                                            <td class="cobradas-cell">1</td>
+                                                                            <td>16.67%</td>
+                                                                            <td class="cobradas-cell">1</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td>ftorres</td>
+                                                                            <td class="tipo-cell">Agente</td>
+                                                                            <td>mfuentes</td>
+                                                                            <td class="total-cell">11</td>
+                                                                            <td class="cobradas-cell">4</td>
+                                                                            <td>36.36%</td>
+                                                                            <td class="cobradas-cell">4</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td class="agente-baja">hdelgado (baja)</td>
+                                                                            <td class="tipo-cell">Agente</td>
+                                                                            <td>mfuentes</td>
+                                                                            <td class="total-cell">2</td>
+                                                                            <td class="cobradas-cell">1</td>
+                                                                            <td>50.00%</td>
+                                                                            <td class="cobradas-cell">1</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td>oparedes</td>
+                                                                            <td class="tipo-cell">Comisionista</td>
+                                                                            <td>mfuentes</td>
+                                                                            <td class="total-cell">6</td>
+                                                                            <td class="cobradas-cell">6</td>
+                                                                            <td>100.00%</td>
+                                                                            <td class="cobradas-cell">6</td>
+                                                                    </tr>
+                                                            <tr>
+                                                                            <td>vreyes</td>
+                                                                            <td class="tipo-cell">Agente</td>
+                                                                            <td>mfuentes</td>
+                                                                            <td class="total-cell">15</td>
+                                                                            <td class="cobradas-cell">8</td>
+                                                                            <td>53.33%</td>
+                                                                            <td class="cobradas-cell">10</td>
+                                                                    </tr>
+                            
+                            
+                                                    </tbody>
+                    </table>
+                </div>
+
+                            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/dashboard.js"></script>
+        <script src="../assets/js/reportes.js"></script>
+        
+</body>
+</html>

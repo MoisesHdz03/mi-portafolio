@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <style>
+        .info-grupo {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px 24px;
+            margin: 0;
+        }
+        .info-grupo dt {
+            margin-bottom: 3px;
+            color: var(--texto-suave);
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+        .info-grupo dd {
+            margin: 0;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+        .estadisticas {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            padding: 14px 16px;
+            border: 1px solid var(--borde);
+            border-top: 3px solid var(--color, var(--borde-fuerte));
+            border-radius: var(--radio);
+            background: #fff;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -.02em;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+        }
+        .stat-label {
+            color: var(--texto-suave);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+        .stat-pct {
+            color: var(--texto-tenue);
+            font-size: 12px;
+        }
+        .progreso-envio {
+            margin-top: 18px;
+        }
+        .progreso-envio .progress {
+            height: 8px;
+            border-radius: 99px;
+            background: var(--gris-suave);
+        }
+        .progreso-envio .progress-bar {
+            background: var(--acento);
+            transition: width .15s linear;
+        }
+        .progreso-texto {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            color: var(--texto-medio);
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .sid {
+            color: var(--texto-suave);
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 12px;
+        }
+        .error-envio {
+            display: block;
+            max-width: 280px;
+            color: var(--rojo);
+            font-size: 12px;
+        }
+        @media (max-width: 1199px) {
+            .estadisticas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .info-grupo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 575px) {
+            .estadisticas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+    </style>
+    <title>Grupo de envío | WhatsApp HSM</title>
+</head>
+<body>
+<main class="main-content">
+    <div class="encabezado">
+        <div>
+            <h1 id="titulo">Grupo de envío</h1>
+            <p id="subtitulo"></p>
+        </div>
+        <div class="encabezado-acciones" id="acciones"></div>
+    </div>
+
+    <!-- Información del grupo -->
+    <div class="tarjeta">
+        <div class="tarjeta-cuerpo">
+            <dl class="info-grupo" id="informacion"></dl>
+            <div class="progreso-envio" id="progreso" hidden>
+                <div class="progreso-texto"><span id="progresoTexto">Enviando mensajes...</span><span id="progresoCifra"></span></div>
+                <div class="progress"><div class="progress-bar" id="progresoBarra" style="width: 0%"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="estadisticas" id="estadisticas"></div>
+
+    <!-- Clientes del grupo -->
+    <div class="tarjeta">
+        <div class="tarjeta-encabezado">
+            <h2><i class="bi bi-people"></i> Clientes del grupo</h2>
+        </div>
+        <div class="tabla-herramientas">
+            <div class="buscador">
+                <i class="bi bi-search"></i>
+                <input type="search" class="form-control form-control-sm" id="buscar" placeholder="Buscar por cliente o teléfono">
+            </div>
+            <select class="form-select form-select-sm" id="filtro" aria-label="Filtrar por estado">
+                <option value="">Todos los estados</option>
+                <option value="pending">Pendiente</option>
+                <option value="sent">Enviado</option>
+                <option value="delivered">Entregado</option>
+                <option value="read">Leído</option>
+                <option value="failed">Error</option>
+                <option value="respuesta">Con respuesta</option>
+            </select>
+            <span class="conteo" id="conteo"></span>
+        </div>
+        <div class="tabla-contenedor">
+            <table class="tabla tabla-compacta">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Teléfono</th>
+                        <th>Estado</th>
+                        <th>Fecha de envío</th>
+                        <th>Twilio SID</th>
+                        <th>Respuesta</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo"></tbody>
+            </table>
+        </div>
+        <div class="paginacion" id="paginacion" hidden></div>
+    </div>
+</main>
+
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/iconos.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/envio.js"></script>
+<script>
+(function () {
+    'use strict';
+    if (!App.iniciar('shipment_batches')) return;
+    const e = App.e;
+
+    const grupo = HSM.grupo(App.param('id'));
+    if (!grupo) {
+        document.querySelector('.main-content').insertAdjacentHTML('beforeend', '<div class="alerta-error">El grupo solicitado no existe.</div>');
+        return;
+    }
+    Envio.completarSinAnimacion(grupo);
+
+    const plantilla = HSM.campana(grupo.campaign_id);
+    const creador = HSM.usuario(grupo.created_by);
+    document.getElementById('titulo').textContent = 'Grupo de envío #' + grupo.id;
+    document.getElementById('subtitulo').textContent = grupo.file_name;
+
+    function dibujarInformacion() {
+        document.getElementById('informacion').innerHTML =
+            '<div><dt>Archivo</dt><dd>' + e(grupo.file_name) + '</dd></div>' +
+            '<div><dt>Plantilla</dt><dd>' + e(plantilla.name) + '</dd></div>' +
+            '<div><dt>Idioma</dt><dd>' + e(plantilla.template_language) + '</dd></div>' +
+            '<div><dt>Creado por</dt><dd>' + e(creador ? creador.name : 'Usuario no disponible') + '</dd></div>' +
+            '<div><dt>Estado del grupo</dt><dd>' + App.etiqueta(App.ESTADO_GRUPO, grupo.status) + '</dd></div>' +
+            '<div><dt>Fecha de creación</dt><dd>' + App.fecha(grupo.created_at) + '</dd></div>' +
+            '<div><dt>Inicio del envío</dt><dd>' + (grupo.started_at ? App.fecha(grupo.started_at) : '<span class="texto-tenue">Pendiente</span>') + '</dd></div>' +
+            '<div><dt>Finalización</dt><dd>' + (grupo.completed_at ? App.fecha(grupo.completed_at) : '<span class="texto-tenue">Pendiente</span>') + '</dd></div>';
+    }
+
+    function dibujarAcciones() {
+        const fallidos = HSM.enviosDeGrupo(grupo.id).filter((x) => x.status === 'failed').length;
+        document.getElementById('acciones').innerHTML =
+            '<a href="shipment_batches.html" class="btn btn-light"><i class="bi bi-arrow-left"></i> Volver a grupos</a>' +
+            (grupo.status === 'PENDING' ? '<button type="button" class="btn btn-success" id="enviar"><i class="bi bi-send"></i> Enviar grupo</button>' : '') +
+            (fallidos > 0 ? '<button type="button" class="btn btn-peligro-suave" id="exportar"><i class="bi bi-download"></i> Exportar fallidos</button>' : '');
+    }
+
+    const TARJETAS = [
+        ['total', 'Total', '#64748b'], ['pending', 'Pendientes', '#f59e0b'], ['sending', 'Enviando', '#3b82f6'],
+        ['sent', 'Enviados', '#2563eb'], ['delivered', 'Entregados', '#16a34a'], ['read', 'Leídos', '#0891b2'], ['failed', 'Fallidos', '#dc2626'],
+    ];
+
+    function dibujarEstadisticas() {
+        const envios = HSM.enviosDeGrupo(grupo.id);
+        const total = envios.length;
+        const cuenta = { total: total };
+        envios.forEach((x) => { cuenta[x.status] = (cuenta[x.status] || 0) + 1; });
+        document.getElementById('estadisticas').innerHTML = TARJETAS.map(function ([clave, texto, color]) {
+            const n = cuenta[clave] || 0;
+            const pct = clave !== 'total' && total ? Math.round(n / total * 100) + '%' : '';
+            return '<div class="stat-card" style="--color:' + color + '"><div class="stat-label">' + texto + '</div>' +
+                '<div class="stat-number">' + n.toLocaleString('es-MX') + '</div><div class="stat-pct">' + (pct || '&nbsp;') + '</div></div>';
+        }).join('');
+    }
+
+    function filaEnvio(x) {
+        const cliente = HSM.cliente(x.client_id);
+        const r = HSM.respuestaDe(x.id);
+        let respuesta = '<span class="texto-tenue">-</span>';
+        if (r) {
+            respuesta = (r.response_type === 'button'
+                ? '<span class="respuesta-boton"><i class="bi bi-reply"></i>' + e(r.button_text || r.response_text) + '</span>'
+                : '<span>' + e(r.response_text) + '</span>') +
+                '<br><small class="texto-tenue">' + App.fecha(r.created_at, false) + ' ' + r.created_at.slice(11, 16) + ' h</small>';
+        } else if (x.status === 'failed' && x.response_message) {
+            respuesta = '<span class="error-envio">' + e(x.response_message) + '</span>';
+        }
+        return '<tr>' +
+            '<td class="num">' + x.id + '</td>' +
+            '<td class="fuerte">' + e(cliente.name) + '</td>' +
+            '<td class="num">' + e(cliente.phone) + '</td>' +
+            '<td>' + App.etiqueta(App.ESTADO_ENVIO, x.status) + '</td>' +
+            '<td>' + (x.sent_at ? App.fecha(x.sent_at) : '<span class="texto-tenue">-</span>') + '</td>' +
+            '<td>' + (x.twilio_sid ? '<span class="sid">' + e(x.twilio_sid) + '</span>' : '<span class="texto-tenue">-</span>') + '</td>' +
+            '<td>' + respuesta + '</td></tr>';
+    }
+
+    const tabla = App.tablaPaginada({
+        filas: HSM.enviosDeGrupo(grupo.id).slice().sort((a, b) => b.id - a.id),
+        cuerpo: document.getElementById('cuerpo'),
+        buscador: document.getElementById('buscar'),
+        filtro: document.getElementById('filtro'),
+        conteo: document.getElementById('conteo'),
+        paginacion: document.getElementById('paginacion'),
+        columnas: 7,
+        porPagina: 25,
+        vacio: 'No hay clientes registrados en este grupo.',
+        dibujar: filaEnvio,
+        coincide: function (x, texto, filtro) {
+            if (filtro === 'respuesta') { if (!HSM.respuestaDe(x.id)) return false; }
+            else if (filtro && x.status !== filtro) return false;
+            if (!texto) return true;
+            const c = HSM.cliente(x.client_id);
+            return c.name.toLowerCase().includes(texto) || c.phone.includes(texto);
+        },
+    });
+
+    function dibujarTodo() {
+        dibujarInformacion();
+        dibujarAcciones();
+        dibujarEstadisticas();
+        tabla.redibujar();
+    }
+    dibujarTodo();
+
+    // Enviar grupo
+    function enviar() {
+        const progreso = document.getElementById('progreso');
+        progreso.hidden = false;
+        Envio.enviarGrupo(grupo, function (fase, hechos, total) {
+            const pct = total ? Math.round(hechos / total * 100) : 100;
+            document.getElementById('progresoBarra').style.width = pct + '%';
+            document.getElementById('progresoCifra').textContent = hechos + ' / ' + total;
+            document.getElementById('progresoTexto').textContent =
+                fase === 'enviando' ? 'Enviando mensajes a Twilio...' :
+                fase === 'entregando' ? 'Recibiendo confirmaciones de entrega...' : 'Envío terminado';
+            dibujarInformacion();
+            dibujarAcciones();
+            dibujarEstadisticas();
+            if (fase !== 'enviando' || hechos === total) tabla.redibujar();
+        }, function () {
+            setTimeout(() => { progreso.hidden = true; }, 1500);
+            const fallidos = HSM.enviosDeGrupo(grupo.id).filter((x) => x.status === 'failed').length;
+            App.avisar('Se envió el grupo #' + grupo.id + '. ' + (fallidos ? fallidos + (fallidos === 1 ? ' mensaje' : ' mensajes') + ' con error.' : 'Todos los mensajes salieron correctamente.'), fallidos ? 'error' : undefined);
+        });
+    }
+
+    document.getElementById('acciones').addEventListener('click', function (ev) {
+        if (ev.target.closest('#enviar')) {
+            if (confirm('¿Deseas enviar todos los mensajes pendientes de este grupo?')) enviar();
+        }
+        if (ev.target.closest('#exportar')) exportarFallidos();
+    });
+
+    // Desde la lista de grupos ("Enviar grupo" ya pidió confirmación)
+    if (App.param('enviar') === '1' && grupo.status === 'PENDING') {
+        history.replaceState(null, '', 'shipment_batch_detail.html?id=' + grupo.id);
+        setTimeout(enviar, 300);
+    }
+
+    // Exportar fallidos (mismas columnas que export_failed_shipments.php)
+    function exportarFallidos() {
+        const filas = [['ID', 'Nombre_Cliente', 'Telefono_Cliente', 'Estado', 'Error', 'Fecha_Error', 'Twilio_SID']];
+        HSM.enviosDeGrupo(grupo.id).filter((x) => x.status === 'failed').forEach(function (x) {
+            const c = HSM.cliente(x.client_id);
+            filas.push([x.id, c.name, c.phone, x.status, x.response_message || '', x.failed_at || '', x.twilio_sid || '']);
+        });
+        const csv = '﻿' + filas.map((f) => f.map((v) => {
+            v = String(v);
+            return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+        }).join(',')).join('\r\n');
+        const enlace = document.createElement('a');
+        enlace.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+        enlace.download = 'errores_grupo_' + grupo.id + '.csv';
+        enlace.click();
+        setTimeout(() => URL.revokeObjectURL(enlace.href), 1000);
+    }
+})();
+</script>
+</body>
+</html>

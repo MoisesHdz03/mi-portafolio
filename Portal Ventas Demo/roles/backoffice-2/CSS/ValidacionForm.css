@@ -1,0 +1,579 @@
+/* =====================================================================
+   1. VARIABLES POR DEFECTO (Paleta 1: Menta & Pizarra)
+   ===================================================================== */
+:root {
+  --bg-canvas: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --text-main: #1E293B;
+  --text-muted: #64748B;
+  --border-color: #E2E8F0;
+  --primary: #0D9488;
+  --primary-hover: #0F766E;
+  --danger: #E11D48;
+  --danger-bg: #FFE4E6;
+  --readonly-bg: #F1F5F9;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* =====================================================================
+   2. DEFINICIÓN DE PALETAS INTERACTIVAS
+   ===================================================================== */
+
+/* Paleta 1: Menta & Pizarra (Enfoque, precisión y calma) */
+[data-theme="menta"] {
+  --bg-canvas: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --text-main: #1E293B;
+  --text-muted: #64748B;
+  --border-color: #E2E8F0;
+  --primary: #0D9488;
+  --primary-hover: #0F766E;
+  --danger: #E11D48;
+  --danger-bg: #FFE4E6;
+  --readonly-bg: #F1F5F9;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Paleta 2: Índigo & Cobre (Moderna, productiva y ágil estilo SaaS) */
+[data-theme="indigo"] {
+  --bg-canvas: #F1F5F9;
+  --bg-card: #FFFFFF;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --border-color: #CBD5E1;
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+  --danger: #E11D48;
+  --danger-bg: #FFE4E6;
+  --readonly-bg: #F8FAFC;
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+/* Paleta 3: Verde Salvia (Cero fatiga, relajante para turnos largos) */
+[data-theme="salvia"] {
+  --bg-canvas: #F4F5F0;
+  --bg-card: #FFFFFF;
+  --text-main: #27272A;
+  --text-muted: #71717A;
+  --border-color: #E4E4E7;
+  --primary: #2D5A27;
+  --primary-hover: #1E3E1A;
+  --danger: #DC2626;
+  --danger-bg: #FEE2E2;
+  --readonly-bg: #EFEFE9;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Paleta 4: Azul Océano (Corporativa clásica y seria) */
+[data-theme="oceano"] {
+  --bg-canvas: #F0F4F8;
+  --bg-card: #FFFFFF;
+  --text-main: #102A43;
+  --text-muted: #486581;
+  --border-color: #D9E2EC;
+  --primary: #0967D2;
+  --primary-hover: #054A91;
+  --danger: #D32F2F;
+  --danger-bg: #FFEBEE;
+  --readonly-bg: #E4E7EB;
+  --shadow: 0 1px 3px rgba(16, 42, 67, 0.05);
+}
+
+/* Paleta 5: Dark Soft / Modo Oscuro Suave (Ideal para baja iluminación) */
+[data-theme="dark-soft"] {
+  --bg-canvas: #1E1E2E;
+  --bg-card: #2A2A3C;
+  --text-main: #E2E8F0;
+  --text-muted: #94A3B8;
+  --border-color: #3F3F56;
+  --primary: #14B8A6;
+  --primary-hover: #0D9488;
+  --danger: #F43F5E;
+  --danger-bg: #4C1D24;
+  --readonly-bg: #232334;
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =====================================================================
+   3. BASE / LAYOUT GENERAL
+   ===================================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg-canvas);
+    color: var(--text-main);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.formulario {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+}
+
+.formulario ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.formulario ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 8px;
+}
+
+
+/* =====================================================================
+   4. BARRA DE ACCIONES (Guardar / Regresar / SMS / Comprobar NIP)
+   ===================================================================== */
+
+.button {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.button input[type="submit"],
+.button .btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease, background-color .15s ease, border-color .15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.button input[type="submit"]:hover,
+.button .btn:hover {
+    transform: translateY(-1px);
+}
+.button input[type="submit"]:active,
+.button .btn:active {
+    transform: translateY(0);
+}
+
+/* Guardar: acción principal */
+.button input[type="submit"] {
+    background: var(--primary);
+    color: #ffffff;
+}
+.button input[type="submit"]:hover {
+    background: var(--primary-hover);
+}
+
+/* Regresar / Comprobar NIP (Bootstrap .btn-warning -> botón secundario neutro) */
+.button .btn-warning {
+    background: var(--bg-canvas);
+    color: var(--text-main);
+    border: 1.5px solid var(--border-color);
+}
+.button .btn-warning:hover {
+    background: var(--readonly-bg);
+    border-color: var(--text-muted);
+}
+
+/* Enviar SMS (Bootstrap .btn-primary) */
+.button .btn-primary {
+    background: color-mix(in srgb, var(--primary) 12%, var(--bg-card));
+    color: var(--primary);
+    border: 1.5px solid color-mix(in srgb, var(--primary) 25%, var(--bg-card));
+}
+.button .btn-primary:hover {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+
+
+/* =====================================================================
+   5. BLOQUES DEL FORMULARIO (.form-block)
+   ===================================================================== */
+
+.form-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.form-block__title {
+    margin: 0;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+}
+
+.form-block__body {
+    padding: 20px;
+}
+
+
+/* =====================================================================
+   6. GRID DE CAMPOS
+   ===================================================================== */
+
+.form-grid {
+    display: grid;
+    gap: 16px 18px;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 16px;
+}
+.form-grid:last-child {
+    margin-bottom: 0;
+}
+
+.form-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.form-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.form-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+.field--wide {
+    grid-column: span 2;
+}
+.field--full {
+    grid-column: 1 / -1;
+}
+
+/* Caja de motivo de rechazo (Backoffice): ocupa todo el ancho */
+.motivo-rechazo-box {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 18px;
+    padding: 14px 16px;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-bg);
+    border-radius: 10px;
+}
+.motivo-rechazo-box .field label {
+    color: var(--danger);
+}
+
+
+/* =====================================================================
+   7. CAMPOS: labels, inputs, selects, textareas
+   ===================================================================== */
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.field label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: .1px;
+}
+
+.Mark {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+.formulario input[type="text"],
+.formulario input[type="tel"],
+.formulario input[type="email"],
+.formulario input[type="date"],
+.formulario select,
+.formulario textarea,
+.formulario .form-control,
+.formulario .form-select {
+    width: 100%;
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1.5px solid var(--border-color);
+    border-radius: 9px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .2s ease;
+}
+
+.formulario textarea {
+    resize: vertical;
+    line-height: 1.4;
+}
+
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* Campos de solo lectura */
+.formulario input[readonly],
+.formulario textarea[readonly] {
+    background: var(--readonly-bg);
+    color: var(--text-muted);
+    border-style: dashed;
+    cursor: default;
+}
+.formulario input[readonly]:focus,
+.formulario textarea[readonly]:focus {
+    box-shadow: none;
+    border-color: var(--border-color);
+}
+
+.field-hint {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    opacity: .85;
+}
+
+
+/* =====================================================================
+   8. CASOS ESPECIALES
+   ===================================================================== */
+
+/* Motivo de rechazo de validación: aparece cuando estatus = RECHAZADA */
+.rechazo-validacion {
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-bg);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.rechazo-validacion label {
+    color: var(--danger);
+}
+
+/* Comentarios de domiciliación: resalte neutro (no es un error) */
+.no-domicilia-cobrador {
+    background: color-mix(in srgb, var(--primary) 6%, var(--bg-card));
+    border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--bg-card));
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+/* Verificación OTP */
+.otp-very {
+    background: color-mix(in srgb, var(--primary) 8%, var(--bg-card));
+    border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--bg-card));
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.otp-very label {
+    color: var(--primary);
+}
+
+.btn-sms i {
+    font-size: 13px;
+}
+
+
+/* =====================================================================
+   9. ADJUNTOS (comprobante / conversaciones WhatsApp)
+   ===================================================================== */
+
+.file-card {
+    background: var(--readonly-bg);
+    border: 1px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+}
+.file-card label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+.file-card img {
+    max-width: 100%;
+    max-height: 220px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    object-fit: contain;
+}
+.file-card a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+.file-card a:hover {
+    text-decoration: underline;
+}
+.file-card p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--text-muted);
+}
+
+
+/* =====================================================================
+   10. RESPONSIVE
+   ===================================================================== */
+
+@media (max-width: 960px) {
+    .form-grid--3,
+    .form-grid--4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .formulario {
+        padding: 16px 12px 90px;
+    }
+    .form-grid,
+    .form-grid--2,
+    .form-grid--3,
+    .form-grid--4,
+    .motivo-rechazo-box {
+        grid-template-columns: 1fr;
+    }
+    .field--wide,
+    .field--full {
+        grid-column: 1 / -1;
+    }
+    .button {
+        justify-content: stretch;
+    }
+    .button input[type="submit"],
+    .button .btn {
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+}
+
+
+/* =====================================================================
+   11. SELECTOR DE PALETAS DE COLORES (widget flotante)
+   Controlado por theme-switcher.js. No depende de FormValidacion.js.
+   ===================================================================== */
+
+.mc-theme-switcher {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 200;
+    font-family: inherit;
+}
+
+.mc-theme-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: #ffffff;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--text-main) 20%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .15s ease;
+}
+.mc-theme-toggle:hover {
+    transform: scale(1.06);
+}
+
+.mc-theme-panel {
+    position: absolute;
+    right: 0;
+    bottom: 62px;
+    width: 240px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--text-main) 18%, transparent);
+    padding: 14px;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity .15s ease, transform .15s ease;
+}
+.mc-theme-panel.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.mc-theme-panel__title {
+    margin: 0 0 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.mc-theme-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mc-theme-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: 9px;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: var(--text-main);
+    cursor: pointer;
+    text-align: left;
+    transition: background-color .15s ease, border-color .15s ease;
+}
+.mc-theme-option:hover {
+    background: var(--readonly-bg);
+}
+.mc-theme-option.is-active {
+    border-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 12%, var(--bg-card));
+    font-weight: 600;
+}
+
+.mc-theme-swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, .08);
+}
+
+.mc-theme-swatch--menta     { background: linear-gradient(135deg, #0D9488, #0F766E); }
+.mc-theme-swatch--indigo    { background: linear-gradient(135deg, #4F46E5, #4338CA); }
+.mc-theme-swatch--salvia    { background: linear-gradient(135deg, #2D5A27, #1E3E1A); }
+.mc-theme-swatch--oceano    { background: linear-gradient(135deg, #0967D2, #054A91); }
+.mc-theme-swatch--dark-soft { background: linear-gradient(135deg, #1E1E2E, #14B8A6); }
+
+@media (max-width: 640px) {
+    .mc-theme-switcher {
+        right: 14px;
+        bottom: 14px;
+    }
+    .mc-theme-panel {
+        width: 210px;
+    }
+}

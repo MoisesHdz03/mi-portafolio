@@ -1,0 +1,321 @@
+/* ==========================================================
+   ADMINISTRACIÓN · FILTROS (ver.php)
+   Sólo lo que no tiene Ver Ventas; el resto viene de
+   Dash_admin.css y Ventas_registradas.css.
+   ========================================================== */
+
+/* Formulario: "Buscar por" arriba, campos en cuadrícula y botones abajo */
+.filtros-form .filtro-fila {
+    flex: 1 1 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    min-width: 0;
+    margin: 0;
+    padding: 0 0 14px;
+    border: 0;
+    border-bottom: 1px dashed var(--borde);
+}
+
+.filtros-form .filtro-fila legend {
+    float: left;
+    width: auto;
+    margin: 0 4px 0 0;
+    font-size: 12px;
+}
+
+.filter-grid--filtros {
+    flex: 1 1 100%;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+/* Interruptor de dos opciones: Fecha de venta / Fecha de cobro */
+.selector-fecha {
+    display: inline-flex;
+    padding: 3px;
+    border: 1px solid var(--borde);
+    border-radius: 9px;
+    background: var(--superficie-suave);
+}
+
+.selector-fecha-opcion {
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+}
+
+.selector-fecha-opcion input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.selector-fecha-opcion span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: var(--texto-suave);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+.selector-fecha-opcion span i {
+    color: var(--texto-tenue);
+    font-size: 12px;
+    transition: color .2s ease;
+}
+
+.selector-fecha-opcion:hover span {
+    color: var(--texto);
+}
+
+.selector-fecha-opcion input:checked + span {
+    background: var(--superficie);
+    color: var(--acento);
+    box-shadow: 0 1px 2px rgba(20, 28, 40, .08), 0 0 0 1px var(--borde);
+}
+
+.selector-fecha-opcion input:checked + span i {
+    color: var(--acento);
+}
+
+.selector-fecha-opcion input:focus-visible + span {
+    outline: 2px solid var(--acento);
+    outline-offset: 1px;
+}
+
+.selector-fecha-ayuda {
+    color: var(--texto-tenue);
+    font-size: 12px;
+}
+
+/* Listas de estatus con la misma apariencia que los campos */
+.form-input.form-select {
+    padding-right: 32px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2386919f' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m3 6 5 5 5-5'/%3e%3c/svg%3e");
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-size: 12px;
+    cursor: pointer;
+}
+
+/* Lista con un estatus elegido: se marca con el color de acento */
+.form-input.form-select.con-valor {
+    border-color: var(--acento);
+    background-color: var(--acento-suave);
+    color: var(--acento);
+    font-weight: 500;
+}
+
+/* Filtros activos mostrados sobre la tabla */
+.chip-filtro {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 9px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+
+.chip-filtro i {
+    color: var(--exito);
+    font-size: 11px;
+}
+
+.chip-filtro b {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+.form-input[type="date"] {
+    min-width: 0;
+    color-scheme: light;
+}
+
+body.dark-mode .form-input[type="date"] {
+    color-scheme: dark;
+}
+
+/* Botón de Excel: verde sobrio */
+.btn.btn-exportar {
+    border-color: var(--exito);
+    background: var(--exito);
+    color: #fff;
+}
+
+.btn.btn-exportar i {
+    color: rgba(255, 255, 255, .85);
+}
+
+.btn.btn-exportar:hover {
+    border-color: #18613d;
+    background: #18613d;
+    color: #fff;
+}
+
+body.dark-mode .btn.btn-exportar,
+body.dark-mode .btn.btn-exportar i {
+    color: #0e2318;
+}
+
+body.dark-mode .btn.btn-exportar:hover {
+    border-color: #8fd3ae;
+    background: #8fd3ae;
+}
+
+/* Botones "Buscando..." / "Generando...": el ícono gira */
+.btn.cargando {
+    pointer-events: none;
+    opacity: .85;
+}
+
+.btn.cargando i {
+    animation: girar .8s linear infinite;
+}
+
+.btn.cargando i::before {
+    content: "\f110";
+}
+
+@keyframes girar {
+    to { transform: rotate(360deg); }
+}
+
+/* Barra sobre la tabla: rango buscado y total */
+.table-toolbar {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.table-toolbar-titulo {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+.table-toolbar .badge {
+    border-color: transparent;
+    background: var(--acento-suave);
+    color: var(--acento);
+    font-weight: 600;
+}
+
+.table-toolbar-nota {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    color: var(--texto-tenue);
+    font-size: 12px;
+}
+
+/* Tabla que se arrastra con el mouse */
+.table-wrapper {
+    cursor: grab;
+}
+
+.table-wrapper.arrastrando {
+    cursor: grabbing;
+    user-select: none;
+}
+
+/* El ID de la venta (primera columna) en el color de acento */
+.data-table td.celda-id strong {
+    color: var(--acento);
+}
+
+.tabla-vacia b {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+/* Aviso "¡Búsqueda completada con éxito!" */
+.success-notification {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border: 1px solid var(--borde);
+    border-left: 3px solid var(--exito);
+    border-radius: var(--radio);
+    background: var(--superficie);
+    box-shadow: var(--sombra-flotante);
+    color: var(--texto);
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity .3s var(--curva), transform .3s var(--curva);
+}
+
+.success-notification i {
+    color: var(--exito);
+    font-size: 16px;
+}
+
+.success-notification.show {
+    opacity: 1;
+    transform: none;
+}
+
+@media (max-width: 768px) {
+    .filter-grid--filtros {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .selector-fecha {
+        display: flex;
+        width: 100%;
+    }
+
+    .selector-fecha-opcion {
+        flex: 1;
+    }
+
+    .selector-fecha-opcion span {
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Buscar / Excel / Limpiar: pasan a otra línea si no caben */
+    .filtros-form .filter-actions {
+        flex: 1 1 100%;
+        flex-wrap: wrap;
+    }
+
+    .filtros-form .filter-actions .btn {
+        flex: 1 1 auto;
+    }
+
+    .table-toolbar-nota {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .success-notification {
+        right: 16px;
+        bottom: 16px;
+        left: 16px;
+    }
+}
+
+/* Los campos pueden encogerse dentro de su columna (los de texto tienen un ancho mínimo natural) */
+.filter-grid .form-input {
+    width: 100%;
+    min-width: 0;
+}

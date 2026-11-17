@@ -1,0 +1,333 @@
+/* ==========================================================
+   GERENCIA · BASE Y MENÚ LATERAL (Ver Ventas)
+   Paleta neutra con un solo color de acento. Las variables se
+   usan también en ventas_registradas.css y comentario_domiciliacion.css.
+   ========================================================== */
+
+:root {
+    --fondo: #edf0f5;
+    --superficie: #ffffff;
+    --superficie-suave: #f5f7fa;
+    --borde: #e0e5ec;
+    --borde-fuerte: #cdd4de;
+
+    --texto: #1b2230;
+    --texto-suave: #556070;
+    --texto-tenue: #8a93a3;
+
+    --acento: #2f5aa8;
+    --acento-hover: #264b8c;
+    --acento-suave: #e8eef9;
+
+    /* Menú lateral azul marino */
+    --menu-fondo: #1d2b45;
+    --menu-borde: rgba(255, 255, 255, .08);
+    --menu-texto: #b6c1d5;
+    --menu-icono: #7f8da6;
+    --menu-activo: rgba(255, 255, 255, .10);
+    --menu-marca: #7ea2e6;
+
+    /* Encabezados de tabla y secciones */
+    --encabezado-fondo: #eef2f8;
+    --encabezado-texto: #3d5175;
+
+    --exito: #2f7a4f;
+    --exito-suave: #ebf4ee;
+    --alerta: #8f6410;
+    --alerta-suave: #f8f1e2;
+    --error: #b4322a;
+    --error-suave: #f9ecea;
+
+    --radio: 10px;
+    --radio-chico: 7px;
+    --sombra: 0 1px 2px rgba(28, 29, 31, .05);
+    --sombra-flotante: 0 12px 32px rgba(28, 29, 31, .14);
+    --curva: cubic-bezier(.2, .7, .2, 1);
+    --menu-ancho: 248px;
+}
+
+/* Modo oscuro (assets/js/dashboard.js agrega body.dark-mode si se eligió) */
+body.dark-mode {
+    --fondo: #141517;
+    --superficie: #1b1c1f;
+    --superficie-suave: #202125;
+    --borde: #2c2d31;
+    --borde-fuerte: #3a3b40;
+    --texto: #ececec;
+    --texto-suave: #a5a7ad;
+    --texto-tenue: #6f7177;
+    --acento: #7ea2e6;
+    --acento-hover: #9bb7ee;
+    --acento-suave: rgba(126, 162, 230, .12);
+    --exito: #7cc49a;
+    --exito-suave: rgba(124, 196, 154, .12);
+    --alerta: #d9b261;
+    --alerta-suave: rgba(217, 178, 97, .12);
+    --error: #e48a82;
+    --error-suave: rgba(228, 138, 130, .12);
+    --menu-fondo: #111a2b;
+    --encabezado-fondo: #1f2738;
+    --encabezado-texto: #a9b8d4;
+    --sombra: none;
+    color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+}
+
+:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: 2px;
+}
+
+/* ---------- Menú lateral ---------- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    width: var(--menu-ancho);
+    height: 100vh;
+    background: var(--menu-fondo);
+    color: var(--menu-texto);
+    transform: translateX(0);
+    transition: transform .28s var(--curva), box-shadow .28s var(--curva);
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 20px 20px;
+    border-bottom: 1px solid var(--menu-borde);
+}
+
+.avatar {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--acento);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    box-shadow: 0 0 0 3px rgba(126, 162, 230, .18);
+}
+
+.user-info {
+    min-width: 0;
+}
+
+.user-info h3 {
+    margin-bottom: 1px;
+    color: var(--menu-icono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+}
+
+.user-info p {
+    overflow: hidden;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 12px;
+}
+
+.nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: var(--radio-chico);
+    color: var(--menu-texto);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.nav-item i {
+    width: 16px;
+    color: var(--menu-icono);
+    font-size: 14px;
+    text-align: center;
+    transition: color .15s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, .06);
+    color: #fff;
+}
+
+.nav-item:hover i {
+    color: var(--menu-texto);
+}
+
+.nav-item.active {
+    background: var(--menu-activo);
+    color: #fff;
+}
+
+.nav-item.active i {
+    color: var(--menu-marca);
+}
+
+/* Línea de acento a la izquierda de la opción activa */
+.nav-item.active::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: -12px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--menu-marca);
+}
+
+.sidebar-footer {
+    padding: 12px;
+    border-top: 1px solid var(--menu-borde);
+}
+
+.theme-toggle,
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: var(--radio-chico);
+    background: none;
+    color: var(--menu-texto);
+    font: inherit;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, .06);
+    color: #fff;
+}
+
+.theme-toggle i {
+    width: 16px;
+    color: var(--menu-icono);
+    text-align: center;
+    transition: color .15s ease, transform .5s var(--curva);
+}
+
+.theme-toggle:hover i {
+    color: var(--menu-marca);
+    transform: rotate(-20deg);
+}
+
+body.dark-mode .theme-toggle i {
+    color: #e8c46a;
+}
+
+/* ---------- Cambio de tema ---------- */
+/* El tema nuevo se dibuja encima y crece en círculo (assets/js/dashboard.js) */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+    z-index: 2;
+}
+
+/* Navegadores sin View Transitions: los colores se desvanecen */
+.tema-en-transicion,
+.tema-en-transicion *,
+.tema-en-transicion *::before,
+.tema-en-transicion *::after {
+    transition: background-color .6s ease, border-color .6s ease, color .6s ease, box-shadow .6s ease !important;
+}
+
+.logout-btn i {
+    width: 16px;
+    color: var(--menu-icono);
+    text-align: center;
+    transition: color .15s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(228, 138, 130, .14);
+    color: #f4b4ad;
+}
+
+.logout-btn:hover i {
+    color: #f4b4ad;
+}
+
+.brand {
+    padding: 12px 12px 4px;
+    color: var(--menu-icono);
+    font-size: 11px;
+    letter-spacing: .04em;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: var(--sombra-flotante);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}

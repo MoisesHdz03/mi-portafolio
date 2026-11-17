@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <title>Grupos de envío | WhatsApp HSM</title>
+</head>
+<body>
+<main class="main-content">
+    <div class="encabezado">
+        <div>
+            <h1>Grupos de envío</h1>
+            <p>Cada archivo CSV procesado genera un grupo con sus mensajes.</p>
+        </div>
+        <div class="encabezado-acciones">
+            <a href="upload_csv.html" class="btn btn-success"><i class="bi bi-upload"></i> Subir CSV</a>
+        </div>
+    </div>
+
+    <div class="tarjeta">
+        <div class="tabla-herramientas">
+            <div class="buscador">
+                <i class="bi bi-search"></i>
+                <input type="search" class="form-control form-control-sm" id="buscar" placeholder="Buscar por archivo o plantilla">
+            </div>
+            <select class="form-select form-select-sm" id="filtro" aria-label="Filtrar por estado">
+                <option value="">Todos los estados</option>
+                <option value="PENDING">Pendiente</option>
+                <option value="COMPLETED">Completado</option>
+                <option value="PARTIAL">Completado con errores</option>
+                <option value="FAILED">Fallido</option>
+            </select>
+            <span class="conteo" id="conteo"></span>
+        </div>
+        <div class="tabla-contenedor">
+            <table class="tabla tabla-compacta">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Archivo</th>
+                        <th>Plantilla</th>
+                        <th>Total</th>
+                        <th>Creado por</th>
+                        <th>Estado</th>
+                        <th>Fecha de creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo"></tbody>
+            </table>
+        </div>
+        <div class="paginacion" id="paginacion" hidden></div>
+    </div>
+</main>
+
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/iconos.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/envio.js"></script>
+<script>
+(function () {
+    'use strict';
+    if (!App.iniciar('shipment_batches')) return;
+    const e = App.e;
+
+    // Si algún envío quedó a medias, se termina
+    HSM.datos().grupos.forEach(Envio.completarSinAnimacion);
+
+    App.tablaPaginada({
+        filas: HSM.datos().grupos.slice().sort((a, b) => b.id - a.id),
+        cuerpo: document.getElementById('cuerpo'),
+        buscador: document.getElementById('buscar'),
+        filtro: document.getElementById('filtro'),
+        conteo: document.getElementById('conteo'),
+        paginacion: document.getElementById('paginacion'),
+        columnas: 8,
+        porPagina: 20,
+        vacio: 'No hay grupos de envío registrados.',
+        coincide: function (g, texto, filtro) {
+            if (filtro && g.status !== filtro) return false;
+            const plantilla = HSM.campana(g.campaign_id);
+            return !texto || g.file_name.toLowerCase().includes(texto) || plantilla.name.toLowerCase().includes(texto);
+        },
+        dibujar: function (g) {
+            const plantilla = HSM.campana(g.campaign_id);
+            const creador = HSM.usuario(g.created_by);
+            return '<tr>' +
+                '<td class="num">' + g.id + '</td>' +
+                '<td><i class="bi bi-filetype-csv text-success me-1"></i>' + e(g.file_name) + '</td>' +
+                '<td>' + e(plantilla.name) + '</td>' +
+                '<td><span class="contador">' + g.total_records + '</span></td>' +
+                '<td>' + e(creador ? creador.name : 'Usuario no disponible') + '</td>' +
+                '<td>' + App.etiqueta(App.ESTADO_GRUPO, g.status) + '</td>' +
+                '<td>' + App.fecha(g.created_at) + '</td>' +
+                '<td class="acciones">' +
+                '<a href="shipment_batch_detail.html?id=' + g.id + '" class="btn btn-sm btn-suave"><i class="bi bi-eye"></i> Ver</a>' +
+                (g.status === 'PENDING'
+                    ? '<a href="shipment_batch_detail.html?id=' + g.id + '&enviar=1" class="btn btn-sm btn-success" onclick="return confirm(\'¿Deseas enviar este grupo?\');"><i class="bi bi-send"></i> Enviar grupo</a>'
+                    : '') +
+                '</td></tr>';
+        },
+    });
+})();
+</script>
+</body>
+</html>

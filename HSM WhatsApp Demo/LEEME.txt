@@ -1,0 +1,37 @@
+HSM WHATSAPP - DEMO PARA PORTAFOLIO
+==================================
+
+Sistema de envío masivo de plantillas HSM de WhatsApp con Twilio.
+
+Cómo abrirla
+------------
+1. Abre "index.html" con doble clic (Google Chrome o Microsoft Edge).
+2. Elige uno de los accesos de demostración (contraseña: demo1234):
+   - lmedina  · Administrador Full: plantillas, envíos y usuarios.
+   - dramirez · Administrador: envíos, sin gestión de usuarios ni plantillas.
+
+Qué se puede probar
+-------------------
+- Plantillas HSM: sincronizar con Twilio, ver la plantilla como se vería en
+  WhatsApp (con o sin datos de ejemplo) y activarla o desactivarla.
+- Subir CSV: elige una plantilla, descarga el CSV de ejemplo y súbelo.
+  Se valida igual que el sistema (columnas Nombre_Cliente, Telefono_Cliente
+  y una columna por cada variable de la plantilla).
+- Grupos de envío: "Enviar grupo" simula el envío por Twilio con su avance,
+  los estados (enviado, entregado, leído o error) y las respuestas de los
+  clientes. "Exportar fallidos" descarga el CSV de errores.
+- Envíos: todos los mensajes con búsqueda y filtro por estado.
+- Usuarios: crear, editar, activar y desactivar.
+
+Importante
+----------
+- Todos los datos son FICTICIOS (nombres, teléfonos y SID de Twilio).
+- No se conecta a Twilio ni envía mensajes reales: todo ocurre en el navegador.
+- Los cambios se guardan en el navegador. "Restablecer datos" (abajo, junto a
+  la etiqueta DEMO) regresa la demo a su estado inicial.
+- No usa Bootstrap ni ningún framework: los estilos están en assets/css.
+- Los íconos son archivos SVG locales (assets/icons, Bootstrap Icons con
+  licencia MIT); assets/js/iconos.js los dibuja sin necesidad de internet.
+- La fuente Inter también es local (assets/fonts, licencia SIL OFL 1.1).
+- Funciona 100% sin internet: no carga nada de fuera de la carpeta.
+- Para publicarla (GitHub Pages, Netlify, etc.) sube la carpeta completa.

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../../demo/demo-datos.js"></script><script src="../../../demo/demo.js"></script><link rel="stylesheet" href="../../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/Logoick.png" type="image/x-icon">
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('mc_portal_theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="stylesheet"
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../CSS/CobradorForm.css">
+    <title>Bandeja Cobrador - Modificación Venta</title>
+</head>
+<body>
+    <!-- Seleccion de paletas de colores -->
+<div id="mc-theme-switcher" class="mc-theme-switcher">
+    <button type="button" id="mc-theme-toggle" class="mc-theme-toggle" aria-label="Cambiar paleta de colores" aria-expanded="false">
+        <i class="fa-solid fa-palette"></i>
+    </button>
+    <div id="mc-theme-panel" class="mc-theme-panel" role="menu" aria-hidden="true">
+        <p class="mc-theme-panel__title">Paleta de colores</p>
+        <div class="mc-theme-options">
+            <button type="button" class="mc-theme-option" data-theme="menta" role="menuitem">
+                <span class="mc-theme-swatch mc-theme-swatch--menta"></span>
+                Menta &amp; Pizarra
+            </button>
+            <button type="button" class="mc-theme-option" data-theme="indigo" role="menuitem">
+                <span class="mc-theme-swatch mc-theme-swatch--indigo"></span>
+                Índigo &amp; Cobre
+            </button>
+            <button type="button" class="mc-theme-option" data-theme="salvia" role="menuitem">
+                <span class="mc-theme-swatch mc-theme-swatch--salvia"></span>
+                Verde Salvia
+            </button>
+            <button type="button" class="mc-theme-option" data-theme="oceano" role="menuitem">
+                <span class="mc-theme-swatch mc-theme-swatch--oceano"></span>
+                Azul Océano
+            </button>
+            <button type="button" class="mc-theme-option" data-theme="dark-soft" role="menuitem">
+                <span class="mc-theme-swatch mc-theme-swatch--dark-soft"></span>
+                Dark Soft
+            </button>
+        </div>
+    </div>
+</div>
+
+    <!-- Formulario Cobrador -->
+    <section class="formulario">
+        <form data-demo="1" id="form-venta" action="modificar.html" method="post">
+            <div class="button">
+                <input type="submit" name="enviar" value="Guardar">
+                <a href="#demo" class="btn btn-warning">
+                    Regresar
+                </a>
+            </div>
+
+            <article class="form-block">
+    <h3 class="form-block__title">Agente y usuario</h3>
+    <div class="form-block__body">
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <input type="hidden" name="Validador" value="dsalinas" id="Validador">
+                <input type="hidden" name="Backoffice" value="dsalinas" id="Backoffice">
+
+                <label for="Cobrador">Cobrada por<span class="Mark"> *</span></label>
+                <input type="text" name="Cobrador" value="dsalinas" id="Cobrador" readonly required>
+            </div>
+
+            <div class="field">
+                <label for="usuario">Usuario (Login)<span class="Mark"> *</span></label>
+                <input type="text" name="usuario" value="ftorres" id="usuario" readonly>
+            </div>
+
+            <div class="field">
+                <label for="nombreAgt">Nombre del agente</label>
+                <input type="text" name="nombreAgt" value="FERNANDA TORRES" id="nombreAgt" readonly>
+            </div>
+        </div>
+    </div>
+</article>
+<article class="form-block">
+    <h3 class="form-block__title">Detalle de venta</h3>
+    <div class="form-block__body">
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="estatus">Estatus Validacion</label>
+                <input type="text" name="estatus" value="APROBADA" id="estatus" readonly>
+            </div>
+
+            <div class="field">
+                <label for="ID_Grabacion_Validacion">ID de Grabación de Validación</label>
+                <input type="text" name="ID_Grabacion_Validacion" value="VAL-CF3EF6B" id="ID_Grabacion_Validacion" readonly>
+            </div>
+
+            <div class="field">
+                <label for="estatus-backoffice">Estatus BackOffice</label>
+                <input type="text" name="estatus_backoffice" value="INGRESADA" id="estatus-backoffice" readonly>
+            </div>
+        </div>
+
+        <section id="motivo_rechazo">
+            <div class="form-grid form-grid--3">
+                <div class="field">
+                    <label for="Motivo_Rechazo_Backoffice">Motivo de Rechazo Backoffice</label>
+                    <input type="text" name="Motivo_Rechazo_Backoffice" value="" id="Motivo_Rechazo_Backoffice" readonly>
+                </div>
+
+                <div class="field field--wide">
+                    <label for="Comentario_Rechazo_Backoffice">Comentario del rechazo</label>
+                    <textarea name="Comentario_Rechazo_Backoffice" id="Comentario_Rechazo_Backoffice" cols="5" rows="2" readonly></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="Sus">Sus</label>
+                    <input type="text" name="Sus" value="" id="Sus" readonly>
+                </div>
+            </div>
+        </section>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="NumeroFolio">Numero de Folio</label>
+                <input type="text" value="46630193" id="NumeroFolio" name="NumeroFolio">
+                <span id="errorFolio" class="field-hint">El numero de folio debe de contener al menos 6 digitos. </span>
+            </div>
+
+            <div class="field">
+                <label for="FechaV">Fecha de venta<span class="Mark"> *</span></label>
+                <input type="text" name="FechaV" value="2026-11-11 17:17:52" id="FechaV" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="IDlead">ID lead<span class="Mark"> *</span></label>
+                <input type="text" name="IDlead" value="9077397685" id="IDlead" readonly>
+            </div>
+
+            <div class="field">
+                <label for="ID_Grabacion">ID de Grabación</label>
+                <input type="text" name="ID_Grabacion" value="GRB-BE038F98" id="ID_Grabacion" readonly>
+            </div>
+
+            <div class="field">
+                <label for="TipoCliente">Tipo de cliente<span class="Mark"> *</span></label>
+                <select name="TipoCliente" id="TipoCliente" readonly>
+                    <option value=""></option>                    <option value="Nuevo" selected>Nuevo</option>                    <option value="Actual">Actual</option>                    <option value="VSS">Venta Seguridad Hogar</option>                    <option value="VPP">Ventas Productos Premier</option>                </select>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="CCE">CCE<span class="Mark"> *</span></label>
+                <select name="CCE" id="CCE" readonly>
+                    <option value=""></option>
+                    <option value="Afiliado">Afiliado</option>                    <option value="Social Selling">Social Selling</option>                    <option value="NEOTELL Llamada">NEOTELL Llamada</option>                    <option value="Llamada CCC">Llamada CCC</option>                    <option value="Viont">Viont</option>                </select>
+            </div>
+
+            <div class="field">
+                <label for="NumeroSucursal">Numero de Sucursal<span class="Mark"> *</span></label>
+                <input type="text" name="NumeroSucursal" value="69" id="NumeroSucursal" readonly>
+            </div>
+
+            <div class="field">
+                <label for="Sucursal">Sucursal<span class="Mark"> *</span></label>
+                <input type="text" name="Sucursal" value="TONALA" id="Sucursal" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--2">
+            <!-- Campo Oculto -->
+            <div class="field" hidden>
+                <label for="Region">Región<span class="Mark"> *</span></label>
+                <select name="Region" id="Region" readonly>
+                    <option value=""></option>                    <option value="OCCIDENTE">OCCIDENTE</option>                    <option value="TCO">TCO</option>                    <option value="BAJIO">BAJIO</option>                    <option value="CENTRO">CENTRO</option>                    <option value="GOLFO">GOLFO</option>                    <option value="NORESTE">NORESTE</option>                    <option value="NORTE">NORTE</option>                    <option value="PACIFICO">PACIFICO</option>                    <option value="SURESTE" selected>SURESTE</option>                </select>
+            </div>
+            <!-- ------------------- -->
+
+            <div class="field">
+                <label for="NumSuscriptor">Numero de Susciptor</label>
+                <input type="text" name="NumSuscriptor" value="" id="NumSuscriptor" readonly>
+            </div>
+        </div>
+    </div>
+</article>
+<article class="form-block">
+    <h3 class="form-block__title">Datos de Contacto</h3>
+    <div class="form-block__body">
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="Segmento">Segmento<span class="Mark"> *</span></label>
+                <select name="Segmento" id="Segmento" readonly>
+                    <option value=""></option>                    <option value="RESIDENCIAL" selected>Residencial</option>                    <option value="NEGOCIO">Negocio</option>                </select>
+            </div>
+
+            <div class="field">
+                <label for="Apellidopaterno">Apellido Paterno<span class="Mark"> *</span></label>
+                <input type="text" name="Apellidopaterno" value="RODRIGUEZ" id="Apellidopaterno" readonly>
+            </div>
+
+            <div class="field">
+                <label for="Apellidomaterno">Apellido Materno<span class="Mark"> *</span></label>
+                <input type="text" name="Apellidomaterno" value="CRUZ" id="Apellidomaterno" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="Nombre">Nombre<span class="Mark"> *</span></label>
+                <input type="text" name="Nombre" value="SANDRA" id="Nombre" readonly>
+            </div>
+
+            <div class="field">
+                <label for="Fecha_Nacimiento">Fecha de Nacimiento<span class="Mark"> *</span></label>
+                <input type="date" name="Fecha_Nacimiento" value="1989-11-16" id="Fecha_Nacimiento" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field field--wide">
+                <label for="Domicilio">Domicilio (calle y numero)<span class="Mark"> *</span></label>
+                <input type="text" name="Domicilio" value="CALLE ROBLE 101" id="Domicilio" readonly>
+            </div>
+
+            <div class="field">
+                <label for="NumeroInterior">Interior (Mz / lote)</label>
+                <input type="text" name="NumeroInterior" value="" id="NumeroInterior" readonly>
+            </div>
+
+            <div class="field">
+                <label for="Colonia ">Colonia<span class="Mark"> *</span></label>
+                <input type="text" name="Colonia" value="VILLA VERDE" id="Colonia" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--2">
+            <div class="field">
+                <label for="Entrecalle1">Entrecalle 1<span class="Mark"> *</span></label>
+                <input type="text" name="Entrecalle1" value="CALLE CEDRO"id="Entrecalle1" readonly>
+            </div>
+
+            <div class="field">
+                <label for="Entrecalle2">Entrecalle 2<span class="Mark"> *</span></label>
+                <input type="text" name="Entrecalle2" value="AV. JUAREZ" id="Entrecalle2" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="CP">Codigo Postal<span class="Mark"> *</span></label>
+                <input type="text" name="CP" value="57016" id="CP" readonly>
+            </div>
+
+            <div class="field">
+                <label for="coordenadas">Coordenadas<span class="Mark"> *</span></label>
+                <input type="text" name="Coordenadas" value="19.798460, -101.428670" id="coordenadas" readonly>
+            </div>
+
+            <div class="field">
+                <label for="Telefonocasa">Telefono de casa</label>
+                <input type="tel" name="Telefonocasa" value="5550908301" id="Telefonocasa" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="TelefonoOficina">Telefono de oficina</label>
+                <input type="tel" name="Telefonoficina" value="" id="TelefonoOficina" readonly>
+            </div>
+
+            <div class="field">
+                <label for="Telefonocelular">Telefono celular<span class="Mark"> *</span></label>
+                <input type="tel" name="Telefonocelular" value="5550172395" id="Telefonocelular" readonly>
+            </div>
+
+            <div class="field">
+                <label for="correo">Correo electronico<span class="Mark"> *</span></label>
+                <input type="email" name="Correo" value="sandra.rodriguez8@ejemplo.com" id="correo" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--2">
+            <div class="field field--full">
+                <label for="Comentarios">Comentarios del vendedor<span class="Mark"> *</span></label>
+                <textarea name="Comentarios" id="Comentarios" readonly cols="30" rows="2">Esquina con farmacia</textarea>
+            </div>
+            <div class="field field--full">
+                <label for="comentarios" id="Down">Orientación de la dirección</label>
+            </div>
+        </div>
+    </div>
+</article>
+<article class="form-block">
+    <h3 class="form-block__title">PRODUCTO</h3>
+    <div class="form-block__body">
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="Paquetes">Paquete<span class="Mark"> *</span></label>
+                <select name="Paquetes" id="Paquetes">
+                    <option value="off"></option>                    <option value="Doble Pack">Doble Pack</option>                    <option value="Triple Pack">Triple Pack</option>                    <option value="Servicios Premier" selected>Servicios Premier</option>                </select>
+            </div>
+        </div>
+
+        <div id="opcionesbycampain">
+            <div class="form-grid form-grid--2">
+                <div class="field">
+                    <label for="Ventadeinternet">Venta de Internet<span class="Mark"> *</span></label>
+                    <select name="Ventadeinternet" id="Ventadeinternet" required>
+                        <option value="100 megas">100 Megas</option>                        <option value="200 megas">200 Megas</option>                        <option value="300 megas">300 Megas</option>                        <option value="500 megas">500 Megas</option>                        <option value="1000 megas" selected>1000 Megas</option>                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="Ventadecable">Venta de Cable</label>
+                    <select name="Ventadecable" id="Ventadecable" readonly>
+                        <option value="-">-</option>                        <option value="Conecta" selected>Conecta</option>                        <option value="Basico plus">Basico plus</option>                    </select>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid--3">
+                <!-- Campo Oculto -->
+                <div class="field" hidden>
+                    <label for="VentadeTelefonia">Venta de Telefonia<span class="Mark"> *</span></label>
+                    <select name="VentadeTelefonia" id="VentadeTelefonia" readonly>
+                        <option value=""></option>                        <option value="Ilimitado Plus" selected>Ilimitado Plus</option>                        <option value="-">-</option>                    </select>
+
+                </div>
+                <!-- ------------- -->
+
+                <div class="field">
+                    <label for="HD">HD</label>
+                    <select name="HD" id="HD" readonly>
+                        <option value="-">-</option>                        <option value="Conecta" selected>Conecta</option>                        <option value="HDTotal">HD Total</option>                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="HDXVIEW">HD XVIEW</label>
+                    <select name="HDXVIEW" id="HDXVIEW" readonly>
+                        <option value="-">-</option>                        <option value="XVIEW">XVIEW</option>                        <option value="XVIEW+" selected>XVIEW +</option>                    </select>
+                </div>
+            </div>
+
+            <div class="form-grid form-grid--2">
+                <div class="field">
+                    <label for="TVADICIONAL">TV Adicional</label>
+                    <select name="TVADICIONAL" id="TVADICIONAL" readonly>
+                        <option value="-">-</option>                        <option value="0">0</option>                        <option value="1" selected>1</option>                        <option value="2">2</option>                        <option value="3">3</option>                        <option value="4">4</option>                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="LineaAdicional">Linea Adicional (solo negocios)</label>
+                    <select name="LineaAdicional" id="LineaAdicional" readonly>
+                        <option value="-">-</option>                        <option value="0" selected>0</option>                        <option value="1">1</option>                        <option value="2">2</option>                        <option value="3">3</option>                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="VentaSE">Venta de servicio de Streaming</label>
+                <select name="VentaSE" id="VentaSE" readonly>
+                    <option value=""></option>                    <option value="SI">SI</option>                    <option value="NO" selected>NO</option>                </select>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--4">
+            <div class="field">
+                <label for="Netflix">Netflix</label>
+                <select name="Netflix" id="Netflix" class="form-select" readonly>
+                    <option value="-" selected>-</option>                    <option value="Anuncios">Anuncios</option>                    <option value="Basico">Basico</option>                    <option value="Estandar">Estandar</option>                    <option value="Premium">Premium</option>                </select>
+            </div>
+
+            <div class="field">
+                <label for="Disney">Disney</label>
+                <select
+                    name="Disney" id="Disney" class="form-select" readonly>
+                    <option value="-" selected>-</option>                    <option value="Disney+ Premium">Disney+ Premium</option>                    <option value="Disney+ Estandar">Disney+ Estandar</option>                    <option value="Disney+ Anuncios Promo">Disney+ Anuncios Promo</option>                </select>
+            </div>
+
+            <div class="field">
+                <label for="Amazon">AMAZON</label>
+                <select name="Amazon" id="Amazon" class="form-select" readonly>
+                    <option value="-" selected>-</option>                    <option value="SI">SI</option>                    <option value="NO">NO</option>                    <option value="Amazon Prime">Amazon Prime</option>                </select>
+            </div>
+
+            <div class="field">
+                <label for="HBOMAX">HBO - MAX</label>
+                <select name="HBOMAX" id="HBOMAX" class="form-select" readonly>
+                    <option value="-" selected>-</option>                    <option value="SI">SI</option>                    <option value="NO">NO</option>                    <option value="MAX Anuncios">MAX Anuncios</option>                    <option value="MAX">MAX</option>                </select>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="megamovil">Megamovil<span class="Mark"> *</span></label>
+                <input type="text" name="megamovil" value="" id="megamovil" readonly>
+            </div>
+
+            <div class="field">
+                <label for="modelo">Modelo<span class="Mark"> *</span></label>
+                <input type="text" name="modelo" value="" id="modelo" readonly>
+            </div>
+
+            <div class="field">
+                <label for="IMEI">IMEI<span class="Mark"> *</span></label>
+                <input type="text" name="IMEI" value="" id="IMEI">
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="Npromo">Numero de Promoción<span class="Mark"> *</span></label>
+                <input type="text" name="Npromo" value="5410" id="Npromo" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="CostoContratacion">Costo de Contratacion<span class="Mark"> *</span></label>
+                <input type="text" name="CostoContratacion" value="200" id="CostoContratacion" readonly>
+
+                <label for="CostoContratacion" id="Down">Costo de contratacion</label>
+            </div>
+
+            <div class="field">
+                <label for="Costopromo">Costo promocional<span class="Mark"> *</span></label>
+                <input type="text" name="Costopromo" value="399" id="Costopromo" readonly>
+
+                <label for="Costopromo" id="Down">Costo del paquete con la promocion</label>
+            </div>
+
+            <div class="field">
+                <label for="Costorenta">Costo Renta<span class="Mark"> *</span></label>
+                <input type="text" name="Costorenta" value="549" id="Costorenta" readonly>
+
+                <label for="CostoContratacion" id="Down">Costo del paquete despues de la promoción</label>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--2">
+            <div class="field field--full">
+                <label for="ComentariosPV">Comentarios de producto vendido<span class="Mark"> *</span></label>
+                <textarea name="ComentariosPV" id="ComentariosPV" readonly cols="30" rows="2">Instalacion por la tarde</textarea>
+            </div>
+        </div>
+    </div>
+</article>
+<article class="form-block">
+    <h3 class="form-block__title">Detalles del servicio</h3>
+    <div class="form-block__body">
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="status_ingreso">Estatus Cobrador</label>
+                <select name="status_ingreso" id="status_ingreso" required>
+                    <option value=""></option>                    <option value="COBRADA">Cobrada</option>                    <option value="RECHAZADA">Rechazada</option>                </select>
+            </div>
+
+            <div class="field">
+                <label for="venta_exitosa">Cobro Empaquetado</label>
+                <input type="text" name="venta_exitosa" value="" id="venta_exitosa">
+            </div>
+
+            <div class="field">
+                <label for="ingreso-venta">Fecha de Cobro</label>
+                <input type="date" name="fecha_venta" value="" id="fecha_venta" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field" id="contenedorMotivoRechazoCobrador" style="display:none;">
+                <label for="motivo_rechazo">Motivo de Rechazo Cobrador</label>
+                <select name="motivo_rechazo" id="motivo_rechazo">
+                    <option value="">Selecciona un motivo de rechazo...</option>
+                                            <option value="ACTIVO">ACTIVO</option>                                            <option value="CALLE NO REGISTRADA">CALLE NO REGISTRADA</option>                                            <option value="CAMBIO DE PAQUETE">CAMBIO DE PAQUETE</option>                                            <option value="CANCELADO">CANCELADO</option>                                            <option value="CLIENTE CUELGA">CLIENTE CUELGA</option>                                            <option value="COLONIA NO DISPONIBLE PARA VENTA">COLONIA NO DISPONIBLE PARA VENTA</option>                                            <option value="COLONIA NO REGISTRADA">COLONIA NO REGISTRADA</option>                                            <option value="CONTRATADO">CONTRATADO</option>                                            <option value="CORTADO">CORTADO</option>                                            <option value="ERROR DE NIP">ERROR DE NIP</option>                                            <option value="ERROR EN SISTEMA SFYC">ERROR EN SISTEMA SFYC</option>                                            <option value="ERROR LLENADO DE PAPELETA">ERROR LLENADO DE PAPELETA</option>                                            <option value="FUERA DE COBERTURA">FUERA DE COBERTURA</option>                                            <option value="NO CONTESTA FILTROS">NO CONTESTA FILTROS</option>                                            <option value="PENDIENTE DE COMPROBANTE">PENDIENTE DE COMPROBANTE</option>                                            <option value="POR INSTALAR">POR INSTALAR</option>                                            <option value="PROCESO DE CANCELACION">PROCESO DE CANCELACION</option>                                            <option value="SUCURSAL NO DISPONIBLE">SUCURSAL NO DISPONIBLE</option>                                            <option value="TITULAR SOLICITA CANCELACION">TITULAR SOLICITA CANCELACION</option>                                            <option value="ZONA POR CONTRATOS">ZONA POR CONTRATOS</option>                                                                            </select>
+            </div>
+
+            <div class="field">
+                <label for="plastico">Numero de Plastico</label>
+                <input type="text" name="numero_plastico" value="" id="numero_plastico">
+            </div>
+
+            <div class="field">
+                <label for="vencimiento">Fecha de Vencimiento</label>
+                <input type="date" name="Fecha_Vencimiento" value="" id="Fecha_Vencimiento">
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="Banco">Banco</label>
+                <select name="Banco" id="Banco" class="form-select">
+                    <option value="" disabled selected>
+                        Seleccione un banco...
+                    </option>
+
+                                                            <option value="BBVA México">BBVA México</option>
+                                            <option value="Banamex (Citibanamex)">Banamex (Citibanamex)</option>
+                                            <option value="Santander">Santander</option>
+                                            <option value="Banorte">Banorte</option>
+                                            <option value="HSBC">HSBC</option>
+                                            <option value="Scotiabank">Scotiabank</option>
+                                            <option value="Banco Azteca">Banco Azteca</option>
+                                            <option value="Inbursa">Inbursa</option>
+                                            <option value="BanCoppel">BanCoppel</option>
+                                            <option value="Banco del Bajío (BanBajío)">Banco del Bajío (BanBajío)</option>
+                                            <option value="Afirme">Afirme</option>
+                                            <option value="BanRegio">BanRegio</option>
+                                            <option value="Mifel">Mifel</option>
+                                            <option value="Actinver">Actinver</option>
+                                            <option value="Multiva">Multiva</option>
+                                            <option value="Invex">Invex</option>
+                                            <option value="Bansi">Bansi</option>
+                                            <option value="Compartamos Banco">Compartamos Banco</option>
+                                            <option value="Bancrea">Bancrea</option>
+                                            <option value="Hey Banco">Hey Banco</option>
+                                            <option value="Bankaool">Bankaool</option>
+                                            <option value="Banco Covalto">Banco Covalto</option>
+                                            <option value="NU México">NU México</option>
+                                            <option value="Klar">Klar</option>
+                                            <option value="Ualá">Ualá</option>
+                                            <option value="Spin by OXXO">Spin by OXXO</option>
+                                            <option value="Banco del Bienestar">Banco del Bienestar</option>
+                                            <option value="Banobras">Banobras</option>
+                                            <option value="Nafin">Nafin</option>
+                                            <option value="Bancomext">Bancomext</option>
+                                            <option value="BanJercito">BanJercito</option>
+                                            <option value="Banxico">Banxico</option>
+                                            <option value="JP Morgan">JP Morgan</option>
+                                            <option value="Barclays">Barclays</option>
+                                            <option value="ICBC">ICBC</option>
+                                            <option value="Bank of America">Bank of America</option>
+                                            <option value="Mizuho Bank">Mizuho Bank</option>
+                                            <option value="Shinhan Bank">Shinhan Bank</option>
+                                            <option value="MUFG">MUFG</option>
+                                            <option value="Sabadell">Sabadell</option>
+                                            <option value="Volkswagen Bank">Volkswagen Bank</option>
+                                            <option value="Ve Por Más (BX+)">Ve Por Más (BX+)</option>
+                                            <option value="Intercam Banco">Intercam Banco</option>
+                                            <option value="BMONEX">BMONEX</option>
+                                            <option value="Base (BBASE)">Base (BBASE)</option>
+                                            <option value="Consubanco">Consubanco</option>
+                                            <option value="Banco S3">Banco S3</option>
+                                            <option value="Inmobiliario">Inmobiliario</option>
+                                            <option value="Kapital Bank">Kapital Bank</option>
+                                            <option value="Bansefi / Banco Bienestar">Bansefi / Banco Bienestar</option>
+                                            <option value="No domicilia">No domicilia</option>
+                                            <option value="STP">STP</option>
+                                            <option value="Mercado Pago">Mercado Pago</option>
+                                            <option value="Plata">Plata</option>
+                                            <option value="Nombre_Banco">Nombre_Banco</option>
+                                                    </select>
+            </div>
+        </div>
+
+        <div class="field field--full" id="contenedorMotivoNoDomicilia" style="display:none;">
+            <label for="Motivo_No_Domicilia_Cobrador">¿Porqué motivo no domicilia?</label>
+            <textarea name="Motivo_No_Domicilia_Cobrador" id="Motivo_No_Domicilia_Cobrador" cols="35" rows="3"></textarea>
+        </div>
+    </div>
+</article>
+<article class="form-block">
+    <h3 class="form-block__title">Adicionales</h3>
+    <div class="form-block__body">
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="CDomicilio"> Comprobante de Domicilio<span class="Mark"> *</span> </label>
+                <select name="CDomicilio" id="CDomicilio" readonly>
+                    <option value=""></option>                    <option value="Si">SI</option>                    <option value="No" selected>NO</option>                </select>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--2">
+            <div id="img-comprobante" class="file-card">
+                <label>Imagen del comprobante</label>
+
+                                                            <a href="../../backoffice/Comprobantes/demo_9077397685.pdf" target="_blank">Ver comprobante (PDF)</a>
+                                                </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field field--wide">
+                <label for="NombreCom">Nombre comercial (en caso de ser negocio)</label>
+                <input type="text" name="nombreCom" value="" id="NombreCom" readonly>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--3">
+            <div class="field">
+                <label for="RFC">RFC</label>
+                <input type="text" name="RFC" value="" id="RFC" readonly >
+                
+                <input type="hidden" name="CapturaDeVenta_Id" value="310117">
+            </div>
+                
+            <!-- Campo Oculto -->
+            <div class="field" hidden>
+                <label for="Consecutivo">Consecutivo de Venta</label>
+                <input type="text" name="Consecutivo" value="" id="Consecutivo" readonly>
+            </div>
+            <!-- -------------- -->
+                
+            <div class="field">
+                <label for="Paquetes2">Cliente desea facturar?<span class="Mark"> *</span></label>
+                <select name="Paquetes2" id="Paquetes2" readonly>
+                    <option value=""></option>                    <option value="SI">SI</option>                    <option value="NO" selected>NO</option>                </select>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--2">
+            <div class="field">
+                <label for="Desea_Domiciliar">¿Cliente desea domiciliar?</label>
+                <input type="text" name="Desea_Domiciliar" id="Desea_Domiciliar" value="Si" readonly>
+            </div>
+                
+            <div class="field">
+                <label for="Motivo_No_Domicilia">Motivo de no domiciliar</label>
+                <textarea name="Motivo_No_Domicilia" id="Motivo_No_Domicilia" cols="35" rows="3" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="form-grid form-grid--2">
+            <div class="field field--full">
+                <label for="Comentarios_Confirmacion">Motivo de rechazo<span class="Mark"> *</span></label> 
+                <textarea name="Comentarios_Confirmacion" id="Comentarios_Confirmacion" readonly cols="35" rows="3" required>Se aprobo</textarea>
+            </div>
+        </div>
+                
+        <div class="form-grid form-grid--2">
+            <div class="field">
+                <label for="Nombre_Referido">Nombre de Referencia</label> 
+                <input type="text" name="Nombre_Referido" value="NA" id="Nombre_Referido" class="form-control">
+            </div>
+                
+            <div class="field">
+                <label for="Contacto_Referido">Contacto de Referncia</label> 
+                <input type="tel" name="Contacto_Referido" value="5550522537" id="Contacto_Referido" class="form-control" pattern="\d{10}" maxlength="10">
+            </div>
+        </div>
+    </div>
+</article>             
+        </form>
+    </section>
+
+    <script src="assets/js/modificar.js"></script>
+
+    
+
+    <script src="../JS/theme_switcher.js"></script>
+    
+</body>
+</html>

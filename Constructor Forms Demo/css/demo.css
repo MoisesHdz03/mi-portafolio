@@ -1,0 +1,107 @@
+/* ============================================================
+   Solo lo propio de la demo (no existe en el sistema):
+   la etiqueta "DEMO" y los accesos por rol del inicio de sesión.
+   Usa las mismas variables de app.css.
+   ============================================================ */
+.demo-etiqueta {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 900;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: calc(100vw - 28px);
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background-color: var(--superficie);
+  box-shadow: var(--sombra-2);
+  color: var(--texto-2);
+  font-size: 0.8rem;
+}
+
+.demo-etiqueta b {
+  color: var(--principal-texto);
+  letter-spacing: 0.06em;
+}
+
+.demo-etiqueta a,
+.demo-etiqueta button {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--principal-texto);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.demo-etiqueta button:hover:not(:disabled) {
+  background: none;
+  transform: none;
+}
+
+/* Accesos de demostración en el inicio de sesión */
+.demo-accesos {
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--borde);
+}
+
+.demo-accesos h2 {
+  margin: 0 0 0.6rem;
+  color: var(--texto-2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.demo-accesos-lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.demo-accesos-lista button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background-color: var(--superficie);
+  box-shadow: none;
+  color: var(--texto);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.demo-accesos-lista button small {
+  color: var(--texto-3);
+  font-size: 0.75rem;
+  font-weight: normal;
+}
+
+.demo-accesos-lista button:hover:not(:disabled) {
+  border-color: var(--principal);
+  background-color: var(--principal-suave);
+}
+
+.demo-accesos p {
+  margin: 0.6rem 0 0;
+  color: var(--texto-3);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 420px) {
+  .demo-accesos-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

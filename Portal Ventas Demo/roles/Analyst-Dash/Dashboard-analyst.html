@@ -1,0 +1,1340 @@
+<script>console.log('[v2] Database connected successfully');</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../demo/demo-datos.js"></script><script src="../../demo/demo.js"></script><link rel="stylesheet" href="../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Ventas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="../img/Logoick.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                <h2>Seguridad Hogar</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="SummaryByPeriod.html" class="nav-item">
+                    <i class="fas fa-table"></i>
+                    <span>Tablero Resumen</span>
+                </a>
+                <a href="SummaryByHour.html" class="nav-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Tablero por Hora</span>
+                </a>
+                <a href="#demo" class="nav-item">
+                    <i class='fas fa-calendar icon' title="Intervalo de ventas"></i>
+                    <span class="text nav-text">Intervalo de ventas</span>
+                </a>
+                <a href="../../index.html" class="nav-item">
+                    <i class="fas fa-right-from-bracket"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h1>Dashboard de Ventas</h1>
+                <div class="filter-container">
+                    <select id="filterSelect" class="filter-select" onchange="applyFilter()">
+                        <option value="day" >Hoy</option>
+                        <option value="week" >Última Semana</option>
+                        <option value="month" selected>Último Mes</option>
+                        <option value="custom" >Personalizado</option>
+                    </select>
+                    
+                    <div id="customDateRange" style="display: none; gap: 10px; margin-left: 10px;">
+                        <input type="date" id="startDate" class="date-input" value="">
+                        <input type="date" id="endDate" class="date-input" value="">
+                        <button onclick="applyCustomFilter()" class="btn-apply">Aplicar</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3>Ventas Totales</h3>
+                        <p class="kpi-value">61</p>
+                        <span class="kpi-label">Total de ventas registradas</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3>Ventas Aprobadas</h3>
+                        <p class="kpi-value">48</p>
+                        <span class="kpi-label">Validadas correctamente</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3>Ventas Ingresadas</h3>
+                        <p class="kpi-value">38</p>
+                        <span class="kpi-label">Procesadas en backoffice</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3>Ventas Cobradas</h3>
+                        <p class="kpi-value">26</p>
+                        <span class="kpi-label">Pagos confirmados</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adding Monthly Goal Section -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-bullseye"></i>
+                    Meta Mensual
+                </h2>
+            </div>
+            
+            <div class="goal-section">
+                <div class="chart-card chart-card-wide">
+                    <div class="goal-header">
+                        <h3 class="chart-title">Progreso de Meta del Mes</h3>
+                        <button class="btn-set-goal" onclick="openGoalModal()">
+                            <i class="fas fa-edit"></i>
+                            Establecer Meta
+                        </button>
+                    </div>
+                    <div class="goal-content">
+                        <div class="goal-stats">
+                            <div class="goal-stat-item">
+                                <span class="goal-stat-label">Meta Establecida</span>
+                                <span class="goal-stat-value" id="goalValue">-</span>
+                            </div>
+                            <div class="goal-stat-item">
+                                <span class="goal-stat-label">Ventas Cobradas</span>
+                                <span class="goal-stat-value" id="currentSales">46</span>
+                            </div>
+                            <div class="goal-stat-item">
+                                <span class="goal-stat-label">Porcentaje</span>
+                                <span class="goal-stat-value" id="goalPercentage">0%</span>
+                            </div>
+                        </div>
+                        <canvas id="goalChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adding individual CCE counters section -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-building"></i>
+                    Ventas por CCE
+                </h2>
+            </div>
+            
+            <div class="cce-grid">
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>Viont</h4>
+                        <p class="cce-value">12</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>Afiliado</h4>
+                        <p class="cce-value">9</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>MKT Inconcert / Messenger</h4>
+                        <p class="cce-value">8</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>MKT Bitrix</h4>
+                        <p class="cce-value">7</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>MKT Inconcert / Llamadas</h4>
+                        <p class="cce-value">7</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>MKT Inconcert / WhatsApp</h4>
+                        <p class="cce-value">6</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>NEOTELL Llamada</h4>
+                        <p class="cce-value">5</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>Llamada CCC</h4>
+                        <p class="cce-value">5</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                                <div class="cce-card">
+                    <div class="cce-icon" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="cce-content">
+                        <h4>Social Selling</h4>
+                        <p class="cce-value">2</p>
+                        <span class="cce-label">ventas</span>
+                    </div>
+                </div>
+                            </div>
+
+            <!-- Adding Hourly Sales Table Section -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i>
+                    Ventas Cobradas por Hora
+                </h2>
+                <div style="display: flex; gap: 10px;">
+                    <!-- Adding fullscreen button -->
+                    <button class="btn-set-all-hours" onclick="openFullscreenTable()" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <i class="fas fa-expand"></i>
+                        Ver Pantalla Completa
+                    </button>
+                    <button class="btn-set-all-hours" onclick="openBulkHourModal()">
+                        <i class="fas fa-edit"></i>
+                        Establecer Metas por Hora
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hourly-table-container">
+                <table class="hourly-table">
+                    <thead>
+                        <tr>
+                            <th>Hora</th>
+                            <th>Meta Cobradas</th>
+                            <th>Venta Cobrada</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hourlyTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td>TOTAL DEL DÍA</td>
+                            <td id="totalGoal">0</td>
+                            <td id="totalSales">0</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3 class="chart-title">Ventas Totales por Mes</h3>
+                    <canvas id="ventasMesChart"></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <h3 class="chart-title">Comparación: Totales vs Cobradas</h3>
+                    <canvas id="comparacionChart"></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <h3 class="chart-title">Distribución por Estatus</h3>
+                    <canvas id="estatusChart"></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <h3 class="chart-title">Tasa de Conversión</h3>
+                    <canvas id="conversionChart"></canvas>
+                </div>
+
+                <!-- Adding new chart for Top CCE -->
+                <div class="chart-card chart-card-wide">
+                    <h3 class="chart-title">Top 10 CCE con Mayor Impacto</h3>
+                    <canvas id="topCCEChart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Adding Modal for Setting Goal -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-bullseye"></i>
+                    Establecer Meta Mensual
+                </h2>
+                <button class="modal-close" onclick="closeGoalModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Define la cantidad de ventas que deseas alcanzar este mes</p>
+                <div class="form-group">
+                    <label for="goalInput">Meta de Ventas</label>
+                    <input type="number" id="goalInput" class="goal-input" placeholder="Ej: 100" min="1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeGoalModal()">Cancelar</button>
+                <button class="btn-save" onclick="saveGoal()">
+                    <i class="fas fa-save"></i>
+                    Guardar Meta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adding Modal for Setting Hourly Goal -->
+    <div id="hourlyGoalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-clock"></i>
+                    Establecer Meta por Hora
+                </h2>
+                <button class="modal-close" onclick="closeHourlyGoalModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Define la meta de ventas cobradas para <strong id="selectedHourRange"></strong></p>
+                <div class="form-group">
+                    <label for="hourlyGoalInput">Meta de Ventas Cobradas</label>
+                    <input type="number" id="hourlyGoalInput" class="goal-input" placeholder="Ej: 50" min="0">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeHourlyGoalModal()">Cancelar</button>
+                <button class="btn-save" onclick="saveHourlyGoal()">
+                    <i class="fas fa-save"></i>
+                    Guardar Meta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adding Modal for Setting All Hours at Once -->
+    <div id="bulkHourModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-clock"></i>
+                    Establecer Metas para Todas las Horas
+                </h2>
+                <button class="modal-close" onclick="closeBulkHourModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Define la misma meta para todas las horas del día</p>
+                <div class="form-group">
+                    <label for="bulkHourlyGoalInput">Meta de Ventas Cobradas (para todas las horas)</label>
+                    <input type="number" id="bulkHourlyGoalInput" class="goal-input" placeholder="Ej: 50" min="0">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeBulkHourModal()">Cancelar</button>
+                <button class="btn-save" onclick="saveBulkHourlyGoal()">
+                    <i class="fas fa-save"></i>
+                    Guardar para Todas las Horas
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adding Fullscreen Table Modal -->
+    <div id="fullscreenTableModal" class="fullscreen-modal">
+        <div class="fullscreen-modal-content">
+            <div class="fullscreen-modal-header">
+                <div>
+                    <h2>
+                        <i class="fas fa-clock"></i>
+                        Ventas Cobradas por Hora
+                    </h2>
+                    <p class="fullscreen-subtitle">Monitoreo en tiempo real del desempeño por hora</p>
+                </div>
+                <button class="fullscreen-close-btn" onclick="closeFullscreenTable()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="fullscreen-modal-body">
+                <div class="fullscreen-stats">
+                    <div class="fullscreen-stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Meta Total</span>
+                            <span class="stat-value" id="fullscreenTotalGoal">0</span>
+                        </div>
+                    </div>
+                    <div class="fullscreen-stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Ventas Cobradas</span>
+                            <span class="stat-value" id="fullscreenTotalSales">0</span>
+                        </div>
+                    </div>
+                    <div class="fullscreen-stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Cumplimiento</span>
+                            <span class="stat-value" id="fullscreenPercentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fullscreen-table-wrapper">
+                    <table class="fullscreen-hourly-table">
+                        <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Meta Cobradas</th>
+                                <th>Venta Cobrada</th>
+                                <th>Progreso</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fullscreenTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adding Floating Action Button -->
+    <button class="fab" onclick="openGoalModal()" title="Establecer Meta Mensual">
+        <i class="fas fa-bullseye"></i>
+    </button>
+
+    <script>
+        // Datos desde PHP
+        const ventasPorMes = [{"mes":"2026-10","total":61}];
+        const comparacionVentas = [{"mes":"2026-10","totales":61,"cobradas":"26"}];
+        const distribucionEstatus = [{"tipo_estatus":"APROBADA","total":48},{"tipo_estatus":"COBRADA","total":26},{"tipo_estatus":"INGRESADA","total":38},{"tipo_estatus":"RECHAZADA","total":34}];
+        const tasaConversion = 42.62;
+        const topCCE = [{"CCE":"Viont","total":12},{"CCE":"Afiliado","total":9},{"CCE":"MKT Inconcert \/ Messenger","total":8},{"CCE":"MKT Bitrix","total":7},{"CCE":"MKT Inconcert \/ Llamadas","total":7},{"CCE":"MKT Inconcert \/ WhatsApp","total":6},{"CCE":"NEOTELL Llamada","total":5},{"CCE":"Llamada CCC","total":5},{"CCE":"Social Selling","total":2}];
+        
+        let currentMonthSales = 46;
+        
+        const ventasCobradasPorHora = [{"hora":0,"total":1},{"hora":1,"total":1},{"hora":2,"total":3},{"hora":3,"total":1},{"hora":4,"total":2},{"hora":5,"total":2},{"hora":6,"total":1},{"hora":8,"total":2},{"hora":11,"total":1},{"hora":13,"total":1},{"hora":15,"total":1},{"hora":16,"total":1},{"hora":17,"total":3},{"hora":18,"total":1},{"hora":19,"total":1},{"hora":20,"total":2},{"hora":21,"total":1},{"hora":23,"total":1}];
+
+        console.log('[v0] Ventas Totales:', 61);
+        console.log('[v0] Ventas por Mes:', ventasPorMes);
+        console.log('[v0] Comparación:', comparacionVentas);
+        console.log('[v0] Distribución:', distribucionEstatus);
+        console.log('[v0] Top CCE:', topCCE);
+
+        // Configuración común de gráficas
+        Chart.defaults.font.family = 'Inter, sans-serif';
+        Chart.defaults.color = '#64748b';
+
+        // Gráfica 1: Ventas por Mes (Línea)
+        const ctx1 = document.getElementById('ventasMesChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ventasPorMes.map(v => {
+                    const [year, month] = v.mes.split('-');
+                    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                    return months[parseInt(month) - 1] + ' ' + year;
+                }),
+                datasets: [{
+                    label: 'Ventas Totales',
+                    data: ventasPorMes.map(v => v.total),
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfica 2: Comparación (Barras)
+        const ctx2 = document.getElementById('comparacionChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: comparacionVentas.map(v => {
+                    const [year, month] = v.mes.split('-');
+                    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                    return months[parseInt(month) - 1] + ' ' + year;
+                }),
+                datasets: [
+                    {
+                        label: 'Ventas Totales',
+                        data: comparacionVentas.map(v => v.totales),
+                        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                        borderColor: '#667eea',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    },
+                    {
+                        label: 'Ventas Cobradas',
+                        data: comparacionVentas.map(v => v.cobradas),
+                        backgroundColor: 'rgba(67, 233, 123, 0.8)',
+                        borderColor: '#43e97b',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfica 3: Distribución por Estatus (Dona)
+        const ctx3 = document.getElementById('estatusChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'doughnut',
+            data: {
+                labels: distribucionEstatus.map(d => d.tipo_estatus),
+                datasets: [{
+                    data: distribucionEstatus.map(d => d.total),
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(245, 87, 108, 0.8)',
+                        'rgba(74, 222, 128, 0.8)',
+                        'rgba(251, 191, 36, 0.8)',
+                        'rgba(147, 51, 234, 0.8)'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12
+                    }
+                }
+            }
+        });
+
+        // Gráfica 4: Tasa de Conversión (Dona con porcentaje)
+        const ctx4 = document.getElementById('conversionChart').getContext('2d');
+        new Chart(ctx4, {
+            type: 'doughnut',
+            data: {
+                labels: ['Cobradas', 'Pendientes'],
+                datasets: [{
+                    data: [tasaConversion, 100 - tasaConversion],
+                    backgroundColor: [
+                        'rgba(67, 233, 123, 0.8)',
+                        'rgba(226, 232, 240, 0.5)'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed.toFixed(2) + '%';
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: [{
+                id: 'centerText',
+                beforeDraw: function(chart) {
+                    const width = chart.width;
+                    const height = chart.height;
+                    const ctx = chart.ctx;
+                    ctx.restore();
+                    const fontSize = (height / 114).toFixed(2);
+                    ctx.font = fontSize + "em Inter, sans-serif";
+                    ctx.textBaseline = "middle";
+                    ctx.fillStyle = "#0f172a";
+                    const text = tasaConversion.toFixed(1) + "%";
+                    const textX = Math.round((width - ctx.measureText(text).width) / 2);
+                    const textY = height / 2;
+                    ctx.fillText(text, textX, textY);
+                    ctx.save();
+                }
+            }]
+        });
+
+        const ctx5 = document.getElementById('topCCEChart').getContext('2d');
+        new Chart(ctx5, {
+            type: 'bar',
+            data: {
+                labels: topCCE.map(c => c.CCE),
+                datasets: [{
+                    label: 'Cantidad de Ventas',
+                    data: topCCE.map(c => c.total),
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(245, 87, 108, 0.8)',
+                        'rgba(67, 233, 123, 0.8)',
+                        'rgba(79, 172, 254, 0.8)',
+                        'rgba(250, 112, 154, 0.8)',
+                        'rgba(147, 51, 234, 0.8)',
+                        'rgba(251, 191, 36, 0.8)',
+                        'rgba(56, 249, 215, 0.8)',
+                        'rgba(240, 147, 251, 0.8)',
+                        'rgba(118, 75, 162, 0.8)'
+                    ],
+                    borderColor: [
+                        '#667eea',
+                        '#f5576c',
+                        '#43e97b',
+                        '#4facfe',
+                        '#fa709a',
+                        '#9333ea',
+                        '#fbbf24',
+                        '#38f9d7',
+                        '#f093fb',
+                        '#764ba2'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            precision: 0
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        let goalChart;
+        let hasShownCelebration = false;
+
+        function initGoalChart() {
+            const ctx = document.getElementById('goalChart').getContext('2d');
+            const monthlyGoal = getMonthlyGoal();
+            const percentage = monthlyGoal > 0 ? Math.min((currentMonthSales / monthlyGoal) * 100, 100) : 0;
+            
+            goalChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Progreso de Meta'],
+                    datasets: [
+                        {
+                            label: 'Ventas Actuales',
+                            data: [currentMonthSales],
+                            backgroundColor: percentage >= 100 ? 'rgba(67, 233, 123, 0.8)' : 'rgba(102, 126, 234, 0.8)',
+                            borderColor: percentage >= 100 ? '#43e97b' : '#667eea',
+                            borderWidth: 2,
+                            borderRadius: 8
+                        },
+                        {
+                            label: 'Meta',
+                            data: [monthlyGoal],
+                            backgroundColor: 'rgba(226, 232, 240, 0.5)',
+                            borderColor: '#94a3b8',
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.x + ' ventas';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            updateGoalDisplay();
+        }
+
+        function getMonthlyGoal() {
+            const goal = localStorage.getItem('monthlyGoal');
+            return goal ? parseInt(goal) : 0;
+        }
+
+        function setMonthlyGoal(goal) {
+            localStorage.setItem('monthlyGoal', goal);
+            hasShownCelebration = false;
+            localStorage.removeItem('celebrationShown');
+        }
+
+        function updateGoalDisplay() {
+            const goal = getMonthlyGoal();
+            const percentage = goal > 0 ? Math.min((currentMonthSales / goal) * 100, 100) : 0;
+            
+            document.getElementById('goalValue').textContent = goal > 0 ? goal : 'No establecida';
+            document.getElementById('currentSales').textContent = currentMonthSales;
+            document.getElementById('goalPercentage').textContent = percentage.toFixed(1) + '%';
+            
+            // Check if goal is reached and show celebration
+            if (percentage >= 100 && !hasShownCelebration && !localStorage.getItem('celebrationShown')) {
+                show0
+            }
+        }
+
+        function updateGoalChart() {
+            if (!goalChart) return;
+            
+            const goal = getMonthlyGoal();
+            const percentage = goal > 0 ? Math.min((currentMonthSales / goal) * 100, 100) : 0;
+            
+            goalChart.data.datasets[0].data = [currentMonthSales];
+            goalChart.data.datasets[1].data = [goal];
+            goalChart.data.datasets[0].backgroundColor = percentage >= 100 ? 'rgba(67, 233, 123, 0.8)' : 'rgba(102, 126, 234, 0.8)';
+            goalChart.data.datasets[0].borderColor = percentage >= 100 ? '#43e97b' : '#667eea';
+            goalChart.update();
+            
+            updateGoalDisplay();
+        }
+
+        function openGoalModal() {
+            const modal = document.getElementById('goalModal');
+            const input = document.getElementById('goalInput');
+            const currentGoal = getMonthlyGoal();
+            
+            input.value = currentGoal > 0 ? currentGoal : '';
+            modal.style.display = 'flex';
+            setTimeout(() => input.focus(), 100);
+        }
+
+        function closeGoalModal() {
+            document.getElementById('goalModal').style.display = 'none';
+        }
+
+        function saveGoal() {
+            const input = document.getElementById('goalInput');
+            const goal = parseInt(input.value);
+            
+            if (isNaN(goal) || goal <= 0) {
+                alert('Por favor ingresa un número válido mayor a 0');
+                return;
+            }
+            
+            setMonthlyGoal(goal);
+            updateGoalChart();
+            closeGoalModal();
+            
+            // Show success message
+            showNotification('Meta establecida correctamente: ' + goal + ' ventas');
+        }
+
+        function showCelebration() {
+            // Confetti animation
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+                }));
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+                }));
+            }, 250);
+            
+            // Show celebration message
+            showNotification('¡FELICITACIONES! 🎉 Has alcanzado tu meta mensual', 'success');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = 'notification notification-' + type;
+            notification.innerHTML = '<i class="fas fa-' + (type === 'success' ? 'check-circle' : 'info-circle') + '"></i> ' + message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        function refreshData() {
+            console.log('[v0] Refreshing data...');
+            location.reload();
+        }
+
+        // Set auto-refresh interval (30 seconds)
+        setInterval(refreshData, 30000);
+
+        let selectedHour = null;
+        let hourlyGoalsReached = {};
+        
+        // Define business hours (8 AM to 9 PM)
+        const businessHours = [
+            { start: 8, end: 9, label: '8:00 am - 9:00 am' },
+            { start: 9, end: 10, label: '9:00 am - 10:00 am' },
+            { start: 10, end: 11, label: '10:00 am - 11:00 am' },
+            { start: 11, end: 12, label: '11:00 am - 12:00 pm' },
+            { start: 12, end: 13, label: '12:00 pm - 1:00 pm' },
+            { start: 13, end: 14, label: '1:00 pm - 2:00 pm' },
+            { start: 14, end: 15, label: '2:00 pm - 3:00 pm' },
+            { start: 15, end: 16, label: '3:00 pm - 4:00 pm' },
+            { start: 16, end: 17, label: '4:00 pm - 5:00 pm' },
+            { start: 17, end: 18, label: '5:00 pm - 6:00 pm' },
+            { start: 18, end: 19, label: '6:00 pm - 7:00 pm' },
+            { start: 19, end: 20, label: '7:00 pm - 8:00 pm' },
+            { start: 20, end: 21, label: '8:00 pm - 9:00 pm' }
+        ];
+        
+        function getHourlyGoal(hour) {
+            const goals = JSON.parse(localStorage.getItem('hourlyGoals') || '{}');
+            return goals[hour] || 0;
+        }
+        
+        function setHourlyGoal(hour, goal) {
+            const goals = JSON.parse(localStorage.getItem('hourlyGoals') || '{}');
+            goals[hour] = goal;
+            localStorage.setItem('hourlyGoals', JSON.stringify(goals));
+        }
+        
+        function getHourlySales(hour) {
+            const hourData = ventasCobradasPorHora.find(v => parseInt(v.hora) === hour);
+            return hourData ? parseInt(hourData.total) : 0;
+        }
+        
+        function showHourlyCelebration(hourLabel) {
+            // Mini confetti burst
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#43e97b', '#38f9d7', '#667eea']
+            });
+            
+            showNotification(`¡FELICITACIONES! 🎉 Meta alcanzada para ${hourLabel}`, 'success');
+        }
+        
+        function initHourlyTable() {
+            const tbody = document.getElementById('hourlyTableBody');
+            tbody.innerHTML = '';
+            
+            let totalGoal = 0;
+            let totalSales = 0;
+            
+            businessHours.forEach(hourRange => {
+                const goal = getHourlyGoal(hourRange.start);
+                const sales = getHourlySales(hourRange.start);
+                
+                totalGoal += goal;
+                totalSales += sales;
+                
+                const row = document.createElement('tr');
+                const goalMet = goal > 0 && sales >= goal;
+                const percentage = goal > 0 ? Math.min((sales / goal) * 100, 100) : 0;
+                
+                const goalKey = `hour_${hourRange.start}`;
+                if (goalMet && !hourlyGoalsReached[goalKey]) {
+                    hourlyGoalsReached[goalKey] = true;
+                    // Show celebration after a short delay to allow table to render
+                    setTimeout(() => showHourlyCelebration(hourRange.label), 500);
+                }
+                
+                if (goalMet) {
+                    row.classList.add('goal-met');
+                }
+                
+                row.innerHTML = `
+                    <td class="hour-cell">${hourRange.label}</td>
+                    <td class="goal-cell">
+                        <span class="goal-value">${goal}</span>
+                    </td>
+                    <td class="sales-cell" data-percentage="${percentage}">
+                        <span class="sales-value">${sales}</span>
+                        ${goal > 0 ? `<span class="progress-indicator">(${percentage.toFixed(0)}%)</span>` : ''}
+                    </td>
+                    <td class="action-cell">
+                        <button class="btn-edit-hour" onclick="openHourlyGoalModal(${hourRange.start}, '${hourRange.label}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+                
+                setTimeout(() => {
+                    const salesCell = row.querySelector('.sales-cell');
+                    if (salesCell) {
+                        salesCell.style.setProperty('--progress-width', percentage + '%');
+                        const beforeElement = salesCell.querySelector('::before') || salesCell;
+                        beforeElement.style.width = percentage + '%';
+                    }
+                }, 100);
+            });
+            
+            document.getElementById('totalGoal').textContent = totalGoal;
+            document.getElementById('totalSales').textContent = totalSales;
+            
+            setTimeout(() => {
+                document.querySelectorAll('.sales-cell').forEach(cell => {
+                    const percentage = cell.getAttribute('data-percentage');
+                    cell.style.setProperty('background', `linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, rgba(102, 126, 234, 0.1) ${percentage}%, transparent ${percentage}%)`);
+                });
+            }, 200);
+        }
+        
+        function openHourlyGoalModal(hour, label) {
+            selectedHour = hour;
+            const modal = document.getElementById('hourlyGoalModal');
+            const input = document.getElementById('hourlyGoalInput');
+            const currentGoal = getHourlyGoal(hour);
+            
+            document.getElementById('selectedHourRange').textContent = label;
+            input.value = currentGoal > 0 ? currentGoal : '';
+            modal.style.display = 'flex';
+            setTimeout(() => input.focus(), 100);
+        }
+        
+        function closeHourlyGoalModal() {
+            document.getElementById('hourlyGoalModal').style.display = 'none';
+            selectedHour = null;
+        }
+        
+        function saveHourlyGoal() {
+            const input = document.getElementById('hourlyGoalInput');
+            const goal = parseInt(input.value);
+            
+            if (isNaN(goal) || goal < 0) {
+                alert('Por favor ingresa un número válido mayor o igual a 0');
+                return;
+            }
+            
+            const goalKey = `hour_${selectedHour}`;
+            hourlyGoalsReached[goalKey] = false;
+            
+            setHourlyGoal(selectedHour, goal);
+            initHourlyTable();
+            closeHourlyGoalModal();
+            
+            showNotification('Meta por hora establecida correctamente: ' + goal + ' ventas');
+        }
+        
+        function openBulkHourModal() {
+            const modal = document.getElementById('bulkHourModal');
+            const input = document.getElementById('bulkHourlyGoalInput');
+            
+            input.value = '';
+            modal.style.display = 'flex';
+            setTimeout(() => input.focus(), 100);
+        }
+        
+        function closeBulkHourModal() {
+            document.getElementById('bulkHourModal').style.display = 'none';
+        }
+        
+        function saveBulkHourlyGoal() {
+            const input = document.getElementById('bulkHourlyGoalInput');
+            const goal = parseInt(input.value);
+            
+            if (isNaN(goal) || goal < 0) {
+                alert('Por favor ingresa un número válido mayor o igual a 0');
+                return;
+            }
+            
+            hourlyGoalsReached = {};
+            
+            // Set the same goal for all business hours
+            businessHours.forEach(hourRange => {
+                setHourlyGoal(hourRange.start, goal);
+            });
+            
+            initHourlyTable();
+            closeBulkHourModal();
+            
+            showNotification('Metas establecidas para todas las horas: ' + goal + ' ventas por hora');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const goalModal = document.getElementById('goalModal');
+            const hourlyGoalModal = document.getElementById('hourlyGoalModal');
+            const bulkHourModal = document.getElementById('bulkHourModal');
+            const fullscreenModal = document.getElementById('fullscreenTableModal');
+            
+            if (event.target === goalModal) {
+                closeGoalModal();
+            }
+            if (event.target === hourlyGoalModal) {
+                closeHourlyGoalModal();
+            }
+            if (event.target === bulkHourModal) {
+                closeBulkHourModal();
+            }
+            if (event.target === fullscreenModal) {
+                closeFullscreenTable();
+            }
+        }
+
+        // Handle Enter key in goal input
+        document.getElementById('goalInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveGoal();
+            }
+        });
+        
+        document.getElementById('hourlyGoalInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveHourlyGoal();
+            }
+        });
+        
+        document.getElementById('bulkHourlyGoalInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveBulkHourlyGoal();
+            }
+        });
+
+        // Initialize goal chart on page load
+        window.addEventListener('load', function() {
+            initGoalChart();
+            initHourlyTable(); // Initialize hourly table
+        });
+        
+        function applyFilter() {
+            const filterSelect = document.getElementById('filterSelect');
+            const customDateRange = document.getElementById('customDateRange');
+            const selectedFilter = filterSelect.value;
+            
+            console.log('[v0] Filter changed to:', selectedFilter);
+            
+            if (selectedFilter === 'custom') {
+                // Show custom date range inputs
+                customDateRange.style.display = 'flex';
+            } else {
+                // Hide custom date range and reload with selected filter
+                customDateRange.style.display = 'none';
+                window.location.href = '?filter=' + selectedFilter;
+            }
+        }
+        
+        function applyCustomFilter() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            console.log('[v0] Applying custom filter:', startDate, 'to', endDate);
+            
+            if (!startDate || !endDate) {
+                alert('Por favor selecciona ambas fechas');
+                return;
+            }
+            
+            if (startDate > endDate) {
+                alert('La fecha de inicio no puede ser mayor que la fecha final');
+                return;
+            }
+            
+            window.location.href = '?filter=custom&start=' + startDate + '&end=' + endDate;
+        }
+        
+        function openFullscreenTable() {
+            console.log('[v0] Opening fullscreen table');
+            const modal = document.getElementById('fullscreenTableModal');
+            modal.style.display = 'flex';
+            localStorage.setItem('fullscreenModalOpen', 'true');
+            setTimeout(() => {
+                modal.classList.add('active');
+                initFullscreenTable();
+            }, 10);
+        }
+        
+        function closeFullscreenTable() {
+            console.log('[v0] Closing fullscreen table');
+            const modal = document.getElementById('fullscreenTableModal');
+            modal.classList.remove('active');
+            localStorage.removeItem('fullscreenModalOpen');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            const shouldOpenModal = localStorage.getItem('fullscreenModalOpen');
+            if (shouldOpenModal === 'true') {
+                openFullscreenTable();
+            }
+        });
+
+        function initFullscreenTable() {
+            const tbody = document.getElementById('fullscreenTableBody');
+            tbody.innerHTML = '';
+            
+            let totalGoal = 0;
+            let totalSales = 0;
+            
+            businessHours.forEach(hourRange => {
+                const goal = getHourlyGoal(hourRange.start);
+                const sales = getHourlySales(hourRange.start);
+                
+                totalGoal += goal;
+                totalSales += sales;
+                
+                const row = document.createElement('tr');
+                const goalMet = goal > 0 && sales >= goal;
+                const percentage = goal > 0 ? Math.min((sales / goal) * 100, 100) : 0;
+                
+                if (goalMet) {
+                    row.classList.add('goal-met');
+                }
+                
+                row.innerHTML = `
+                    <td class="hour-cell">${hourRange.label}</td>
+                    <td>
+                        <span class="goal-badge">${goal}</span>
+                    </td>
+                    <td>
+                        <span class="sales-badge ${goalMet ? 'success' : ''}">${sales}</span>
+                    </td>
+                    <td class="progress-cell">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 0%">
+                                <span class="progress-text">${percentage.toFixed(0)}%</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn-edit-hour-fullscreen" onclick="openHourlyGoalModal(${hourRange.start}, '${hourRange.label}'); closeFullscreenTable();">
+                            <i class="fas fa-edit"></i>
+                            Editar Meta
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+                
+                // Animate progress bar
+                setTimeout(() => {
+                    const progressBar = row.querySelector('.progress-bar');
+                    if (progressBar) {
+                        progressBar.style.width = percentage + '%';
+                    }
+                }, 100);
+            });
+            
+            // Update summary stats
+            document.getElementById('fullscreenTotalGoal').textContent = totalGoal;
+            document.getElementById('fullscreenTotalSales').textContent = totalSales;
+            const overallPercentage = totalGoal > 0 ? ((totalSales / totalGoal) * 100).toFixed(1) : 0;
+            document.getElementById('fullscreenPercentage').textContent = overallPercentage + '%';
+        }
+    </script>
+</body>
+</html>

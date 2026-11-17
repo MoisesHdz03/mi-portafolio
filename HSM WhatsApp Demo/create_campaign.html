@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <title>Nueva Campaña | WhatsApp HSM</title>
+</head>
+<body>
+<main class="main-content">
+    <div class="encabezado">
+        <div>
+            <h1>Nueva Campaña</h1>
+            <p>Registra una campaña manual con su mensaje.</p>
+        </div>
+    </div>
+
+    <div class="tarjeta" style="max-width: 760px">
+        <form class="tarjeta-cuerpo" id="formCampana">
+            <div class="mb-3">
+                <label class="form-label" for="name">Nombre de Campaña</label>
+                <input type="text" name="name" id="name" class="form-control" maxlength="255" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="message">Mensaje</label>
+                <textarea name="message" id="message" class="form-control" rows="5" required></textarea>
+                <div class="form-text">Puedes usar variables como <code>{{1}}</code>, <code>{{2}}</code>; se tomarán de las columnas del CSV.</div>
+            </div>
+
+            <button type="submit" class="btn btn-success"><i class="bi bi-check2"></i> Guardar Campaña</button>
+        </form>
+    </div>
+</main>
+
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/iconos.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+    'use strict';
+    if (!App.iniciar('create_campaign')) return;
+
+    document.getElementById('formCampana').addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        if (!this.reportValidity()) return;
+
+        const datos = HSM.datos();
+        const nombre = document.getElementById('name').value.trim();
+        const mensaje = document.getElementById('message').value.trim();
+        const variables = Array.from(new Set((mensaje.match(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g) || [])
+            .map((v) => v.replace(/[{}\s]/g, ''))));
+        const id = Math.max(...datos.campanas.map((c) => c.id)) + 1;
+
+        datos.campanas.push({
+            id: id, name: nombre, template_sid: 'MANUAL-' + id, variables_count: variables.length,
+            template_variables: JSON.stringify(variables), template_language: 'es', template_status: 'manual',
+            source: 'manual', status: 1, creation_date: HSM.fechaSql(new Date()), last_sync: null,
+            body: mensaje, media: null, actions: [], types: ['twilio/text'], ejemplo: {},
+        });
+        HSM.guardar();
+        App.avisarDespues('Se guardó la campaña <b>' + App.e(nombre) + '</b>.');
+        location.href = 'campaigns.html';
+    });
+})();
+</script>
+</body>
+</html>

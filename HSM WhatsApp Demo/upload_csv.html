@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <style>
+        .variables-box {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border: 1px solid var(--borde);
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        .variables-box-title {
+            margin-bottom: 8px;
+            color: var(--texto-medio);
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .variable-badge {
+            display: inline-block;
+            margin: 0 6px 6px 0;
+            padding: 4px 9px;
+            border: 1px solid #fde68a;
+            border-radius: 6px;
+            background: var(--ambar-suave);
+            color: #92400e;
+            font-size: 12.5px;
+            font-weight: 600;
+        }
+        .no-variables {
+            color: var(--texto-suave);
+            font-size: 13px;
+        }
+        .columnas-csv {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .columnas-csv li {
+            display: flex;
+            gap: 8px;
+            padding: 7px 0;
+            border-bottom: 1px dashed var(--borde);
+            font-size: 13px;
+        }
+        .columnas-csv li:last-child {
+            border-bottom: 0;
+        }
+        .columnas-csv code {
+            flex: none;
+        }
+        .zona-archivo {
+            padding: 22px;
+            border: 1.5px dashed var(--borde-fuerte);
+            border-radius: 10px;
+            background: #fafafa;
+            text-align: center;
+            transition: border-color .15s ease, background-color .15s ease;
+        }
+        .zona-archivo.sobre {
+            border-color: var(--acento-claro);
+            background: #f0fdf4;
+        }
+        .zona-archivo i {
+            color: var(--texto-tenue);
+            font-size: 28px;
+        }
+        .zona-archivo p {
+            margin: 6px 0 12px;
+            color: var(--texto-suave);
+        }
+        .archivo-elegido {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            color: var(--texto-medio);
+            font-weight: 500;
+        }
+    </style>
+    <title>Subir CSV | WhatsApp HSM</title>
+</head>
+<body>
+<main class="main-content">
+    <div class="encabezado">
+        <div>
+            <h1>Subir Archivo CSV</h1>
+            <p>Crea un grupo de envío a partir de un archivo con los datos de los clientes.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-xl-8">
+            <div id="errorCsv" class="alerta-error mb-3" hidden></div>
+
+            <div class="tarjeta">
+                <form class="tarjeta-cuerpo" id="formCsv" novalidate>
+                    <!-- Plantilla -->
+                    <div class="mb-3">
+                        <label class="form-label" for="campaign_id">Seleccionar Plantilla</label>
+                        <select name="campaign_id" id="campaign_id" class="form-select" required>
+                            <option value="">-- Selecciona una plantilla --</option>
+                        </select>
+                    </div>
+
+                    <!-- Variables de la plantilla -->
+                    <div id="variablesBox" class="variables-box" hidden>
+                        <div class="variables-box-title">Variables requeridas por la plantilla:</div>
+                        <div id="variablesList"></div>
+                    </div>
+
+                    <!-- Archivo -->
+                    <div class="mb-3 mt-3">
+                        <label class="form-label" for="csv_file">Archivo CSV</label>
+                        <div class="zona-archivo" id="zonaArchivo">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                            <p>Arrastra tu archivo aquí o selecciónalo desde tu equipo</p>
+                            <label class="btn btn-light btn-sm mb-0" for="csv_file"><i class="bi bi-folder2-open"></i> Elegir archivo</label>
+                            <input type="file" name="csv_file" id="csv_file" accept=".csv" hidden required>
+                            <div><span class="archivo-elegido" id="archivoElegido" hidden></span></div>
+                        </div>
+                        <div class="form-text">Selecciona un archivo CSV con los datos necesarios para realizar el envío.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success" id="procesar"><i class="bi bi-upload"></i> Procesar CSV</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="tarjeta">
+                <div class="tarjeta-encabezado">
+                    <h2><i class="bi bi-layout-text-sidebar"></i> Formato del archivo</h2>
+                </div>
+                <div class="tarjeta-cuerpo">
+                    <ul class="columnas-csv" id="columnasCsv"></ul>
+                    <button type="button" class="btn btn-suave btn-sm w-100 mt-3" id="descargarEjemplo">
+                        <i class="bi bi-download"></i> Descargar CSV de ejemplo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/iconos.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+    'use strict';
+    const sesion = App.iniciar('upload_csv');
+    if (!sesion) return;
+    const e = App.e;
+
+    const select = document.getElementById('campaign_id');
+    const caja = document.getElementById('variablesBox');
+    const lista = document.getElementById('variablesList');
+    const entrada = document.getElementById('csv_file');
+    const zona = document.getElementById('zonaArchivo');
+    const elegido = document.getElementById('archivoElegido');
+    const cajaError = document.getElementById('errorCsv');
+
+    // Sólo plantillas activas, por nombre
+    HSM.datos().campanas
+        .filter((c) => c.status === 1)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(function (c) {
+            const opcion = document.createElement('option');
+            opcion.value = c.id;
+            opcion.textContent = c.name + ' (' + c.template_language + ')';
+            select.appendChild(opcion);
+        });
+
+    function variablesElegidas() {
+        const c = HSM.campana(select.value);
+        return c ? JSON.parse(c.template_variables || '[]') : [];
+    }
+
+    function dibujarFormato() {
+        const vars = variablesElegidas();
+        document.getElementById('columnasCsv').innerHTML =
+            '<li><code>Nombre_Cliente</code><span>Nombre del cliente (obligatorio)</span></li>' +
+            '<li><code>Telefono_Cliente</code><span>10 dígitos, sin lada internacional (obligatorio)</span></li>' +
+            vars.map((v) => '<li><code>' + e(v) + '</code><span>Valor de la variable <b>{{' + e(v) + '}}</b></span></li>').join('');
+    }
+
+    select.addEventListener('change', function () {
+        if (!select.value) {
+            caja.hidden = true;
+            lista.innerHTML = '';
+            dibujarFormato();
+            return;
+        }
+        const vars = variablesElegidas();
+        lista.innerHTML = vars.length
+            ? vars.map((v) => '<span class="variable-badge">{{' + e(v) + '}}</span>').join('')
+            : '<span class="no-variables">Esta plantilla no requiere variables.</span>';
+        caja.hidden = false;
+        dibujarFormato();
+    });
+    dibujarFormato();
+
+    // Archivo: botón o arrastrar
+    function mostrarArchivo() {
+        const archivo = entrada.files[0];
+        elegido.hidden = !archivo;
+        if (archivo) elegido.innerHTML = '<i class="bi bi-file-earmark-text"></i> ' + e(archivo.name) + ' · ' + Math.max(1, Math.round(archivo.size / 1024)) + ' KB';
+    }
+    entrada.addEventListener('change', mostrarArchivo);
+    ['dragenter', 'dragover'].forEach((t) => zona.addEventListener(t, (ev) => { ev.preventDefault(); zona.classList.add('sobre'); }));
+    ['dragleave', 'drop'].forEach((t) => zona.addEventListener(t, (ev) => { ev.preventDefault(); zona.classList.remove('sobre'); }));
+    zona.addEventListener('drop', function (ev) {
+        if (ev.dataTransfer.files.length) {
+            entrada.files = ev.dataTransfer.files;
+            mostrarArchivo();
+        }
+    });
+
+    // CSV de ejemplo para la plantilla elegida
+    document.getElementById('descargarEjemplo').addEventListener('click', function () {
+        const c = HSM.campana(select.value);
+        const vars = variablesElegidas();
+        const nombres = ['Mariana López', 'Roberto Sánchez', 'Daniela Torres', 'Jorge Castillo', 'Patricia Ruiz'];
+        const filas = [['Nombre_Cliente', 'Telefono_Cliente'].concat(vars)];
+        nombres.forEach(function (n, i) {
+            filas.push([n, '555012340' + i].concat(vars.map((v) => (c && c.ejemplo[v] && v !== '1') ? c.ejemplo[v] : n.split(' ')[0])));
+        });
+        const csv = '﻿' + filas.map((f) => f.map((x) => /[",\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x).join(',')).join('\r\n');
+        const enlace = document.createElement('a');
+        enlace.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+        enlace.download = 'ejemplo_' + (c ? c.name : 'envio') + '.csv';
+        enlace.click();
+        setTimeout(() => URL.revokeObjectURL(enlace.href), 1000);
+    });
+
+    // Lector de CSV (comillas, comas y saltos de línea dentro de campos)
+    function leerCsv(texto) {
+        const filas = [];
+        let fila = [];
+        let campo = '';
+        let comillas = false;
+        for (let i = 0; i < texto.length; i++) {
+            const c = texto[i];
+            if (comillas) {
+                if (c === '"' && texto[i + 1] === '"') { campo += '"'; i++; }
+                else if (c === '"') comillas = false;
+                else campo += c;
+            } else if (c === '"') comillas = true;
+            else if (c === ',') { fila.push(campo); campo = ''; }
+            else if (c === '\n' || c === '\r') {
+                if (c === '\r' && texto[i + 1] === '\n') i++;
+                fila.push(campo); filas.push(fila); fila = []; campo = '';
+            } else campo += c;
+        }
+        if (campo !== '' || fila.length) { fila.push(campo); filas.push(fila); }
+        return filas;
+    }
+
+    function mostrarError(html) {
+        cajaError.innerHTML = html;
+        cajaError.hidden = false;
+        cajaError.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Procesar (mismas validaciones que process_csv.php)
+    document.getElementById('formCsv').addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        cajaError.hidden = true;
+
+        if (!select.value) { select.reportValidity(); select.focus(); return; }
+        const archivo = entrada.files[0];
+        if (!archivo) { App.avisar('Selecciona un archivo CSV.', 'error'); return; }
+
+        const lector = new FileReader();
+        lector.onload = function () {
+            const filas = leerCsv(String(lector.result));
+            if (!filas.length || !filas[0].length) { mostrarError('El archivo CSV está vacío.'); return; }
+
+            const encabezados = filas[0].map((h) => h.trim().replace(/^﻿/, ''));
+            const faltan = ['Nombre_Cliente', 'Telefono_Cliente'].filter((h) => !encabezados.includes(h));
+            if (faltan.length) {
+                mostrarError('<h3>Error en el CSV</h3><p class="mb-0">Faltan las siguientes columnas obligatorias:</p><ul>' +
+                    faltan.map((f) => '<li><strong>' + f + '</strong></li>').join('') + '</ul>');
+                return;
+            }
+
+            const campana = HSM.campana(select.value);
+            const vars = variablesElegidas();
+            const faltanVars = vars.filter((v) => !encabezados.includes(v));
+            if (faltanVars.length) {
+                mostrarError('<h3>Error en el CSV</h3><p class="mb-0">La plantilla <strong>' + e(campana.name) + '</strong> requiere las siguientes variables:</p><ul>' +
+                    faltanVars.map((v) => '<li><strong>{{' + e(v) + '}}</strong></li>').join('') + '</ul><p class="mb-0">Estas variables deben existir como columnas en el CSV.</p>');
+                return;
+            }
+
+            const registros = [];
+            for (let i = 1; i < filas.length; i++) {
+                const fila = filas[i];
+                if (!fila.some((v) => v.trim() !== '')) continue;
+                const r = {};
+                encabezados.forEach((h, k) => { r[h] = (fila[k] || '').trim(); });
+                const numero = i + 1;
+                if (r.Nombre_Cliente === '') { mostrarError('Error en la fila ' + numero + ': el campo Nombre_Cliente está vacío.'); return; }
+                if (r.Telefono_Cliente === '') { mostrarError('Error en la fila ' + numero + ': el campo Telefono_Cliente está vacío.'); return; }
+                for (const v of vars) {
+                    if (r[v] === '') { mostrarError('Error en la fila ' + numero + ': la variable ' + e('{{' + v + '}}') + ' está vacía.'); return; }
+                }
+                registros.push(r);
+            }
+            if (!registros.length) { mostrarError('El archivo CSV no contiene registros para procesar.'); return; }
+
+            // Crear grupo, clientes y envíos pendientes
+            const datos = HSM.datos();
+            const ahora = HSM.fechaSql(new Date());
+            const grupo = {
+                id: datos.siguiente.grupo++, campaign_id: campana.id, file_name: archivo.name, total_records: registros.length,
+                status: 'PENDING', created_by: sesion.id, created_at: ahora, started_at: null, completed_at: null,
+            };
+            datos.grupos.push(grupo);
+            registros.forEach(function (r) {
+                const cliente = { id: datos.siguiente.cliente++, name: r.Nombre_Cliente, phone: r.Telefono_Cliente.replace(/\D/g, '').slice(-10), batch_id: grupo.id, create_at: ahora };
+                datos.clientes.push(cliente);
+                const valores = {};
+                vars.forEach((v) => { valores[v] = r[v]; });
+                datos.envios.push({
+                    id: datos.siguiente.envio++, client_id: cliente.id, campaign_id: campana.id, batch_id: grupo.id,
+                    content_variables: JSON.stringify(valores), status: 'pending', created_at: ahora, twilio_sid: null,
+                    response_message: null, sent_at: null, delivered_at: null, read_at: null, failed_at: null, created_by: sesion.id,
+                });
+            });
+            HSM.guardar();
+            App.avisarDespues('Se cargaron <b>' + registros.length + '</b> registros en el grupo #' + grupo.id + '. Ya puedes enviarlo.');
+            location.href = 'shipment_batch_detail.html?id=' + grupo.id;
+        };
+        lector.onerror = function () { mostrarError('No se pudo leer el archivo.'); };
+        lector.readAsText(archivo, 'UTF-8');
+    });
+})();
+</script>
+</body>
+</html>

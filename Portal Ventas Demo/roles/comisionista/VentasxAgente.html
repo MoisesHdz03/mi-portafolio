@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../demo/demo-datos.js"></script><script src="../../demo/demo.js"></script><link rel="stylesheet" href="../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas por Agente</title>
+    <link rel="shortcut icon" href="../img/Logoick.png" type="image/x-icon">
+
+    <!-- Librerías (copias locales, no dependen de internet) -->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="vendor/boxicons/css/boxicons.min.css">
+
+    <!-- Estilos del portal -->
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/ventas.css">
+</head>
+<body>
+    <!-- ===========================================================
+     SIDEBAR (Ventas por Agente)
+============================================================ -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <a href="#" class="sidebar-brand">
+            <i class="fas fa-chart-line"></i>
+            <span class="sidebar-brand-text">Empresarial</span>
+        </a>
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <nav class="sidebar-menu">
+        <div class="menu-item">
+            <a href="comissioner.html" class="menu-link">
+                <i class='bx bxs-add-to-queue'></i>
+                <span>Ingresar nueva venta</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="VentasxAgente.html" class="menu-link active">
+                <i class="fas fa-binoculars"></i>
+                <span>Ver ventas</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="../../index.html" class="menu-link">
+                <i class='bx bx-log-out'></i>
+                <span>Cerrar Sesión</span>
+            </a>
+        </div>
+        <div class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()">
+            <i class='bx bx-moon'></i>
+            <span>Modo oscuro</span>
+            <div class="toggle-switch"></div>
+        </div>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="footer-text">
+            <i class='bx bx-registered'></i>
+            <span>RAM SECURITY</span>
+        </div>
+    </div>
+</aside>
+
+<!-- Mobile Toggle Button -->
+<button class="mobile-toggle" onclick="toggleSidebarMobile()">
+    <i class="fas fa-bars"></i>
+</button>
+
+    <main class="main-content">
+        <header class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-chart-bar"></i>
+                Ventas por Agente
+            </h1>
+            <p class="page-subtitle">Consulta y analiza las ventas realizadas por cada agente</p>
+        </header>
+
+        <section class="filters-container">
+            <div class="filters-card">
+                <h2 class="filters-title">
+                    <i class="fas fa-filter"></i>
+                    Filtros de Búsqueda
+                </h2>
+                <form data-demo="1" method="GET" action="">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <div class="filter-group">
+                                <label for="fecha_inicio" class="filter-label">Fecha de Inicio</label>
+                                <input type="date" id="fecha_inicio" name="from_date" class="filter-input" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="filter-group">
+                                <label for="fecha_fin" class="filter-label">Fecha de Fin</label>
+                                <input type="date" id="fecha_fin" name="to_date" class="filter-input" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn-search w-100">
+                                <i class="fas fa-search"></i>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===========================================================
+     TABLA DE VENTAS
+     $resultadoVentas viene de VentasxAgente.php (null si no hay búsqueda)
+============================================================ -->
+<section class="table-container">
+    <div class="table-wrapper">
+        <div class="table-responsive">
+            <table class="data-table" id="tablaVentas">
+                <thead>
+                    <tr>
+                        <th>CapturaDeVenta Id</th>
+                        <th>Usuario</th>
+                        <th>Nombre Agente</th>
+                        <th>Estatus Validacion</th>
+                        <th>Estatus Backoffice</th>
+                        <th>Numero Folio</th>
+                        <th>Fecha Venta</th>
+                        <th>ID Lead</th>
+                        <th>ID de Grabación</th>
+                        <th>Tipo Cliente</th>
+                        <th>CCE</th>
+                        <th>ID Chat (Social Selling)</th>
+                        <th>Numero de Sucursal</th>
+                        <th>Sucursal</th>
+                        <th>Region</th>
+                        <th>Numero de Suscriptor</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Nombre</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Domicilio (Calle/Numero)</th>
+                        <th>Interior (MZ/LOTE)</th>
+                        <th>Colonia</th>
+                        <th>Entrecalle 1</th>
+                        <th>Entrecalle 2</th>
+                        <th>Codigo Postal</th>
+                        <th>Coordenadas</th>
+                        <th>Telefono Casa</th>
+                        <th>Telefono Oficina</th>
+                        <th>Telefono Celular</th>
+                        <th>Correo Electronico</th>
+                        <th>Comentarios Vendedor</th>
+                        <th>Paquete</th>
+                        <th>Venta Internet</th>
+                        <th>Venta Cable</th>
+                        <th>Venta Telefonia</th>
+                        <th>HD</th>
+                        <th>HDXVIEW</th>
+                        <th>TV Adicional</th>
+                        <th>Linea Adicional</th>
+                        <th>Venta Servicios de Streaming</th>
+                        <th>Motivo de no venta de streaming</th>
+                        <th>Netflix</th>
+                        <th>Disney</th>
+                        <th>Amazon</th>
+                        <th>HBOMAX</th>
+                        <th>Megamovil</th>
+                        <th>Modelo</th>
+                        <th>IMEI</th>
+                        <th>Numero de Promocion</th>
+                        <th>Costo de Contratacion</th>
+                        <th>Costo Promocional</th>
+                        <th>Costo Renta</th>
+                        <th>Comentarios de Producto Vendido</th>
+                        <th>Estatus Cobrador</th>
+                        <th>Venta Exitosa</th>
+                        <th>Fecha de Venta</th>
+                        <th>Motivo de Rechazo</th>
+                        <th>Segmento</th>
+                        <th>Comprobante Domicilio</th>
+                        <th>Nombre Comercial</th>
+                        <th>RFC</th>
+                        <th>Consecutivo de Venta</th>
+                        <th>¿Cliente Desea Facturar?</th>
+                        <th>Motivo Rechazo</th>
+                        <th>Supervisor a cargo de venta</th>
+                        <th>Banco Agente</th>
+                        <th>Nombre de Referencia</th>
+                        <th>Contacto de Referencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                    </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="assets/js/ventas/ventas.js"></script>
+</body>
+</html>

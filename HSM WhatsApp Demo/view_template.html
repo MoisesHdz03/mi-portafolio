@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/view_template.css">
+    <title>Vista previa HSM | WhatsApp HSM</title>
+</head>
+<body>
+<main class="main-content">
+    <div class="encabezado">
+        <div>
+            <div class="preview-badge">Vista previa HSM</div>
+            <h1 id="titulo">Plantilla</h1>
+            <p>Así podría visualizarse el mensaje para el cliente.</p>
+        </div>
+        <div class="encabezado-acciones">
+            <a href="campaigns.html" class="btn btn-light"><i class="bi bi-arrow-left"></i> Regresar</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Información -->
+        <div class="col-lg-4">
+            <div class="tarjeta">
+                <div class="tarjeta-encabezado">
+                    <h2><i class="bi bi-info-circle"></i> Información de la plantilla</h2>
+                </div>
+                <dl class="tarjeta-cuerpo info-lista" id="informacion"></dl>
+            </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="col-lg-8">
+            <div class="whatsapp-wrapper">
+                <div class="whatsapp-header">
+                    <div class="whatsapp-avatar">H</div>
+                    <div class="flex-grow-1">
+                        <div class="whatsapp-contact-name">HSM WhatsApp</div>
+                        <div class="whatsapp-contact-status">Plantilla HSM</div>
+                    </div>
+                    <label class="whatsapp-ejemplo" id="opcionEjemplo" hidden>
+                        <input type="checkbox" id="conEjemplo"> Con datos de ejemplo
+                    </label>
+                </div>
+                <div class="whatsapp-chat">
+                    <div class="whatsapp-message" id="mensaje"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/iconos.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+    'use strict';
+    if (!App.iniciar('campaigns', { soloFull: true })) return;
+    const e = App.e;
+
+    const plantilla = HSM.campana(App.param('id'));
+    if (!plantilla) {
+        location.replace('campaigns.html');
+        return;
+    }
+
+    const variables = JSON.parse(plantilla.template_variables || '[]');
+    document.getElementById('titulo').textContent = plantilla.name;
+    document.title = plantilla.name + ' | WhatsApp HSM';
+
+    document.getElementById('informacion').innerHTML =
+        '<dt>Nombre</dt><dd>' + e(plantilla.name) + '</dd>' +
+        '<dt>Template SID</dt><dd><code>' + e(plantilla.template_sid) + '</code></dd>' +
+        '<dt>Idioma</dt><dd>' + e(plantilla.template_language) + '</dd>' +
+        '<dt>Variables</dt><dd>' + (variables.length
+            ? variables.map((v) => '<span class="variable-chip">{{' + e(v) + '}}</span>').join(' ')
+            : '<span class="estado estado-gris">Sin variables</span>') + '</dd>' +
+        '<dt>Tipo de contenido</dt><dd>' + plantilla.types.map((t) => '<span class="tipo-chip">' + e(t) + '</span>').join(' ') + '</dd>' +
+        '<dt>Última sincronización</dt><dd>' + App.fecha(plantilla.last_sync) + '</dd>';
+
+    function cuerpo(conEjemplo) {
+        let html = e(plantilla.body).replace(/\n/g, '<br>');
+        return html.replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, function (todo, v) {
+            return conEjemplo && plantilla.ejemplo[v]
+                ? '<span class="template-valor">' + e(plantilla.ejemplo[v]) + '</span>'
+                : '<span class="template-variable">' + todo + '</span>';
+        });
+    }
+
+    function dibujar() {
+        const conEjemplo = document.getElementById('conEjemplo').checked;
+        const ahora = new Date();
+        const hora = String(ahora.getHours()).padStart(2, '0') + ':' + String(ahora.getMinutes()).padStart(2, '0');
+        let html = '';
+        if (plantilla.media) {
+            html += '<img src="' + e(plantilla.media) + '" class="whatsapp-media" alt="Imagen de la plantilla">';
+        }
+        html += '<div class="whatsapp-body">' + cuerpo(conEjemplo) + '</div>' +
+            '<div class="whatsapp-meta"><span>' + hora + '</span><span class="whatsapp-checks"><i class="bi bi-check2-all"></i></span></div>';
+        if (plantilla.actions.length) {
+            html += '<div class="whatsapp-buttons">' + plantilla.actions.map(function (a) {
+                return '<div class="whatsapp-button' + (a.type === 'URL' ? ' whatsapp-button-url' : '') + '">' +
+                    (a.type === 'URL' ? '<i class="bi bi-box-arrow-up-right"></i> ' : '<i class="bi bi-reply"></i> ') + e(a.title) + '</div>';
+            }).join('') + '</div>';
+        }
+        document.getElementById('mensaje').innerHTML = html;
+    }
+
+    if (variables.length) document.getElementById('opcionEjemplo').hidden = false;
+    document.getElementById('conEjemplo').addEventListener('change', dibujar);
+    dibujar();
+})();
+</script>
+</body>
+</html>

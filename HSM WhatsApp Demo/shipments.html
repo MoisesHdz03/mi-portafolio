@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <title>Envíos | WhatsApp HSM</title>
+</head>
+<body>
+<main class="main-content">
+    <div class="encabezado">
+        <div>
+            <h1>Envíos</h1>
+            <p>Todos los mensajes enviados, con su estado reportado por Twilio.</p>
+        </div>
+    </div>
+
+    <div class="tarjeta">
+        <div class="tabla-herramientas">
+            <div class="buscador">
+                <i class="bi bi-search"></i>
+                <input type="search" class="form-control form-control-sm" id="buscar" placeholder="Buscar por cliente, teléfono o campaña">
+            </div>
+            <select class="form-select form-select-sm" id="filtro" aria-label="Filtrar por estado">
+                <option value="">Todos los estados</option>
+                <option value="pending">Pendiente</option>
+                <option value="sent">Enviado</option>
+                <option value="delivered">Entregado</option>
+                <option value="read">Leído</option>
+                <option value="failed">Error</option>
+            </select>
+            <span class="conteo" id="conteo"></span>
+        </div>
+        <div class="tabla-contenedor">
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Teléfono</th>
+                        <th>Campaña</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo"></tbody>
+            </table>
+        </div>
+        <div class="paginacion" id="paginacion" hidden></div>
+    </div>
+</main>
+
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/iconos.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/envio.js"></script>
+<script>
+(function () {
+    'use strict';
+    if (!App.iniciar('shipments')) return;
+    const e = App.e;
+    const datos = HSM.datos();
+    datos.grupos.forEach(Envio.completarSinAnimacion);
+
+    // Índices para buscar rápido
+    const clientes = new Map(datos.clientes.map((c) => [c.id, c]));
+    const campanas = new Map(datos.campanas.map((c) => [c.id, c]));
+
+    App.tablaPaginada({
+        filas: datos.envios.slice().sort((a, b) => b.id - a.id),
+        cuerpo: document.getElementById('cuerpo'),
+        buscador: document.getElementById('buscar'),
+        filtro: document.getElementById('filtro'),
+        conteo: document.getElementById('conteo'),
+        paginacion: document.getElementById('paginacion'),
+        columnas: 6,
+        porPagina: 50,
+        vacio: 'No hay envios registrados.',
+        coincide: function (x, texto, filtro) {
+            if (filtro && x.status !== filtro) return false;
+            if (!texto) return true;
+            const c = clientes.get(x.client_id);
+            return c.name.toLowerCase().includes(texto) || c.phone.includes(texto) || campanas.get(x.campaign_id).name.toLowerCase().includes(texto);
+        },
+        dibujar: function (x) {
+            const c = clientes.get(x.client_id);
+            return '<tr>' +
+                '<td class="num">' + x.id + '</td>' +
+                '<td class="fuerte">' + e(c.name) + '</td>' +
+                '<td class="num">' + e(c.phone) + '</td>' +
+                '<td>' + e(campanas.get(x.campaign_id).name) + '</td>' +
+                '<td>' + App.etiqueta(App.ESTADO_ENVIO, x.status) + '</td>' +
+                '<td>' + App.fecha(x.created_at) + '</td></tr>';
+        },
+    });
+})();
+</script>
+</body>
+</html>

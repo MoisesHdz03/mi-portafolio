@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <style>
+        .usuario-celda {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .usuario-inicial {
+            display: grid;
+            flex: none;
+            place-items: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gris-suave);
+            color: var(--texto-medio);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .rol {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: var(--gris-suave);
+            color: var(--texto-medio);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .rol-full {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+    </style>
+    <title>Usuarios | WhatsApp HSM</title>
+</head>
+<body>
+<main class="main-content">
+    <div class="encabezado">
+        <div>
+            <h1>Usuarios</h1>
+            <p>Personas con acceso al sistema de envíos.</p>
+        </div>
+        <div class="encabezado-acciones">
+            <a href="create_user.html" class="btn btn-success"><i class="bi bi-person-plus"></i> Nuevo Usuario</a>
+        </div>
+    </div>
+
+    <div class="tarjeta">
+        <div class="tabla-contenedor">
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Rol</th>
+                        <th>Status</th>
+                        <th>Último login</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo"></tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/iconos.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+    'use strict';
+    const sesion = App.iniciar('users', { soloFull: true });
+    if (!sesion) return;
+    const e = App.e;
+
+    function dibujar() {
+        document.getElementById('cuerpo').innerHTML = HSM.datos().usuarios.slice().sort((a, b) => b.id - a.id).map(function (u) {
+            const iniciales = u.name.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase();
+            const esYo = u.id === sesion.id;
+            return '<tr>' +
+                '<td class="num">' + u.id + '</td>' +
+                '<td><div class="usuario-celda"><span class="usuario-inicial">' + e(iniciales) + '</span><span class="fuerte">' + e(u.name) + (esYo ? ' <span class="texto-tenue">(tú)</span>' : '') + '</span></div></td>' +
+                '<td>' + e(u.username) + '</td>' +
+                '<td><span class="rol' + (u.role === 'full_admin' ? ' rol-full' : '') + '">' + e(App.ROLES[u.role] || u.role) + '</span></td>' +
+                '<td>' + (u.status === 1 ? '<span class="estado estado-verde">Activo</span>' : '<span class="estado estado-rojo">Inactivo</span>') + '</td>' +
+                '<td>' + (u.last_login ? App.fecha(u.last_login) : '<span class="texto-tenue">Sin acceso</span>') + '</td>' +
+                '<td class="acciones">' +
+                '<a href="edit_user.html?id=' + u.id + '" class="btn btn-sm btn-suave"><i class="bi bi-pencil"></i> Editar</a>' +
+                (esYo ? '' : '<button type="button" class="btn btn-sm ' + (u.status === 1 ? 'btn-peligro-suave' : 'btn-exito-suave') + '" data-cambiar="' + u.id + '">' + (u.status === 1 ? 'Desactivar' : 'Activar') + '</button>') +
+                '</td></tr>';
+        }).join('');
+    }
+
+    document.getElementById('cuerpo').addEventListener('click', function (ev) {
+        const boton = ev.target.closest('[data-cambiar]');
+        if (!boton) return;
+        const u = HSM.usuario(boton.dataset.cambiar);
+        u.status = u.status === 1 ? 0 : 1;
+        HSM.guardar();
+        dibujar();
+        App.avisar('El usuario <b>' + e(u.username) + '</b> quedó ' + (u.status === 1 ? 'activo' : 'inactivo') + '.');
+    });
+
+    dibujar();
+})();
+</script>
+</body>
+</html>

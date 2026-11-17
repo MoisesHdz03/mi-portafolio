@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../../demo/demo-datos.js"></script><script src="../../../demo/demo.js"></script><link rel="stylesheet" href="../../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="../CSS/Bandejas.css">
+    <link rel="shortcut icon" href="../../img/Logoick.png" type="image/x-icon">
+    <title>Bandeja Validador - Ventas Registradas</title>
+</head>
+<body>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menú">
+        <i class="bx bx-menu"></i>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <nav class="sidebar close">
+    <header>
+        <div class="text logo">
+            <span class="name">B I E N V E N I D O</span> <br>
+            <span class="profe">dsalinas</span>
+        </div>
+        <i class="bx bx-chevron-left toggle"></i>
+    </header>
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                                    <li class="nav-link" id="Seleccion">
+                        <a href="Validacion_Dashboard.html">
+                            <i class="bx bx-search icon" title="Bandeja del Validador"></i>
+                            <span class="text nav-text">Bandeja Validador</span>
+                        </a>
+                    </li>
+                                    <li class="nav-link">
+                        <a href="../backoffice/Backoffice_Dashboard.html">
+                            <i class="bx bx-clipboard icon" title="Bandeja del Backoffice"></i>
+                            <span class="text nav-text">Bandeja Backoffice</span>
+                        </a>
+                    </li>
+                                    <li class="nav-link">
+                        <a href="../cobrador/Cobrador_Dashboard.html">
+                            <i class="bx bx-money icon" title="Bandeja del Cobrador"></i>
+                            <span class="text nav-text">Bandeja Cobrador</span>
+                        </a>
+                    </li>
+                                    <li class="nav-link">
+                        <a href="Rejected_Validation.html">
+                            <i class="bx bx-user-x icon" title="Rechazadas de Validación"></i>
+                            <span class="text nav-text">Rechazadas Validación</span>
+                        </a>
+                    </li>
+                                    <li class="nav-link">
+                        <a href="RejectedNIP.html">
+                            <i class="bx bx-lock-alt icon" title="Rechazadas por NIP"></i>
+                            <span class="text nav-text">Rechazadas por NIP</span>
+                        </a>
+                    </li>
+                                    <li class="nav-link">
+                        <a href="../backoffice/Rejected_Sales.html">
+                            <i class="bx bx-x-circle icon" title="Rechazadas de Backoffice"></i>
+                            <span class="text nav-text">Rechazadas Backoffice</span>
+                        </a>
+                    </li>
+                                    <li class="nav-link">
+                        <a href="../backoffice/Rejected_Cob.html">
+                            <i class="bx bx-block icon" title="Rechazadas de Cobrador"></i>
+                            <span class="text nav-text">Rechazadas Cobrador</span>
+                        </a>
+                    </li>
+                            </ul>
+        </div>
+        <div class="bottom-content">
+            <li class="">
+                <a href="../../../index.html">
+                    <i class="bx bx-log-out icon" title="Cerrar Sesion"></i>
+                    <span class="text nav-text">Cerrar Sesion</span>
+                </a>
+            </li>
+            <li class="mode">
+                <div class="sun-moon">
+                    <i class="bx bx-moon icon moon"></i>
+                    <i class="bx bx-sun icon sun"></i>
+                    <span class="mode-text text">Modo oscuro</span>
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-link" id="RAM">
+                <span class="text nav-text"><i class="fas fa-registered"></i> RAM SECURITY</span>
+            </li>
+        </div>
+    </div>
+</nav>
+    <section class="home">
+        <div class="text">
+            <!-- Navegacion superior -->
+            <nav class="above">
+                <ul>
+                    <li class="nav-above" id="welcome">
+                        <i class="bx bx-search icon"></i>
+                        Ventas registradas                    </li>
+                    <li class="nav-above nav-above-clock" id="liveClock">
+                        <i class="bx bx-time-five"></i>
+                        <span id="clockDate">--</span>
+                        <span class="clock-separator">•</span>
+                        <span id="clockTime">--:--:--</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <section class="table">
+            <section class="filtros">
+    <div class="filter-card">
+        <div class="filter-card-label">
+            <i class="bx bx-filter-alt me-1"></i> Filtros de búsqueda
+        </div>
+        <form data-demo="1" method="GET" action="" class="filtros-form">
+            <div class="filtros-grid">
+                                                        <div class="filtros-field">
+                        <label class="form-label" for="filtro-filtro_id">ID</label>
+                        <input type="text"
+                               name="filtro_id"
+                               id="filtro-filtro_id"
+                               class="form-control"
+                               placeholder="Filtrar por ID"
+                               value="">
+                    </div>
+                                                        <div class="filtros-field">
+                        <label class="form-label" for="filtro-status">Status</label>
+                        <input type="text"
+                               name="status"
+                               id="filtro-status"
+                               class="form-control"
+                               placeholder="Filtrar por Status"
+                               value="">
+                    </div>
+                                                        <div class="filtros-field">
+                        <label class="form-label" for="filtro-user">Usuario</label>
+                        <input type="text"
+                               name="user"
+                               id="filtro-user"
+                               class="form-control"
+                               placeholder="Filtrar por usuario"
+                               value="">
+                    </div>
+                                                        <div class="filtros-field">
+                        <label class="form-label" for="filtro-sucursal">Sucursal</label>
+                        <input type="text"
+                               name="sucursal"
+                               id="filtro-sucursal"
+                               class="form-control"
+                               placeholder="Filtrar por sucursal"
+                               value="">
+                    </div>
+                                <div class="filtros-acciones">
+                    <button type="submit" class="btn-search">
+                        <i class="bx bx-search me-1"></i> Aplicar Filtros
+                    </button>
+                    <a href="Validacion_Dashboard.html" class="btn-clear">
+                        <i class="bx bx-x me-1"></i> Deshacer
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+            <div class="contenedor-tabla" id="contenedor-tabla" data-refresh-url="obtener_tabla_validador.php">
+                    <table class="table table-hover table-bordered table-striped table-sm text-center" id="tablaDatos">
+        <tr>
+            <th>Acciones</th>
+            <th>Estado de Reserva</th>
+                            <th>CapturaDeVenta_Id</th>
+                            <th>Validada Por</th>
+                            <th>Ingresada Por</th>
+                            <th>Cobrada Por</th>
+                            <th>Usuario</th>
+                            <th>Nombre del Agente</th>
+                            <th>Estatus de Validación</th>
+                            <th>Estatus de Backoffice</th>
+                            <th>Motivo de Rechazo Backoffice</th>
+                            <th>Comentario de Rechazo Backoffice</th>
+                            <th>Sus</th>
+                            <th>Numero de Folio</th>
+                            <th>Fecha de Venta</th>
+                            <th>ID Lead</th>
+                            <th>ID de Grabación</th>
+                            <th>Tipo de Cliente</th>
+                            <th id="cce">CCE</th>
+                            <th>ID Chat (Social Selling)</th>
+                            <th>Numero De Sucursal</th>
+                            <th>Sucursal</th>
+                            <th>Region</th>
+                            <th>Numero De Suscriptor</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Nombre</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Domicilio (Calle/Numero)</th>
+                            <th>Interior (MZ/LOTE)</th>
+                            <th>Colonia</th>
+                            <th>Calle 1</th>
+                            <th>Calle 2</th>
+                            <th>Codigo Postal</th>
+                            <th>Coordenadas</th>
+                            <th>Telefono de Casa</th>
+                            <th>Telefono de Oficina</th>
+                            <th>Telefono Celular</th>
+                            <th>Correo Electronico</th>
+                            <th>Comentarios del Vendedor</th>
+                            <th>Paquete</th>
+                            <th>Venta Internet</th>
+                            <th>Venta Cable</th>
+                            <th>Venta Telefonia</th>
+                            <th>HD</th>
+                            <th>HDXVIEW</th>
+                            <th>TV Adicional</th>
+                            <th>Linea Adicional</th>
+                            <th>Servicios De Streaming</th>
+                            <th>Motivo de no venta de streaming</th>
+                            <th>Netflix</th>
+                            <th>Disney</th>
+                            <th>Amazon</th>
+                            <th>HBO-MAX</th>
+                            <th>Mega Movil</th>
+                            <th>Modelo</th>
+                            <th>IMEI</th>
+                            <th>Numero De Promocion</th>
+                            <th>Costo De Contratacion</th>
+                            <th>Costro Promocional</th>
+                            <th>Costo Renta</th>
+                            <th>Comentarios De Producto Vendido</th>
+                            <th>Estatus Cobrador</th>
+                            <th>Venta Exitosa</th>
+                            <th>Fecha de Cobrado</th>
+                            <th>Numero de Plastico</th>
+                            <th>Fecha de Vencimiento</th>
+                            <th>Banco</th>
+                            <th>Segmento</th>
+                            <th>Comprobante Domicilio</th>
+                            <th>Nombre Comercial</th>
+                            <th>RFC</th>
+                            <th>Consecutivo</th>
+                            <th>Cliente Desea Facturar</th>
+                            <th>Motivo de Rechazo</th>
+                            <th>Nombre de Referencia</th>
+                            <th>Contacto de Referencia</th>
+                            <th>Supervisor a cargo de venta</th>
+                    </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310146</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>mlopez</td>
+                                    <td>MIGUEL LOPEZ</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-17 11:58:24</td>
+                                    <td>9020372287</td>
+                                    <td>GRB-CA59B7FA</td>
+                                    <td>Nuevo</td>
+                                    <td>Llamada CCC</td>
+                                    <td>CH2651987</td>
+                                    <td>54</td>
+                                    <td>QUERETARO</td>
+                                    <td>BAJIO</td>
+                                    <td></td>
+                                    <td>VAZQUEZ</td>
+                                    <td>TORRES</td>
+                                    <td>MARTIN</td>
+                                    <td>1989-11-13</td>
+                                    <td>CALLE ENCINO 2056</td>
+                                    <td></td>
+                                    <td>SAN RAFAEL</td>
+                                    <td>AV. HIDALGO</td>
+                                    <td>AV. HIDALGO</td>
+                                    <td>87087</td>
+                                    <td>27.768940, -107.008150</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5550958452</td>
+                                    <td>martin.vazquez33@ejemplo.com</td>
+                                    <td>A un costado del parque</td>
+                                    <td>Servicios Premier</td>
+                                    <td>200 megas</td>
+                                    <td>Basico plus</td>
+                                    <td>Ilimitado Plus</td>
+                                    <td>HDTotal</td>
+                                    <td>XVIEW+</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>SI</td>
+                                    <td>N/A</td>
+                                    <td>-</td>
+                                    <td>Disney+ Anuncios Promo</td>
+                                    <td>Amazon Prime</td>
+                                    <td>MAX</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5401</td>
+                                    <td>350</td>
+                                    <td>649</td>
+                                    <td>649</td>
+                                    <td>Requiere factura</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>RESIDENCIAL</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550351087</td>
+                                    <td>jcastillo</td>
+                            </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310145</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>kmendoza</td>
+                                    <td>KARLA MENDOZA</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-17 11:19:17</td>
+                                    <td>9046409966</td>
+                                    <td>GRB-F007BB8A</td>
+                                    <td>Actual</td>
+                                    <td>Afiliado</td>
+                                    <td>CH1493687</td>
+                                    <td>28</td>
+                                    <td>CHOLULA</td>
+                                    <td>SURESTE</td>
+                                    <td></td>
+                                    <td>REYES</td>
+                                    <td>ALVAREZ</td>
+                                    <td>RAUL MARTIN</td>
+                                    <td>1972-05-01</td>
+                                    <td>AV. HIDALGO 1267</td>
+                                    <td></td>
+                                    <td>LAS LOMAS</td>
+                                    <td>CALLE PINO</td>
+                                    <td>CALLE ALAMO</td>
+                                    <td>42738</td>
+                                    <td>22.227100, -107.435940</td>
+                                    <td>5550134437</td>
+                                    <td></td>
+                                    <td>5550382872</td>
+                                    <td>raul.reyes28@ejemplo.com</td>
+                                    <td>Casa color blanco, porton negro</td>
+                                    <td>Doble Pack</td>
+                                    <td>300 megas</td>
+                                    <td></td>
+                                    <td>-</td>
+                                    <td>Conecta</td>
+                                    <td>XVIEW</td>
+                                    <td>2</td>
+                                    <td>0</td>
+                                    <td>NO</td>
+                                    <td>Motivo económico</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5399</td>
+                                    <td>200</td>
+                                    <td>549</td>
+                                    <td>899</td>
+                                    <td>Requiere factura</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>RESIDENCIAL</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550437348</td>
+                                    <td>jcastillo</td>
+                            </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310144</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>nrios</td>
+                                    <td>NATALIA RIOS</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-16 16:06:46</td>
+                                    <td>9089512850</td>
+                                    <td>GRB-512A660A</td>
+                                    <td>Nuevo</td>
+                                    <td>NEOTELL Llamada</td>
+                                    <td>CH9356854</td>
+                                    <td>24</td>
+                                    <td>EL ROSARIO</td>
+                                    <td>PACIFICO</td>
+                                    <td></td>
+                                    <td>JIMENEZ</td>
+                                    <td>RODRIGUEZ</td>
+                                    <td>LAURA ALICIA</td>
+                                    <td>1982-05-13</td>
+                                    <td>CALLE FRESNO 220</td>
+                                    <td></td>
+                                    <td>VILLA VERDE</td>
+                                    <td>CALLE NOGAL</td>
+                                    <td>AV. HIDALGO</td>
+                                    <td>75253</td>
+                                    <td>22.400290, -99.724410</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5550263498</td>
+                                    <td>laura.jimenez25@ejemplo.com</td>
+                                    <td>A un costado del parque</td>
+                                    <td>Triple Pack</td>
+                                    <td>1000 megas</td>
+                                    <td>Conecta</td>
+                                    <td>Ilimitado Plus</td>
+                                    <td>HDTotal</td>
+                                    <td>XVIEW</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>SI</td>
+                                    <td>N/A</td>
+                                    <td>Anuncios</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5399</td>
+                                    <td>0</td>
+                                    <td>349</td>
+                                    <td>649</td>
+                                    <td>Sin comentarios</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>RESIDENCIAL</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550148860</td>
+                                    <td>jcastillo</td>
+                            </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310143</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>sherrera</td>
+                                    <td>SOFIA HERRERA</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-16 16:04:13</td>
+                                    <td>9056388045</td>
+                                    <td>GRB-AFB02556</td>
+                                    <td>Nuevo</td>
+                                    <td>NEOTELL Llamada</td>
+                                    <td>CH1914892</td>
+                                    <td>12</td>
+                                    <td>TEPIC</td>
+                                    <td>OCCIDENTE</td>
+                                    <td></td>
+                                    <td>AGUILAR</td>
+                                    <td>ALVAREZ</td>
+                                    <td>JAVIER ARTURO</td>
+                                    <td>1995-07-25</td>
+                                    <td>BLVD. DEL SOL 450</td>
+                                    <td>5</td>
+                                    <td>CENTRO</td>
+                                    <td>AV. JUAREZ</td>
+                                    <td>CALLE ENCINO</td>
+                                    <td>60576</td>
+                                    <td>22.840700, -102.228230</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5550798113</td>
+                                    <td>javier.aguilar84@ejemplo.com</td>
+                                    <td>A un costado del parque</td>
+                                    <td>Triple Pack</td>
+                                    <td>1000 megas</td>
+                                    <td>Conecta</td>
+                                    <td>Ilimitado Plus</td>
+                                    <td>Conecta</td>
+                                    <td>XVIEW+</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>NO</td>
+                                    <td>Falla del proveedor</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5399</td>
+                                    <td>0</td>
+                                    <td>349</td>
+                                    <td>749</td>
+                                    <td>Sin comentarios</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NEGOCIO</td>
+                                    <td>Si</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550613842</td>
+                                    <td>jcastillo</td>
+                            </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310142</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>mlopez</td>
+                                    <td>MIGUEL LOPEZ</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-16 11:51:50</td>
+                                    <td>9084908007</td>
+                                    <td>GRB-10C888AF</td>
+                                    <td>Nuevo</td>
+                                    <td>MKT Inconcert / Messenger</td>
+                                    <td>CH6468466</td>
+                                    <td>17</td>
+                                    <td>COATEPEC</td>
+                                    <td>GOLFO</td>
+                                    <td></td>
+                                    <td>FLORES</td>
+                                    <td>MENDOZA</td>
+                                    <td>DIANA</td>
+                                    <td>1997-07-19</td>
+                                    <td>AV. DE LAS FLORES 1341</td>
+                                    <td></td>
+                                    <td>VISTA HERMOSA</td>
+                                    <td>AV. DE LAS FLORES</td>
+                                    <td>CALLE ALAMO</td>
+                                    <td>30558</td>
+                                    <td>20.268430, -107.597440</td>
+                                    <td>5550721547</td>
+                                    <td></td>
+                                    <td>5550424275</td>
+                                    <td>diana.flores46@ejemplo.com</td>
+                                    <td>Esquina con farmacia</td>
+                                    <td>Servicios Premier</td>
+                                    <td>1000 megas</td>
+                                    <td>Basico plus</td>
+                                    <td>Ilimitado Plus</td>
+                                    <td>Conecta</td>
+                                    <td>XVIEW</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>NO</td>
+                                    <td>Paquete Doble</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5422</td>
+                                    <td>200</td>
+                                    <td>349</td>
+                                    <td>899</td>
+                                    <td>Sin comentarios</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>RESIDENCIAL</td>
+                                    <td>Si</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550236260</td>
+                                    <td>jcastillo</td>
+                            </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310141</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>kmendoza</td>
+                                    <td>KARLA MENDOZA</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-16 11:28:19</td>
+                                    <td>9073138489</td>
+                                    <td>GRB-23472C9E</td>
+                                    <td>Nuevo</td>
+                                    <td>Afiliado</td>
+                                    <td>CH6975846</td>
+                                    <td>72</td>
+                                    <td>HUAJUAPAN DE LEON</td>
+                                    <td>SURESTE</td>
+                                    <td></td>
+                                    <td>ALVAREZ</td>
+                                    <td>RUIZ</td>
+                                    <td>MARTIN</td>
+                                    <td>1969-03-10</td>
+                                    <td>CALLE ALAMO 1416</td>
+                                    <td></td>
+                                    <td>LAS PALMAS</td>
+                                    <td>AV. INDEPENDENCIA</td>
+                                    <td>AV. MORELOS</td>
+                                    <td>72177</td>
+                                    <td>27.219750, -106.606640</td>
+                                    <td>5550830817</td>
+                                    <td></td>
+                                    <td>5550780264</td>
+                                    <td>martin.alvarez80@ejemplo.com</td>
+                                    <td>A un costado del parque</td>
+                                    <td>Triple Pack</td>
+                                    <td>500 megas</td>
+                                    <td>Conecta</td>
+                                    <td>Ilimitado Plus</td>
+                                    <td>HDTotal</td>
+                                    <td>XVIEW+</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>SI</td>
+                                    <td>N/A</td>
+                                    <td>Basico</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5422</td>
+                                    <td>200</td>
+                                    <td>349</td>
+                                    <td>549</td>
+                                    <td>Cliente interesado en upgrade</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NEGOCIO</td>
+                                    <td>Si</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550845930</td>
+                                    <td>jcastillo</td>
+                            </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310140</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>cgarcia</td>
+                                    <td>CARLOS GARCIA</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-15 18:45:11</td>
+                                    <td>9010363743</td>
+                                    <td>GRB-903DA31A</td>
+                                    <td>Nuevo</td>
+                                    <td>MKT Bitrix</td>
+                                    <td>CH2140576</td>
+                                    <td>62</td>
+                                    <td>VILLA CORREGIDORA</td>
+                                    <td>BAJIO</td>
+                                    <td></td>
+                                    <td>CRUZ</td>
+                                    <td>GONZALEZ</td>
+                                    <td>VERONICA</td>
+                                    <td>1988-02-08</td>
+                                    <td>AV. REFORMA 2243</td>
+                                    <td></td>
+                                    <td>SAN RAFAEL</td>
+                                    <td>AV. MORELOS</td>
+                                    <td>CALLE FRESNO</td>
+                                    <td>20049</td>
+                                    <td>21.029310, -107.703140</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5550577732</td>
+                                    <td>veronica.cruz21@ejemplo.com</td>
+                                    <td>Esquina con farmacia</td>
+                                    <td>Doble Pack</td>
+                                    <td>1000 megas</td>
+                                    <td></td>
+                                    <td>-</td>
+                                    <td>HDTotal</td>
+                                    <td>XVIEW</td>
+                                    <td>2</td>
+                                    <td>0</td>
+                                    <td>NO</td>
+                                    <td>Falla del proveedor</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5399</td>
+                                    <td>200</td>
+                                    <td>449</td>
+                                    <td>649</td>
+                                    <td>Sin comentarios</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>RESIDENCIAL</td>
+                                    <td>Si</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550577648</td>
+                                    <td>jcastillo</td>
+                            </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310139</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>ftorres</td>
+                                    <td>FERNANDA TORRES</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-15 17:49:19</td>
+                                    <td>9046057620</td>
+                                    <td>GRB-983287F5</td>
+                                    <td>Nuevo</td>
+                                    <td>Viont</td>
+                                    <td>CH3932924</td>
+                                    <td>17</td>
+                                    <td>COATEPEC</td>
+                                    <td>GOLFO</td>
+                                    <td></td>
+                                    <td>GOMEZ</td>
+                                    <td>DIAZ</td>
+                                    <td>JUAN</td>
+                                    <td>1969-10-26</td>
+                                    <td>CALLE FRESNO 775</td>
+                                    <td></td>
+                                    <td>SAN RAFAEL</td>
+                                    <td>CALLE FRESNO</td>
+                                    <td>AV. DE LAS FLORES</td>
+                                    <td>56307</td>
+                                    <td>26.576930, -100.868560</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5550177902</td>
+                                    <td>juan.gomez5@ejemplo.com</td>
+                                    <td>Edificio azul, segundo piso</td>
+                                    <td>Doble Pack</td>
+                                    <td>200 megas</td>
+                                    <td></td>
+                                    <td>-</td>
+                                    <td>HDTotal</td>
+                                    <td>XVIEW</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>SI</td>
+                                    <td>N/A</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5422</td>
+                                    <td>200</td>
+                                    <td>649</td>
+                                    <td>749</td>
+                                    <td>Sin comentarios</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>RESIDENCIAL</td>
+                                    <td>Si</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550205520</td>
+                                    <td>mfuentes</td>
+                            </tr>
+                                <tr>
+                <td>
+                                            <a class="btn btn-warning"
+                           href="modificar.html">
+                            Modificar
+                        </a>
+                                    </td>
+                <td>
+                                            <span class="badge bg-success" style="font-size: 14px;">
+                            🟢 LIBRE
+                        </span>
+                                    </td>
+                                    <td>310138</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>cgarcia</td>
+                                    <td>CARLOS GARCIA</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>2026-11-15 15:12:48</td>
+                                    <td>9088344810</td>
+                                    <td>GRB-E4405EB3</td>
+                                    <td>Actual</td>
+                                    <td>MKT Inconcert / Messenger</td>
+                                    <td>CH7461029</td>
+                                    <td>56</td>
+                                    <td>CARDEL</td>
+                                    <td>GOLFO</td>
+                                    <td></td>
+                                    <td>RAMIREZ</td>
+                                    <td>GONZALEZ</td>
+                                    <td>ALICIA</td>
+                                    <td>1993-06-07</td>
+                                    <td>BLVD. DEL SOL 2110</td>
+                                    <td></td>
+                                    <td>SANTA FE</td>
+                                    <td>CALLE NOGAL</td>
+                                    <td>CALLE OLIVO</td>
+                                    <td>23163</td>
+                                    <td>27.512710, -102.320420</td>
+                                    <td>5550817935</td>
+                                    <td></td>
+                                    <td>5550552789</td>
+                                    <td>alicia.ramirez41@ejemplo.com</td>
+                                    <td>Casa color blanco, porton negro</td>
+                                    <td>Doble Pack</td>
+                                    <td>500 megas</td>
+                                    <td></td>
+                                    <td>-</td>
+                                    <td>HDTotal</td>
+                                    <td>XVIEW+</td>
+                                    <td>2</td>
+                                    <td>0</td>
+                                    <td>SI</td>
+                                    <td>N/A</td>
+                                    <td>Estandar</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>5401</td>
+                                    <td>200</td>
+                                    <td>549</td>
+                                    <td>899</td>
+                                    <td>Instalacion por la tarde</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>RESIDENCIAL</td>
+                                    <td>Si</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>NO</td>
+                                    <td></td>
+                                    <td>NA</td>
+                                    <td>5550287538</td>
+                                    <td>jcastillo</td>
+                            </tr>
+            </table>
+            </div>
+        </section>
+    </section>
+
+    <script src="../JS/Bandejas.js"></script>
+    
+
+</body>
+</html>

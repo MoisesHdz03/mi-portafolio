@@ -1,0 +1,156 @@
+/*==========================================================
+    TOKENS DE DISEÑO (compartidos por todas las vistas)
+    Fondo suave, texto gris pizarra y verde de marca.
+    El modo oscuro se activa con body.dark-mode.
+==========================================================*/
+:root {
+    /* Tipografía del sistema: no depende de internet */
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    /* Superficies */
+    --bg: #f2f6f5;
+    --surface: #ffffff;
+    --surface-2: #f7faf9;
+    --surface-3: #edf2f1;
+    --border: #e1e8e6;
+    --border-strong: #cdd8d5;
+
+    /* Texto */
+    --text: #1e2b29;
+    --text-muted: #5c6e6a;
+    --text-soft: #8a9a97;
+
+    /* Marca */
+    --brand: #009678;
+    --brand-strong: #007b62;
+    --brand-bright: #19c29b;
+    --brand-soft: #e2f4ef;
+    --brand-ring: rgba(0, 150, 120, 0.18);
+
+    /* Acento cálido (solo para lo importante) */
+    --accent: #f59e0b;
+    --accent-soft: #fdf2db;
+
+    /* Estados */
+    --danger: #d4465a;
+    --danger-soft: #fdecee;
+    --warning: #d99a06;
+
+    /* Colores por sección */
+    --c-teal: #0e9f86;   --c-teal-soft: #dff4ee;
+    --c-blue: #3a7bd5;   --c-blue-soft: #e6eefb;
+    --c-violet: #7a5bd4; --c-violet-soft: #eee9fb;
+    --c-amber: #cf8406;  --c-amber-soft: #fcf0d9;
+    --c-rose: #d4466c;   --c-rose-soft: #fbe8ee;
+
+    /* Sidebar */
+    --sidebar-bg: #0e2a2f;
+    --sidebar-bg-2: #123338;
+    --sidebar-text: #a6bbb8;
+    --sidebar-text-strong: #ffffff;
+    --sidebar-hover: rgba(255, 255, 255, 0.06);
+    --sidebar-line: rgba(255, 255, 255, 0.08);
+
+    /* Forma y profundidad */
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 2px rgba(16, 40, 36, 0.06);
+    --shadow: 0 1px 3px rgba(16, 40, 36, 0.06), 0 8px 20px rgba(16, 40, 36, 0.05);
+    --shadow-lg: 0 24px 56px rgba(10, 30, 28, 0.2);
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 0.2s var(--ease);
+
+    color-scheme: light;
+}
+
+body.dark-mode {
+    --bg: #0d1719;
+    --surface: #142124;
+    --surface-2: #18282b;
+    --surface-3: #1d3034;
+    --border: #25393d;
+    --border-strong: #33494e;
+
+    --text: #e1eae8;
+    --text-muted: #9badaa;
+    --text-soft: #738784;
+
+    --brand: #1db993;
+    --brand-strong: #17a583;
+    --brand-bright: #3fd6ae;
+    --brand-soft: rgba(29, 185, 147, 0.14);
+    --brand-ring: rgba(29, 185, 147, 0.28);
+
+    --accent: #f5b23a;
+    --accent-soft: rgba(245, 178, 58, 0.14);
+
+    --danger: #f06a7c;
+    --danger-soft: rgba(240, 106, 124, 0.14);
+
+    --c-teal: #3cc9a8;   --c-teal-soft: rgba(60, 201, 168, 0.14);
+    --c-blue: #6ea3ef;   --c-blue-soft: rgba(110, 163, 239, 0.14);
+    --c-violet: #a58bf0; --c-violet-soft: rgba(165, 139, 240, 0.14);
+    --c-amber: #f2b545;  --c-amber-soft: rgba(242, 181, 69, 0.14);
+    --c-rose: #f07a9a;   --c-rose-soft: rgba(240, 122, 154, 0.14);
+
+    --sidebar-bg: #0a1416;
+    --sidebar-bg-2: #0e1c1f;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.5);
+
+    color-scheme: dark;
+}
+
+/*==========================================================
+    BASE
+==========================================================*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.55;
+    background-color: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color var(--transition), color var(--transition);
+}
+
+::selection {
+    background: var(--brand-ring);
+}
+
+/* Barras de scroll discretas */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

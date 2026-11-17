@@ -1,0 +1,780 @@
+/* ==========================================================
+   ADMINISTRACIÓN · VER VENTAS (ventasregistradas.php)
+   Encabezado, filtros, tabla, etiquetas y ventana de la
+   contraseña vigente. Variables de color en Dash_admin.css.
+   ========================================================== */
+/* ---------- Estructura ---------- */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin-left: var(--menu-ancho);
+    transition: margin-left .28s var(--curva);
+}
+
+.main-content.expanded {
+    margin-left: 0;
+}
+
+.header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--borde);
+    background: var(--superficie);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.menu-toggle {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: var(--radio-chico);
+    background: none;
+    color: var(--texto-suave);
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.menu-toggle:hover {
+    background: var(--superficie-suave);
+    color: var(--texto);
+}
+
+.header {
+    box-shadow: inset 0 -1px 0 var(--borde);
+}
+
+.header h1 {
+    overflow: hidden;
+    color: var(--texto);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 0;
+    padding: 24px 28px;
+    overflow-y: auto;
+}
+
+/* ---------- Botones ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-chico);
+    background: var(--superficie);
+    color: var(--texto);
+    font: inherit;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.btn i {
+    color: var(--texto-tenue);
+    font-size: 13px;
+    transition: color .15s ease, transform .3s var(--curva);
+}
+
+.btn:hover {
+    border-color: var(--texto-tenue);
+    background: var(--superficie-suave);
+}
+
+.btn:hover .fa-sync-alt {
+    transform: rotate(180deg);
+}
+
+.btn:active {
+    background: var(--borde);
+}
+
+.btn-primary {
+    border-color: var(--acento);
+    background: var(--acento);
+    color: #fff;
+}
+
+.btn-primary i {
+    color: rgba(255, 255, 255, .8);
+}
+
+.btn-primary:hover {
+    border-color: var(--acento-hover);
+    background: var(--acento-hover);
+}
+
+.btn-primary:active {
+    background: var(--acento-hover);
+}
+
+.btn-secondary {
+    border-color: transparent;
+    background: none;
+    color: var(--texto-suave);
+}
+
+.btn-secondary:hover {
+    border-color: transparent;
+    background: var(--superficie-suave);
+    color: var(--texto);
+}
+
+.badge {
+    padding: 3px 9px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    background: var(--superficie-suave);
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+
+/* ---------- Filtros ---------- */
+.filter-card {
+    flex-shrink: 0;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    background: var(--superficie);
+    box-shadow: var(--sombra);
+    animation: aparecerSubiendo .4s var(--curva) both;
+}
+
+.filter-card {
+    overflow: hidden;
+    border-top: 3px solid var(--acento);
+}
+
+.filter-header {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--borde);
+    background: var(--encabezado-fondo);
+}
+
+.filter-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--encabezado-texto);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.filter-title i {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--acento);
+    color: #fff;
+    font-size: 11px;
+}
+
+.filter-content {
+    padding: 16px 20px 18px;
+}
+
+.filter-content form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 14px;
+}
+
+.filter-grid {
+    display: grid;
+    flex: 1 1 520px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-label {
+    color: var(--texto-suave);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.form-input {
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-chico);
+    background: var(--superficie);
+    color: var(--texto);
+    font: inherit;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.form-input::placeholder {
+    color: var(--texto-tenue);
+}
+
+.form-input:hover {
+    border-color: var(--texto-tenue);
+}
+
+.form-input:focus {
+    border-color: var(--acento);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--acento-suave);
+}
+
+.filter-actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* ---------- Tabla ---------- */
+.table-card {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 260px;
+    overflow: hidden;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    background: var(--superficie);
+    box-shadow: var(--sombra);
+    animation: aparecerSubiendo .4s var(--curva) .06s both;
+}
+
+.table-container {
+    flex: 1;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.data-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.data-table th {
+    min-width: 120px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--borde);
+    background: var(--encabezado-fondo);
+    color: var(--encabezado-texto);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--borde);
+    background: var(--superficie);
+    color: var(--texto);
+    white-space: nowrap;
+    transition: background-color .12s ease;
+}
+
+/* Las primeras filas aparecen escalonadas; el resto, de inmediato */
+.data-table tbody tr {
+    animation: aparecer .3s ease .1s both;
+}
+
+.data-table tbody tr:nth-child(2) { animation-delay: .12s; }
+.data-table tbody tr:nth-child(3) { animation-delay: .14s; }
+.data-table tbody tr:nth-child(4) { animation-delay: .16s; }
+.data-table tbody tr:nth-child(5) { animation-delay: .18s; }
+.data-table tbody tr:nth-child(n + 6) { animation-delay: .2s; }
+
+.data-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--acento) 5%, var(--superficie));
+}
+
+body.dark-mode .data-table tbody tr:hover td {
+    background: var(--superficie-suave);
+}
+
+/* El ID de la venta (segunda columna, después de Acciones) en el color de acento */
+.data-table td:nth-child(2) strong {
+    color: var(--acento);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.data-table td strong {
+    font-weight: 600;
+}
+
+/* Primera columna (ID con el botón del comentario) fija al desplazarse */
+.data-table th:first-child,
+.data-table td:first-child {
+    position: sticky;
+    left: 0;
+    box-shadow: inset -1px 0 0 var(--borde);
+}
+
+.data-table th:first-child {
+    z-index: 11;
+}
+
+.data-table td:first-child {
+    z-index: 5;
+}
+
+/* ---------- Etiquetas de estatus ---------- */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--superficie-suave);
+    color: var(--texto-suave);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge:empty {
+    display: none;
+}
+
+.status-badge::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: .8;
+}
+
+.status-validado,
+.status-aprobado,
+.status-completado {
+    background: var(--exito-suave);
+    color: var(--exito);
+}
+
+.status-pendiente,
+.status-proceso {
+    background: var(--alerta-suave);
+    color: var(--alerta);
+}
+
+.status-rechazado {
+    background: var(--error-suave);
+    color: var(--error);
+}
+
+/* ---------- Servicios contratados ---------- */
+.service-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border: 1px solid transparent;
+    border-radius: var(--radio-chico);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.service-badge:empty {
+    display: none;
+}
+
+.service-si,
+.netflix-badge,
+.disney-badge,
+.amazon-badge,
+.hbo-badge {
+    background: var(--acento-suave);
+    color: var(--encabezado-texto);
+}
+
+.service-no {
+    background: none;
+    color: var(--texto-tenue);
+}
+
+/* ---------- Costos ---------- */
+.cost-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 500;
+}
+
+.cost-container:empty {
+    display: none;
+}
+
+.cost-container::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.cost-low::before {
+    background: var(--exito);
+}
+
+.cost-medium::before {
+    background: var(--alerta);
+}
+
+.cost-high::before {
+    background: var(--error);
+}
+
+/* ---------- Paginación (se conserva por compatibilidad) ---------- */
+.pagination {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: 12px 20px;
+    border-top: 1px solid var(--borde);
+}
+
+.pagination-info {
+    color: var(--texto-suave);
+    font-size: 13px;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.pagination-btn {
+    padding: 5px 10px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-chico);
+    background: var(--superficie);
+    color: var(--texto-suave);
+    font-size: 13px;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.pagination-btn:hover {
+    background: var(--superficie-suave);
+    color: var(--texto);
+}
+
+.pagination-btn.active {
+    border-color: var(--acento);
+    background: var(--acento);
+    color: #fff;
+}
+
+.pagination-btn:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+/* ---------- Barras de desplazamiento ---------- */
+.table-container,
+.content {
+    scrollbar-color: var(--borde-fuerte) transparent;
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background: var(--borde-fuerte);
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--texto-tenue);
+}
+
+/* ---------- Animaciones ---------- */
+@keyframes aparecerSubiendo {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes aparecer {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
+/* ==========================================================
+   PROPIO DE ADMINISTRACIÓN
+   ========================================================== */
+
+/* Bootstrap también define .btn: aquí se asegura el diseño del portal */
+.main-content .btn {
+    line-height: 1;
+    box-shadow: none;
+}
+
+.main-content .btn:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+/* Botón "Modificar" de cada venta */
+.btn.btn-modificar {
+    height: 30px;
+    padding: 0 11px;
+    border-color: transparent;
+    background: var(--acento-suave);
+    color: var(--acento);
+    font-size: 12.5px;
+}
+
+.btn.btn-modificar i {
+    color: var(--acento);
+    font-size: 11px;
+}
+
+.btn.btn-modificar:hover {
+    border-color: var(--acento);
+    background: var(--acento);
+    color: #fff;
+}
+
+.btn.btn-modificar:hover i {
+    color: #fff;
+}
+
+/* Mensaje cuando no hay ventas */
+.tabla-vacia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 100%;
+    min-height: 240px;
+    padding: 48px 24px;
+    color: var(--texto-suave);
+    text-align: center;
+    animation: aparecer .4s ease both;
+}
+
+.tabla-vacia i {
+    color: var(--borde-fuerte);
+    font-size: 32px;
+}
+
+/* El encabezado no es tan blanco como las tarjetas */
+.header {
+    background: var(--superficie);
+}
+
+/* ---------- Ventana "Contraseña vigente" (Bootstrap) ---------- */
+.modal-content {
+    overflow: hidden;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    background: var(--superficie);
+    color: var(--texto);
+    box-shadow: var(--sombra-flotante);
+}
+
+.modal-header.bg-primary {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--borde);
+    background: linear-gradient(135deg, var(--menu-fondo), #1d2a3b) !important;
+}
+
+.modal-header .modal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.modal-header .modal-title i {
+    color: #d6ad5c;
+}
+
+.modal-header .btn-close {
+    filter: invert(1) grayscale(1) brightness(2);
+    opacity: .7;
+}
+
+.modal-body {
+    padding: 22px 24px;
+}
+
+.modal-body .text-muted {
+    color: var(--texto-suave) !important;
+}
+
+/* La contraseña en grande, como código */
+#passwordVigente {
+    border: 1px dashed var(--acento);
+    border-radius: 10px;
+    background: var(--acento-suave);
+    color: var(--acento);
+    font-family: "Cascadia Mono", Consolas, monospace;
+    letter-spacing: .14em;
+    animation: aparecer .3s ease both;
+}
+
+#btnCopiarPassword {
+    border-color: var(--acento);
+    color: var(--acento);
+    transition: background-color .15s ease, color .15s ease;
+}
+
+#btnCopiarPassword:hover {
+    background: var(--acento);
+    color: #fff;
+}
+
+#estadoPassword {
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-weight: 600;
+}
+
+.modal-body hr {
+    border-color: var(--borde);
+    opacity: 1;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--borde);
+    background: var(--superficie-suave);
+}
+
+.modal-footer .btn {
+    border-radius: var(--radio-chico);
+}
+
+.modal-backdrop.show {
+    opacity: .5;
+}
+
+.modal.fade .modal-dialog {
+    transform: translateY(14px) scale(.97);
+    transition: transform .25s var(--curva);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+/* ---------- Responsivo ---------- */
+/* En pantallas chicas el menú se abre encima: el contenido usa todo el ancho */
+@media (max-width: 1024px) {
+    .main-content,
+    .main-content.expanded {
+        margin-left: 0;
+    }
+
+    .header {
+        padding: 12px 20px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 14px;
+    }
+
+    .content {
+        gap: 14px;
+        padding: 14px;
+    }
+
+    .header h1 {
+        font-size: 16px;
+    }
+
+    .btn {
+        padding: 0 12px;
+    }
+
+    .filter-header {
+        padding: 12px 16px;
+    }
+
+    .filter-content {
+        padding: 12px 16px 16px;
+    }
+
+    .filter-grid {
+        flex-basis: 100%;
+        grid-template-columns: 1fr;
+    }
+
+    .filter-actions,
+    .filter-actions .btn {
+        flex: 1;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 9px 12px;
+    }
+}

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../../demo/demo-datos.js"></script><script src="../../../demo/demo.js"></script><link rel="stylesheet" href="../../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/Logoick.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../CSS/Dash_admin.css">
+        <link rel="stylesheet" href="../CSS/Ventas_registradas.css">
+        <link rel="stylesheet" href="../CSS/usuarios_admin.css">
+            <title>Administración - Portal Ventas</title>
+</head>
+<body>
+    <!-- Aplica el modo oscuro guardado antes de dibujar la página (evita el destello blanco) -->
+<script src="../JS/tema-inicial.js"></script>
+<nav class="sidebar" id="sidebar" aria-label="Menú principal">
+    <div class="sidebar-brand">
+        <span class="sidebar-brand__logo"><i class="fas fa-shield-halved"></i></span>
+        <span class="sidebar-brand__texto">
+            <strong>Portal Ventas</strong>
+            <small>Administración</small>
+        </span>
+    </div>
+
+    <div class="sidebar-header">
+        <div class="avatar">AM</div>
+        <div class="user-info">
+            <h3>BIENVENIDO</h3>
+            <p>amorales</p>
+        </div>
+    </div>
+
+    <div class="sidebar-nav">
+                    <p class="sidebar-section">Navegación</p>
+                            <a href="../ventasregistradas.html" class="nav-item">
+                    <i class="fas fa-binoculars"></i>
+                    <span>Ver Ventas</span>
+                </a>
+                            <a href="../ver.html" class="nav-item">
+                    <i class="fas fa-filter"></i>
+                    <span>Filtros</span>
+                </a>
+                            <a href="../back_log.html" class="nav-item">
+                    <i class="fas fa-list-check"></i>
+                    <span>Backlog</span>
+                </a>
+                            <a href="../Sales/ResumenSale.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Resumen de Ventas</span>
+                </a>
+                            <a href="../Recuperaciones/recuperaciones.html" class="nav-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Bitácora de recuperaciones</span>
+                </a>
+                                <p class="sidebar-section">Usuarios</p>
+                            <a href="NewUser.html" class="nav-item">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Crear un Usuario</span>
+                </a>
+                            <a href="#" class="nav-item active" aria-current="page">
+                    <i class="fas fa-users"></i>
+                    <span>Usuarios Registrados</span>
+                </a>
+                    
+        <p class="sidebar-section">Herramientas</p>
+        <a href="#" class="nav-item" data-bs-toggle="modal" data-bs-target="#modalPasswordVigente">
+            <i class="fas fa-key"></i>
+            <span>Consultar contraseña vigente</span>
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <button type="button" class="theme-toggle" aria-pressed="false">
+            <i class="fas fa-moon"></i>
+            <span>Modo Oscuro</span>
+        </button>
+        <a href="../../../index.html" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Cerrar Sesión</span>
+        </a>
+        <div class="brand">® RAM SECURITY</div>
+    </div>
+</nav>
+
+    <main class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Mostrar u ocultar menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-titulos">
+                    <h1>Gestión de Usuarios</h1>
+                    <p class="page-subtitle">Administra y visualiza todos los usuarios del sistema</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Usuarios</span>
+                        <span class="stat-value">17</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Filtros -->
+            <div class="filter-card">
+                <div class="filter-header">
+                    <div class="filter-title">
+                        <i class="fas fa-sliders-h"></i>
+                        Filtros de Búsqueda
+                    </div>
+                </div>
+                <div class="filter-content">
+                    <form data-demo="1" action="" method="GET" class="filters-form">
+                        <div class="filter-grid">
+                                                            <div class="form-group">
+                                    <label for="name" class="form-label">
+                                        <i class="fas fa-user"></i>
+                                        Nombre                                    </label>
+                                    <input type="text" name="name" id="name" class="form-input"
+                                           placeholder="Buscar por nombre..." value="">
+                                </div>
+                                                            <div class="form-group">
+                                    <label for="user" class="form-label">
+                                        <i class="fas fa-at"></i>
+                                        Usuario                                    </label>
+                                    <input type="text" name="user" id="user" class="form-input"
+                                           placeholder="Buscar por usuario..." value="">
+                                </div>
+                                                            <div class="form-group">
+                                    <label for="supervisor" class="form-label">
+                                        <i class="fas fa-user-tie"></i>
+                                        Supervisor                                    </label>
+                                    <input type="text" name="supervisor" id="supervisor" class="form-input"
+                                           placeholder="Buscar por supervisor..." value="">
+                                </div>
+                            
+                            <div class="form-group">
+                                <label for="role" class="form-label">
+                                    <i class="fas fa-user-tag"></i>
+                                    Rol
+                                </label>
+                                <select name="role" id="role" class="form-input form-select">
+                                    <option value="">Todos los roles</option>
+                                                                            <option value="regular">Regular (Agente)</option>                                                                            <option value="backoffice">Backoffice</option>                                                                            <option value="backoffice-2">Backoffice 2</option>                                                                            <option value="cobrador">Cobrador</option>                                                                            <option value="super">Supervisor</option>                                                                            <option value="validador">Validador</option>                                                                            <option value="Comisionista">Comisionista</option>                                                                            <option value="Calidad">Calidad</option>                                                                            <option value="admin">Administrador</option>                                                                            <option value="Coordinador">Coordinador</option>                                                                            <option value="Gerente">Gerente</option>                                                                            <option value="Analyst">Analista</option>                                                                    </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="estatus" class="form-label">
+                                    <i class="fas fa-toggle-on"></i>
+                                    Estatus de Usuario
+                                </label>
+                                <select name="estatus" id="estatus" class="form-input form-select con-valor">
+                                    <option value="">Todos los estatus</option>
+                                                                            <option value="ACTIVADO" selected>ACTIVADO</option>                                                                            <option value="DESACTIVADO">DESACTIVADO</option>                                                                    </select>
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button type="submit" id="filter_users" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                                Aplicar Filtros
+                            </button>
+                            <a href="Registered_Users.html" id="filter-reset" class="btn btn-secondary">
+                                <i class="fas fa-undo"></i>
+                                Limpiar Filtros
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal para consultar la contraseña semanal de validación (password/password.js) -->
+<div class="modal fade" id="modalPasswordVigente" tabindex="-1" aria-labelledby="modalPasswordVigenteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalPasswordVigenteLabel">
+                    <i class="fas fa-key me-2"></i>
+                    Contraseña Vigente
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="text-muted mb-2">Contraseña semanal de validación</p>
+                <div class="text-center mb-3">
+                    <div class="alert alert-primary fs-3 fw-bold mb-2" id="passwordVigente">Consultando...</div>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnCopiarPassword">
+                        <i class="fas fa-copy"></i>
+                        Copiar contraseña
+                    </button>
+                </div>
+                <div class="mt-3">
+                    <span id="estadoPassword" class="badge bg-secondary fs-6">Consultando...</span>
+                </div>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-12 mb-3">
+                        <small class="text-muted d-block">Fecha de generación</small>
+                        <strong id="fechaGeneracion">--</strong>
+                    </div>
+                    <div class="col-12">
+                        <small class="text-muted d-block">Vigencia</small>
+                        <strong id="vigenciaPassword">--</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- Usuarios -->
+            <div class="table-card">
+                <div class="table-toolbar">
+                    <span class="table-toolbar-titulo"><i class="fas fa-users"></i> Usuarios</span>
+                                            <span class="badge">17 usuarios</span>
+                                                                <span class="chip-filtro">Estatus: <b>ACTIVADO</b></span>
+                                    </div>
+
+                <div class="table-container">
+                                            <table class="data-table users-table">
+                            <thead>
+                                <tr>
+                                                                            <th><i class="fas fa-cog"></i> Acciones</th>
+                                                                            <th><i class="fas fa-hashtag"></i> ID</th>
+                                                                            <th><i class="fas fa-user"></i> Nombre</th>
+                                                                            <th><i class="fas fa-at"></i> Usuario</th>
+                                                                            <th><i class="fas fa-key"></i> Contraseña</th>
+                                                                            <th><i class="fas fa-user-tag"></i> Rol</th>
+                                                                            <th><i class="fas fa-user-tie"></i> Supervisor</th>
+                                                                            <th><i class="fas fa-user-plus"></i> Creador</th>
+                                                                            <th><i class="fas fa-calendar"></i> Fecha Creación</th>
+                                                                            <th><i class="fas fa-toggle-on"></i> Estatus</th>
+                                                                    </tr>
+                            </thead>
+                            <tbody>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1751</td>
+                                        <td><strong>OSCAR PAREDES</strong></td>
+                                        <td class="celda-usuario">oparedes</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-comisionista">Comisionista</span></td>
+                                        <td>mfuentes</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-09-15 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1750</td>
+                                        <td><strong>KARLA MENDOZA</strong></td>
+                                        <td class="celda-usuario">kmendoza</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-comisionista">Comisionista</span></td>
+                                        <td>jcastillo</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-08-01 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1748</td>
+                                        <td><strong>NATALIA RIOS</strong></td>
+                                        <td class="celda-usuario">nrios</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-regular">regular</span></td>
+                                        <td>jcastillo</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-09-22 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1747</td>
+                                        <td><strong>FERNANDA TORRES</strong></td>
+                                        <td class="celda-usuario">ftorres</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-regular">regular</span></td>
+                                        <td>mfuentes</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-08-11 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1746</td>
+                                        <td><strong>ANDRES JIMENEZ</strong></td>
+                                        <td class="celda-usuario">ajimenez</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-regular">regular</span></td>
+                                        <td>mfuentes</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-07-01 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1745</td>
+                                        <td><strong>VALERIA REYES</strong></td>
+                                        <td class="celda-usuario">vreyes</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-regular">regular</span></td>
+                                        <td>mfuentes</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-04-20 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1744</td>
+                                        <td><strong>MIGUEL LOPEZ</strong></td>
+                                        <td class="celda-usuario">mlopez</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-regular">regular</span></td>
+                                        <td>jcastillo</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-06-18 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1743</td>
+                                        <td><strong>SOFIA HERRERA</strong></td>
+                                        <td class="celda-usuario">sherrera</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-regular">regular</span></td>
+                                        <td>jcastillo</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-03-05 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1742</td>
+                                        <td><strong>CARLOS GARCIA</strong></td>
+                                        <td class="celda-usuario">cgarcia</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-regular">regular</span></td>
+                                        <td>jcastillo</td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-03-05 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1741</td>
+                                        <td><strong>ELENA RAMOS</strong></td>
+                                        <td class="celda-usuario">eramos</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-analyst">Analyst</span></td>
+                                        <td></td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-06-02 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1740</td>
+                                        <td><strong>DANIEL SALINAS</strong></td>
+                                        <td class="celda-usuario">dsalinas</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-backoffice-2">backoffice-2</span></td>
+                                        <td></td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-03-12 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1739</td>
+                                        <td><strong>LUCIA ORTEGA</strong></td>
+                                        <td class="celda-usuario">lortega</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-calidad">Calidad</span></td>
+                                        <td></td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-05-20 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1738</td>
+                                        <td><strong>PATRICIA NAVARRO</strong></td>
+                                        <td class="celda-usuario">pnavarro</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-coordinador">Coordinador</span></td>
+                                        <td></td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-03-01 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1737</td>
+                                        <td><strong>MARIANA FUENTES</strong></td>
+                                        <td class="celda-usuario">mfuentes</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-super">super</span></td>
+                                        <td></td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-04-15 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1736</td>
+                                        <td><strong>JORGE CASTILLO</strong></td>
+                                        <td class="celda-usuario">jcastillo</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-super">super</span></td>
+                                        <td></td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-03-01 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1735</td>
+                                        <td><strong>RICARDO VALDEZ</strong></td>
+                                        <td class="celda-usuario">rvaldez</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-gerente">Gerente</span></td>
+                                        <td></td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-02-10 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                                                                        <tr>
+                                        <td>
+                                            <a href="modificarUser.html" class="btn btn-modificar">
+                                                <i class="fas fa-edit"></i> Modificar
+                                            </a>
+                                        </td>
+                                        <td class="celda-tenue">1734</td>
+                                        <td><strong>ANA MORALES</strong></td>
+                                        <td class="celda-usuario">amorales</td>
+                                        <td><span class="password-mask">••••••••</span></td>
+                                        <td><span class="role-badge role-admin">admin</span></td>
+                                        <td></td>
+                                        <td class="celda-tenue">amorales</td>
+                                        <td class="celda-tenue">2025-02-10 09:30:00</td>
+                                        <td><span class="status-badge status-active">ACTIVADO</span></td>
+                                    </tr>
+                                                            </tbody>
+                        </table>
+                                    </div>
+            </div>
+        </div>
+    </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../JS/admin.js"></script>
+        <script src="../password/password.js"></script>
+        
+</body>
+</html>

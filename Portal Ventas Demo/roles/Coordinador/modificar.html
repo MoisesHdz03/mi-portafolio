@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="../../demo/demo-datos.js"></script><script src="../../demo/demo.js"></script><link rel="stylesheet" href="../../demo/demo.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Coordinador - Actualizar Venta</title>
+    <link rel="icon" href="Assets/img/favicon.svg" type="image/svg+xml">
+
+    <!-- Aplica el tema y el menú guardados antes de pintar la página (evita el parpadeo) -->
+    <script src="Assets/JS/tema.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="Assets/CSS/coordinador.css">
+    </head>
+<body>
+<aside class="sidebar" id="sidebar" aria-label="Menú principal">
+    <div class="sidebar__marca">
+        <span class="sidebar__logo"><i class="fas fa-shield-halved"></i></span>
+        <span class="sidebar__nombre">
+            <strong>Portal Ventas</strong>
+            <small>Coordinador</small>
+        </span>
+    </div>
+
+    <div class="sidebar__usuario" title="pnavarro">
+        <span class="avatar">p</span>
+        <span class="sidebar__usuario-datos">
+            <small>Bienvenido</small>
+            <strong>pnavarro</strong>
+        </span>
+    </div>
+
+    <p class="sidebar__titulo">Navegación</p>
+    <ul class="sidebar__menu">
+                    <li>
+                <a href="ventasregistradas.html"
+                   class="sidebar__enlace activo"
+                   title="Ver Ventas"
+                   aria-current="page"                   >
+                    <i class="fas fa-table-list"></i>
+                    <span>Ver Ventas</span>
+                                    </a>
+            </li>
+                    <li>
+                <a href="ver.html"
+                   class="sidebar__enlace"
+                   title="Filtros"
+                                      >
+                    <i class="fas fa-calendar-days"></i>
+                    <span>Filtros</span>
+                                    </a>
+            </li>
+            </ul>
+
+    <div class="sidebar__pie">
+        <a href="../../index.html" class="sidebar__enlace sidebar__enlace--salir" title="Cerrar sesión">
+            <i class="fas fa-arrow-right-from-bracket"></i>
+            <span>Cerrar sesión</span>
+        </a>
+        <p class="sidebar__firma"><i class="far fa-registered"></i> RAM SECURITY</p>
+    </div>
+</aside>
+<div class="capa-oscura" id="capaOscura"></div>
+
+<div class="app">
+    <header class="barra">
+        <button type="button" class="boton-icono boton-icono--menu" id="abrirMenu" aria-label="Abrir menú" aria-controls="sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <button type="button" class="boton-icono boton-icono--colapsar" id="colapsarMenu" aria-label="Contraer menú" title="Contraer / expandir menú">
+            <i class="fas fa-bars-staggered"></i>
+        </button>
+
+        <nav class="barra__ruta" aria-label="Ubicación">
+            <span>Coordinador</span>
+                            <i class="fas fa-chevron-right"></i>
+                                    <a href="ventasregistradas.html">Ver Ventas</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <strong>Venta #310146</strong>
+                                    </nav>
+
+        <div class="barra__acciones">
+            <button type="button" class="boton-icono" id="cambiarTema" aria-label="Cambiar entre modo claro y oscuro" title="Modo claro / oscuro">
+                <i class="fas fa-moon tema-icono-luna"></i>
+                <i class="fas fa-sun tema-icono-sol"></i>
+            </button>
+            <span class="usuario-chip" title="pnavarro">
+                <span class="avatar">p</span>
+                <span>pnavarro</span>
+            </span>
+        </div>
+    </header>
+
+    <main class="contenido">
+                    <div class="encabezado entrar">
+                <div>
+                    <h1 class="encabezado__titulo">
+                        <span class="encabezado__icono"><i class="fas fa-file-pen"></i></span>
+                        Actualizar venta #310146                    </h1>
+                                            <p class="encabezado__subtitulo">Revisa la papeleta y corrige los campos editables. Los campos en gris son de solo lectura.</p>
+                                    </div>
+                                    <div class="encabezado__acciones">
+                                                    <a href="ventasregistradas.html" class="boton boton--secundario"><i class="fas fa-arrow-left"></i> Regresar a ventas</a>
+                                            </div>
+                            </div>
+        <!-- Resumen de la venta -->
+<div class="papeleta-resumen entrar entrar--2">
+    <div class="papeleta-resumen__dato"><small>ID Lead</small><strong>9020372287</strong></div>
+    <div class="papeleta-resumen__dato"><small>Cliente</small><strong>MARTIN VAZQUEZ TORRES</strong></div>
+    <div class="papeleta-resumen__dato"><small>Validación</small><span><span class="etiqueta etiqueta--neutra">Sin estatus</span></span></div>
+    <div class="papeleta-resumen__dato"><small>Backoffice</small><span><span class="etiqueta etiqueta--neutra">Sin estatus</span></span></div>
+    <div class="papeleta-resumen__dato"><small>Cobro</small><span><span class="etiqueta etiqueta--neutra">Sin estatus</span></span></div>
+</div>
+
+<section class="comprobante entrar entrar--2" aria-label="Comprobante de domicilio">
+    <span class="comprobante__icono comprobante__icono--pdf">
+        <i class="fas fa-file-pdf"></i>
+    </span>
+    <div class="comprobante__datos">
+        <strong>Comprobante de domicilio</strong>
+                    <small>PDF · cargado el 17/11/2026 11:58</small>
+            </div>
+            <div class="comprobante__acciones">
+            <button type="button" class="boton boton--primario boton--chico" data-bs-toggle="modal" data-bs-target="#modalComprobante">
+                <i class="fas fa-eye"></i> Ver
+            </button>
+            <a href="#demo" class="boton boton--secundario boton--chico" download>
+                <i class="fas fa-download"></i> Descargar
+            </a>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modalComprobante" tabindex="-1" aria-labelledby="modalComprobanteTitulo" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title" id="modalComprobanteTitulo">
+                            <i class="fas fa-file-lines"></i> Comprobante de domicilio
+                        </h5>
+                        <small class="comprobante-modal__sub">Venta #310146 · ID Lead 9020372287</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body comprobante-visor" id="visorComprobante"
+                     data-url="../demo-archivos/aaeff6686d32.pdf" data-tipo="pdf">
+                    <div class="comprobante-visor__estado" data-estado="cargando">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Cargando comprobante...</span>
+                    </div>
+                    <div class="comprobante-visor__estado oculto" data-estado="error">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <span>No se pudo mostrar el comprobante. Intenta descargarlo.</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                                        <a href="../demo-archivos/aaeff6686d32.pdf" target="_blank" rel="noopener" class="btn btn-outline-secondary">
+                        <i class="fas fa-up-right-from-square"></i> Abrir en pestaña
+                    </a>
+                    <a href="#demo" class="btn btn-primary" download>
+                        <i class="fas fa-download"></i> Descargar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Índice de secciones -->
+<nav class="papeleta-indice chips entrar entrar--2" aria-label="Secciones de la papeleta">
+            <a class="chip" href="#sec-agente"><i class="fas fa-user-tie"></i> Datos del agente</a>
+            <a class="chip" href="#sec-venta"><i class="fas fa-receipt"></i> Detalle de venta</a>
+            <a class="chip" href="#sec-contacto"><i class="fas fa-address-card"></i> Datos de contacto</a>
+            <a class="chip" href="#sec-producto"><i class="fas fa-box-open"></i> Producto</a>
+            <a class="chip" href="#sec-servicio"><i class="fas fa-building-columns"></i> Detalles del servicio</a>
+            <a class="chip" href="#sec-adicional"><i class="fas fa-circle-plus"></i> Adicionales</a>
+        <span class="papeleta-leyenda"><span></span> Solo lectura</span>
+</nav>
+
+<form data-demo="1" action="modificar.html" method="post" id="formPapeleta" class="papeleta">
+    <input type="hidden" name="CapturaDeVenta_Id" value="310146">
+
+    <section class="tarjeta papeleta-seccion entrar entrar--1" id="sec-agente"><div class="tarjeta__cabecera"><h2 class="tarjeta__titulo"><i class="fas fa-user-tie"></i> Datos del agente</h2></div><div class="tarjeta__cuerpo papeleta-grid">        <div class="papeleta-campo">
+            <label for="usuario">Usuario (Login)<span class="Mark"> *</span></label>
+            <input type="text" value="mlopez" id="usuario" readonly>        </div>
+        <div class="papeleta-campo">
+            <label for="nombreAgt">Nombre del agente</label>
+            <input type="text" value="MIGUEL LOPEZ" id="nombreAgt" readonly>        </div>
+    </div></section>
+    <section class="tarjeta papeleta-seccion entrar entrar--2" id="sec-venta"><div class="tarjeta__cabecera"><h2 class="tarjeta__titulo"><i class="fas fa-receipt"></i> Detalle de venta</h2></div><div class="tarjeta__cuerpo papeleta-grid">        <div class="papeleta-campo">
+            <label for="estatus">Estatus Validación</label>
+            <input type="text" value="" id="estatus" readonly>        </div>
+        <div class="papeleta-campo">
+            <label for="estatus-backoffice">Estatus BackOffice</label>
+            <input type="text" value="" id="estatus-backoffice" readonly>        </div>
+        <section id="seccion-motivo-backoffice" class="papeleta-bloque">
+            <p class="papeleta-bloque__titulo"><i class="fas fa-circle-exclamation"></i> Rechazo de Backoffice</p>
+            <div class="papeleta-grid">
+                <div class="papeleta-campo">
+                    <label for="Motivo_Rechazo_Backoffice">Motivo</label>
+                    <input type="text" value="" id="Motivo_Rechazo_Backoffice" readonly>                </div>
+                <div class="papeleta-campo">
+                    <label for="Sus">Sus</label>
+                    <input type="text" value="" id="Sus" readonly>                </div>
+                <div class="papeleta-campo papeleta-campo--ancho">
+                    <label for="Comentario_Rechazo_Backoffice">Comentario del rechazo</label>
+                    <textarea id="Comentario_Rechazo_Backoffice" readonly cols="5" rows="2"></textarea>                </div>
+            </div>
+        </section>
+        <div class="papeleta-campo">
+            <label for="NumeroFolio">Número de Folio</label>
+            <input type="text" value="" id="NumeroFolio" readonly>        </div>
+        <div class="papeleta-campo">
+            <label for="FechaV">Fecha de venta<span class="Mark"> *</span></label>
+            <input type="text" value="2026-11-17 11:58:24" id="FechaV" readonly>        </div>
+        <div class="papeleta-campo">
+            <label for="IDlead">ID lead<span class="Mark"> *</span></label>
+            <input type="text" name="IDlead" value="9020372287" id="IDlead">        </div>
+        <div class="papeleta-campo">
+            <label for="TipoCliente">Tipo de cliente<span class="Mark"> *</span></label>
+            <select name="TipoCliente" id="TipoCliente"><option value=""></option><option value="Nuevo" selected>Nuevo</option><option value="Actual">Actual</option><option value="Venta Seguridad Hogar">Venta Seguridad Hogar</option><option value="Ventas Productos Premier">Ventas Productos Premier</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="CCE">CCE<span class="Mark"> *</span></label>
+            <select id="CCE" disabled><option value=""></option><option value="Afiliado">Afiliado</option><option value="Social Selling">Social Selling</option><option value="NEOTELL Llamada">NEOTELL Llamada</option><option value="Llamada CCC" selected>Llamada CCC</option><option value="Viont">Viont</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="NumeroSucursal">Número de Sucursal<span class="Mark"> *</span></label>
+            <input type="text" name="NumeroSucursal" value="54" id="NumeroSucursal">        </div>
+        <div class="papeleta-campo">
+            <label for="Sucursal">Sucursal<span class="Mark"> *</span></label>
+            <input type="text" name="Sucursal" value="QUERETARO" id="Sucursal">        </div>
+        <div class="papeleta-campo">
+            <label for="NumSuscriptor">Número de Suscriptor</label>
+            <input type="text" name="NumSuscriptor" value="" id="NumSuscriptor">        </div>
+    </div></section>
+    <section class="tarjeta papeleta-seccion entrar entrar--3" id="sec-contacto"><div class="tarjeta__cabecera"><h2 class="tarjeta__titulo"><i class="fas fa-address-card"></i> Datos de contacto</h2></div><div class="tarjeta__cuerpo papeleta-grid">        <div class="papeleta-campo">
+            <label for="Apellidopaterno">Apellido Paterno<span class="Mark"> *</span></label>
+            <input type="text" name="Apellidopaterno" value="VAZQUEZ" id="Apellidopaterno">        </div>
+        <div class="papeleta-campo">
+            <label for="Apellidomaterno">Apellido Materno<span class="Mark"> *</span></label>
+            <input type="text" name="Apellidomaterno" value="TORRES" id="Apellidomaterno">        </div>
+        <div class="papeleta-campo">
+            <label for="Nombre">Nombre<span class="Mark"> *</span></label>
+            <input type="text" name="Nombre" value="MARTIN" id="Nombre">        </div>
+        <div class="papeleta-campo">
+            <label for="Fecha_Nacimiento">Fecha de Nacimiento<span class="Mark"> *</span></label>
+            <input type="date" name="Fecha_Nacimiento" value="1989-11-13" id="Fecha_Nacimiento">        </div>
+
+        <p class="papeleta-subtitulo">Domicilio</p>
+        <div class="papeleta-campo">
+            <label for="Domicilio">Domicilio (calle y número)<span class="Mark"> *</span></label>
+            <input type="text" name="Domicilio" value="CALLE ENCINO 2056" id="Domicilio">        </div>
+        <div class="papeleta-campo">
+            <label for="NumeroInterior">Interior (Mz / lote)</label>
+            <input type="text" name="NumeroInterior" value="" id="NumeroInterior">        </div>
+        <div class="papeleta-campo">
+            <label for="Colonia">Colonia<span class="Mark"> *</span></label>
+            <input type="text" name="Colonia" value="SAN RAFAEL" id="Colonia">        </div>
+        <div class="papeleta-campo">
+            <label for="Entrecalle1">Entrecalle 1<span class="Mark"> *</span></label>
+            <input type="text" name="Entrecalle1" value="AV. HIDALGO" id="Entrecalle1">        </div>
+        <div class="papeleta-campo">
+            <label for="Entrecalle2">Entrecalle 2<span class="Mark"> *</span></label>
+            <input type="text" name="Entrecalle2" value="AV. HIDALGO" id="Entrecalle2">        </div>
+        <div class="papeleta-campo">
+            <label for="CP">Código Postal<span class="Mark"> *</span></label>
+            <input type="text" name="CP" value="87087" id="CP">        </div>
+        <div class="papeleta-campo">
+            <label for="coordenadas">Coordenadas<span class="Mark"> *</span></label>
+            <input type="text" name="Coordenadas" value="27.768940, -107.008150" id="coordenadas">        </div>
+
+        <p class="papeleta-subtitulo">Teléfonos y correo</p>
+        <div class="papeleta-campo">
+            <label for="Telefonocasa">Teléfono de casa</label>
+            <input type="tel" name="Telefonocasa" value="" id="Telefonocasa">        </div>
+        <div class="papeleta-campo">
+            <label for="TelefonoOficina">Teléfono de oficina</label>
+            <input type="tel" name="Telefonoficina" value="" id="TelefonoOficina">        </div>
+        <div class="papeleta-campo">
+            <label for="Telefonocelular">Teléfono celular</label>
+            <input type="tel" name="Telefonocelular" value="5550958452" id="Telefonocelular">        </div>
+        <div class="papeleta-campo">
+            <label for="correo">Correo electrónico<span class="Mark"> *</span></label>
+            <input type="email" name="Correo" value="martin.vazquez33@ejemplo.com" id="correo">        </div>
+        <div class="papeleta-campo papeleta-campo--ancho">
+            <label for="Comentarios">Comentarios del vendedor<span class="Mark"> *</span></label>
+            <textarea name="Comentarios" id="Comentarios" cols="30" rows="2">A un costado del parque</textarea>            <small class="ayuda">Orientación de la dirección</small>
+        </div>
+    </div></section>
+    <section class="tarjeta papeleta-seccion entrar entrar--4" id="sec-producto"><div class="tarjeta__cabecera"><h2 class="tarjeta__titulo"><i class="fas fa-box-open"></i> Producto</h2></div><div class="tarjeta__cuerpo papeleta-grid">        <div class="papeleta-campo">
+            <label for="Segmento">Segmento<span class="Mark"> *</span></label>
+            <select name="Segmento" id="Segmento"><option value=""></option><option value="RESIDENCIAL" selected>Residencial</option><option value="NEGOCIO">Negocio</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="Paquetes">Paquete<span class="Mark"> *</span></label>
+            <select name="Paquetes" id="Paquetes"><option value=""></option><option value="Doble Pack">Doble Pack</option><option value="Triple Pack">Triple Pack</option><option value="Servicios Premier" selected>Servicios Premier</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="Ventadeinternet">Venta de Internet<span class="Mark"> *</span></label>
+            <select name="Ventadeinternet" id="Ventadeinternet"><option value=""></option><option value="20 megas">20 Megas</option><option value="30 megas">30 Megas</option><option value="50 megas">50 Megas</option><option value="60 megas">60 Megas</option><option value="80 megas">80 Megas</option><option value="100 megas">100 Megas</option><option value="130 megas">130 Megas</option><option value="150 megas">150 Megas</option><option value="200 megas" selected>200 Megas</option><option value="250 megas">250 Megas</option><option value="300 megas">300 Megas</option><option value="350 megas">350 Megas</option><option value="500 megas">500 Megas</option><option value="750 megas">750 Megas</option><option value="1000 megas">1000 Megas</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="Ventadecable">Venta de Cable</label>
+            <select name="Ventadecable" id="Ventadecable"><option value="-">-</option><option value="Conecta">Conecta</option><option value="Basico plus" selected>Basico plus</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="HD">HD</label>
+            <select name="HD" id="HD"><option value="-">-</option><option value="Conecta">Conecta</option><option value="HDTotal" selected>HD Total</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="HDXVIEW">HD XVIEW</label>
+            <select name="HDXVIEW" id="HDXVIEW"><option value="-">-</option><option value="XVIEW">XVIEW</option><option value="XVIEW+" selected>XVIEW +</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="TVADICIONAL">TV Adicional</label>
+            <select name="TVADICIONAL" id="TVADICIONAL"><option value="-">-</option><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="LineaAdicional">Línea Adicional (solo negocios)</label>
+            <select name="LineaAdicional" id="LineaAdicional"><option value="-">-</option><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>        </div>
+
+        <p class="papeleta-subtitulo">Streaming</p>
+        <div class="papeleta-campo">
+            <label for="VentaSE">Venta de servicio de Streaming</label>
+            <select name="VentaSE" id="VentaSE"><option value=""></option><option value="SI" selected>SI</option><option value="NO">NO</option></select>        </div>
+                    <div class="papeleta-campo">
+                <label for="Netflix">Netflix</label>
+                <select id="Netflix" disabled class="form-select"><option value="-" selected>-</option><option value="Anuncios">Anuncios</option><option value="Basico">Basico</option><option value="Estandar">Estandar</option><option value="Premium">Premium</option></select>            </div>
+                    <div class="papeleta-campo">
+                <label for="Disney">Disney</label>
+                <select id="Disney" disabled class="form-select"><option value="-">-</option><option value="Disney+ Premium">Disney+ Premium</option><option value="Disney+ Estandar">Disney+ Estandar</option><option value="Disney+ Anuncios Promo" selected>Disney+ Anuncios Promo</option></select>            </div>
+                    <div class="papeleta-campo">
+                <label for="Amazon">Amazon</label>
+                <select id="Amazon" disabled class="form-select"><option value="-">-</option><option value="Amazon Prime" selected>Amazon Prime</option></select>            </div>
+                    <div class="papeleta-campo">
+                <label for="HBOMAX">HBO - MAX</label>
+                <select id="HBOMAX" disabled class="form-select"><option value="-">-</option><option value="MAX Anuncios">MAX Anuncios</option><option value="MAX" selected>MAX</option></select>            </div>
+        
+        <p class="papeleta-subtitulo">Mega Móvil</p>
+        <div class="papeleta-campo">
+            <label for="megamovil">Megamóvil<span class="Mark"> *</span></label>
+            <input type="text" name="megamovil" value="" id="megamovil">        </div>
+        <div class="papeleta-campo">
+            <label for="modelo">Modelo<span class="Mark"> *</span></label>
+            <input type="text" name="modelo" value="" id="modelo">        </div>
+        <div class="papeleta-campo">
+            <label for="IMEI">IMEI<span class="Mark"> *</span></label>
+            <input type="text" name="IMEI" value="" id="IMEI">        </div>
+
+        <p class="papeleta-subtitulo">Promoción y costos</p>
+        <div class="papeleta-campo">
+            <label for="Npromo">Número de Promoción<span class="Mark"> *</span></label>
+            <input type="text" name="Npromo" value="5401" id="Npromo">        </div>
+                    <div class="papeleta-campo">
+                <label for="CostoContratacion">Costo de Contratación<span class="Mark"> *</span></label>
+                <input type="text" name="CostoContratacion" value="350" id="CostoContratacion">                <small class="ayuda">Costo de contratación</small>
+            </div>
+                    <div class="papeleta-campo">
+                <label for="Costopromo">Costo promocional<span class="Mark"> *</span></label>
+                <input type="text" name="Costopromo" value="649" id="Costopromo">                <small class="ayuda">Costo del paquete con la promoción</small>
+            </div>
+                    <div class="papeleta-campo">
+                <label for="Costorenta">Costo Renta<span class="Mark"> *</span></label>
+                <input type="text" name="Costorenta" value="649" id="Costorenta">                <small class="ayuda">Costo del paquete después de la promoción</small>
+            </div>
+                <div class="papeleta-campo papeleta-campo--ancho">
+            <label for="ComentariosPV">Comentarios de producto vendido<span class="Mark"> *</span></label>
+            <textarea name="ComentariosPV" id="ComentariosPV" cols="30" rows="2">Requiere factura</textarea>        </div>
+    </div></section>
+    <section class="tarjeta papeleta-seccion entrar entrar--4" id="sec-servicio"><div class="tarjeta__cabecera"><h2 class="tarjeta__titulo"><i class="fas fa-building-columns"></i> Detalles del servicio</h2></div><div class="tarjeta__cuerpo papeleta-grid">                    <div class="papeleta-campo">
+                <label for="status_ingreso">Estatus Cobrador</label>
+                <input type="text" value="" id="status_ingreso" readonly>            </div>
+                    <div class="papeleta-campo">
+                <label for="venta_exitosa">Registro de Venta Exitosa</label>
+                <input type="text" value="" id="venta_exitosa" readonly>            </div>
+                    <div class="papeleta-campo">
+                <label for="fecha_venta">Fecha de Cobro</label>
+                <input type="text" value="" id="fecha_venta" readonly>            </div>
+                    <div class="papeleta-campo">
+                <label for="motivo_rechazo">Motivo de Rechazo Cobrador</label>
+                <input type="text" value="" id="motivo_rechazo" readonly>            </div>
+                    <div class="papeleta-campo">
+                <label for="numero_plastico">Número de Plástico</label>
+                <input type="text" value="" id="numero_plastico" readonly>            </div>
+                    <div class="papeleta-campo">
+                <label for="Fecha_Vencimiento">Fecha de Vencimiento</label>
+                <input type="text" value="" id="Fecha_Vencimiento" readonly>            </div>
+                <div class="papeleta-campo">
+            <label for="Banco">Banco de Backoffice</label>
+            <select name="Banco" id="Banco" class="form-select"><option value="" disabled selected>Seleccione un banco...</option><option value="Actinver">Actinver</option><option value="Afirme">Afirme</option><option value="Banamex (Citibanamex)">Banamex (Citibanamex)</option><option value="Banco Covalto">Banco Covalto</option><option value="Banco del Bajío (BanBajío)">Banco del Bajío (BanBajío)</option><option value="Banco S3">Banco S3</option><option value="Bancomext">Bancomext</option><option value="BanCoppel">BanCoppel</option><option value="Bancrea">Bancrea</option><option value="BanJercito">BanJercito</option><option value="Bank of America">Bank of America</option><option value="Bankaool">Bankaool</option><option value="Banobras">Banobras</option><option value="Banorte">Banorte</option><option value="BanRegio">BanRegio</option><option value="Bansi">Bansi</option><option value="Banxico">Banxico</option><option value="Barclays">Barclays</option><option value="Base (BBASE)">Base (BBASE)</option><option value="BBVA México">BBVA México</option><option value="BMONEX">BMONEX</option><option value="Compartamos Banco">Compartamos Banco</option><option value="Consubanco">Consubanco</option><option value="Hey Banco">Hey Banco</option><option value="HSBC">HSBC</option><option value="ICBC">ICBC</option><option value="Inmobiliario">Inmobiliario</option><option value="Intercam Banco">Intercam Banco</option><option value="Invex">Invex</option><option value="JP Morgan">JP Morgan</option><option value="Kapital Bank">Kapital Bank</option><option value="Klar">Klar</option><option value="Mercado Pago">Mercado Pago</option><option value="Mifel">Mifel</option><option value="Mizuho Bank">Mizuho Bank</option><option value="MUFG">MUFG</option><option value="Multiva">Multiva</option><option value="Nafin">Nafin</option><option value="No domicilia">No domicilia</option><option value="NU México">NU México</option><option value="Plata">Plata</option><option value="Sabadell">Sabadell</option><option value="Santander">Santander</option><option value="Scotiabank">Scotiabank</option><option value="Shinhan Bank">Shinhan Bank</option><option value="STP">STP</option><option value="Ualá">Ualá</option><option value="Ve Por Más (BX+)">Ve Por Más (BX+)</option><option value="Volkswagen Bank">Volkswagen Bank</option></select>        </div>
+    </div></section>
+    <section class="tarjeta papeleta-seccion entrar entrar--4" id="sec-adicional"><div class="tarjeta__cabecera"><h2 class="tarjeta__titulo"><i class="fas fa-circle-plus"></i> Adicionales</h2></div><div class="tarjeta__cuerpo papeleta-grid">        <div class="papeleta-campo">
+            <label for="CDomicilio">Comprobante de Domicilio<span class="Mark"> *</span></label>
+            <select name="CDomicilio" id="CDomicilio"><option value=""></option><option value="Si">SI</option><option value="No" selected>NO</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="NombreCom">Nombre comercial (en caso de ser negocio)</label>
+            <input type="text" name="nombreCom" value="" id="NombreCom">        </div>
+        <div class="papeleta-campo">
+            <label for="RFC">RFC</label>
+            <input type="text" name="RFC" value="" id="RFC">        </div>
+        <div class="papeleta-campo">
+            <label for="Paquetes2">¿Cliente desea facturar?<span class="Mark"> *</span></label>
+            <select name="Paquetes2" id="Paquetes2"><option value=""></option><option value="SI">SI</option><option value="NO" selected>NO</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="Banco_Agente">Banco</label>
+            <select name="Banco_Agente" id="Banco_Agente" class="form-select" required><option value="" disabled>Seleccione un banco...</option><option value="14">Actinver</option><option value="11">Afirme</option><option value="2">Banamex (Citibanamex)</option><option value="22">Banco Covalto</option><option value="10">Banco del Bajío (BanBajío)</option><option value="47">Banco S3</option><option value="30">Bancomext</option><option value="9">BanCoppel</option><option value="19">Bancrea</option><option value="31">BanJercito</option><option value="36">Bank of America</option><option value="21">Bankaool</option><option value="28">Banobras</option><option value="4">Banorte</option><option value="12">BanRegio</option><option value="17">Bansi</option><option value="32">Banxico</option><option value="34">Barclays</option><option value="45">Base (BBASE)</option><option value="1">BBVA México</option><option value="44">BMONEX</option><option value="18">Compartamos Banco</option><option value="46">Consubanco</option><option value="20">Hey Banco</option><option value="5">HSBC</option><option value="35">ICBC</option><option value="48">Inmobiliario</option><option value="43">Intercam Banco</option><option value="16">Invex</option><option value="33">JP Morgan</option><option value="49">Kapital Bank</option><option value="24">Klar</option><option value="53">Mercado Pago</option><option value="13">Mifel</option><option value="37">Mizuho Bank</option><option value="39">MUFG</option><option value="15">Multiva</option><option value="29">Nafin</option><option value="51">No domicilia</option><option value="23">NU México</option><option value="55">Plata</option><option value="40" selected>Sabadell</option><option value="3">Santander</option><option value="6">Scotiabank</option><option value="38">Shinhan Bank</option><option value="52">STP</option><option value="25">Ualá</option><option value="42">Ve Por Más (BX+)</option><option value="41">Volkswagen Bank</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="Desea_Domiciliar">¿Cliente desea domiciliar?</label>
+            <select name="Desea_Domiciliar" id="Desea_Domiciliar" class="form-select" required><option value="" disabled>Seleccione una opción...</option><option value="1">Si</option><option value="0" selected>No</option></select>        </div>
+        <div class="papeleta-campo">
+            <label for="Nombre_Referido">Nombre de Referencia</label>
+            <input type="text" name="Nombre_Referido" value="NA" id="Nombre_Referido" class="form-control">        </div>
+        <div class="papeleta-campo">
+            <label for="Contacto_Referido">Contacto de Referencia</label>
+            <input type="tel" name="Contacto_Referido" value="5550351087" id="Contacto_Referido" class="form-control" pattern="\d{10}" maxlength="10" data-aviso="telefono-referido">            <span id="telefono-referido" class="error-message">Solamente se aceptan 10 caracteres numéricos.</span>
+        </div>
+        <div class="papeleta-campo papeleta-campo--ancho">
+            <label for="Comentarios_Confirmacion">Motivo de rechazo<span class="Mark"> *</span></label>
+            <textarea id="Comentarios_Confirmacion" readonly cols="35" rows="3"></textarea>        </div>
+    </div></section>
+    <div class="papeleta-acciones">
+        <span class="papeleta-acciones__texto"><i class="fas fa-circle-info"></i> Los cambios se guardan sólo al presionar <b>Guardar</b>.</span>
+        <div class="papeleta-acciones__botones">
+            <a href="ventasregistradas.html" class="boton boton--secundario btn-regresar"><i class="fas fa-arrow-left"></i> Regresar</a>
+            <button type="submit" name="enviar" value="Guardar" class="boton boton--primario"><i class="fas fa-floppy-disk"></i> Guardar</button>
+        </div>
+    </div>
+</form>
+    </main>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="Assets/JS/coordinador.js"></script>
+            <script src="Assets/JS/papeleta.js"></script>
+        <script src="Assets/JS/comprobante.js"></script>
+        
+</body>
+</html>
